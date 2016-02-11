@@ -37,8 +37,7 @@ public class Main {
 		
 		battleScene(myCompkemon, enemy);
 		
-		System.out.println("Battle has concluded");		
-						
+		System.out.println("Battle has concluded");	
 	}
 	
 	

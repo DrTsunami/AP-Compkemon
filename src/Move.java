@@ -31,7 +31,7 @@ public class Move {
 	        case AlmightyPush:
 	        	attackName = "Almighty Push";
 	        	type = "God";
-	        	power = 20;
+	        	power = 100;
 	        	accuracy = 1.0f;
 	        	hasEffect = false;
 	        	toSelf = false;

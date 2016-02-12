@@ -38,7 +38,7 @@ public class Main {
 		battleScene(myCompkemon, enemy);
 		
 		System.out.println("Battle has concluded");	
-	}
+	} // end main method
 	
 	
 	public static void battleScene(Compkemon myCompkemon, Compkemon enemy) {
@@ -56,35 +56,121 @@ public class Main {
 			Move myMoveUsed = myCompkemon.moveset[myMove - 1];
 			Move enemyMoveUsed = enemy.moveset[enemyMove];
 			
-			if (myCompkemon.speed > enemy.speed) {				
+			if (myCompkemon.speed > enemy.speed) {	
+				// ---------- USER FASTER THAN ENEMY ----------
 				System.out.println(myCompkemon + " used " + myMoveUsed);
 				
+				// Alpha damage calculator and applier
 				if (myMoveUsed.power > 0) {
 					System.out.println(enemy + " took damage!");
 					enemy.setHealth(enemy.currentHealth - myMoveUsed.power);
-					System.out.println(enemy + " HP: " + enemy.currentHealth);
+					if (enemy.currentHealth <= 0) {
+						System.out.println(enemy + " HP: 0");
+					} else {
+						System.out.println(enemy + " HP: " + enemy.currentHealth);
+					}
+					
+					damageCalculator(myCompkemon, enemy, myMoveUsed);
+				} 
+				
+				// Check for move effect. If true, effects are applied
+				if (myMoveUsed.hasEffect) {
+					passiveModifier(myCompkemon, enemy, myMoveUsed);
 				}
 				
+				// Splash salute 
+				/*
+				if (!myMoveUsed.hasEffect || myMoveUsed.power == 0) {
+					System.out.println("Nothing happened. You literally suck.");
+				}
+				*/
+				
+				// Check for enemy health. If fainted, end the game
 				if (enemy.currentHealth <= 0) {
 					loser = enemy;
 					break;					
 				}
 				
-				System.out.println(enemy + " used " + enemyMoveUsed);
+				// Enemy move begin
+				System.out.println(enemy + " used " + enemyMoveUsed);				
+
+				// Alpha damage calculator and applier
 				if (enemyMoveUsed.power > 0) {
 					System.out.println(myCompkemon + " took damage!");
 					myCompkemon.setHealth(myCompkemon.currentHealth - enemyMoveUsed.power);
-					System.out.println(myCompkemon + " HP: " + myCompkemon.currentHealth);
+					if (myCompkemon.currentHealth <= 0) {
+						System.out.println(myCompkemon + " HP: 0");
+					} else {
+						System.out.println(myCompkemon + " HP: " + myCompkemon.currentHealth);
+					}
+
 				}
 				
+				// Check for move effect. If true, effects are applied
+				if (enemyMoveUsed.hasEffect) {
+					passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+				}
+				
+				// Splash salute
+				/*
+				if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
+					System.out.println("Nothing happened. The enemy literally sucks.");
+				}
+				*/
+				
+				// Check for user health. If fainted, end the game
 				if (myCompkemon.currentHealth <= 0) {
 					loser = myCompkemon;
 					break;					
 				}
 				
+			} else {
+				// ---------- USER SLOWER THAN ENEMY ----------				
 			}
 		}
 		
 		System.out.println(loser + " has fainted");
+	} // end battleScene
+	
+	public static void passiveModifier(Compkemon user, Compkemon target, Move moveUsed) {		
+		
+		if (moveUsed.toSelf) {
+			switch (moveUsed.effectAttribute) {
+				case "Attack":
+					if (moveUsed.modifier == 10) {
+						System.out.println(user + "'s" + " Attack increased!");
+						user.attack += moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(user + "'s" + " Attack sharply increased!");
+						user.attack += moveUsed.modifier;						
+					}
+					break;		
+			}
+		} else {
+			switch (moveUsed.effectAttribute) {
+				case "Attack":
+					if (moveUsed.modifier == 10) {
+						System.out.println(target + "'s" + " Attack decreased!");
+						target.attack -= moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(target + "'s" + " Attack sharply decreased!");
+						target.attack -= moveUsed.modifier;
+					}
+					break;
+			}
+		}
+		
+	} // end passiveModifier
+	
+	public static void damageCalculator(Compkemon user, Compkemon target, Move userMove) {
+		
+		float damage = 0.0f;
+		float userAttack = user.getAttack();
+		float targetDefense = target.getDefense();
+		
+		damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
+		
+		System.out.println("System out test for damage: " + damage);
+		
 	}
 }

@@ -7,6 +7,7 @@ public class Move {
     boolean hasEffect;
     boolean toSelf;
     boolean lastingEffect;
+    String effectAttribute;
     String description;
     int modifier;
     MoveName moveName;
@@ -19,6 +20,7 @@ public class Move {
     	this.hasEffect = false;
     	this.toSelf = false;
     	this.lastingEffect = false;
+    	this.effectAttribute = "";
     	this.description = "";
     }
 
@@ -31,12 +33,23 @@ public class Move {
 	        case AlmightyPush:
 	        	attackName = "Almighty Push";
 	        	type = "God";
-	        	power = 100;
+	        	power = 120;
 	        	accuracy = 1.0f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
 	        	description = "Massive gravitational expulsion of energy. Only the fat survive";
+	        	break;
+	        case Creator:
+	        	attackName = "Creator";
+	        	type = "God";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	effectAttribute = "";
+	        	description = "Move for debugging. A God's creation...";
 	        	break;
 	        case Growl:
 	        	attackName = "Growl";
@@ -46,9 +59,20 @@ public class Move {
 	            hasEffect = true;
 	            toSelf = false;
 	            lastingEffect = false;
-	            description = "Opponent's attack lowered by 10";
-	            modifier = -10;
+	            effectAttribute = "Attack";
+	            description = "Opponent's attack lowered by 10";	            
+	            modifier = 10;
 	            break;
+	        case Mercy:
+	        	attackName = "Mercy";
+	        	type = "God";
+	            power = 0;
+	            accuracy = 1.0f;
+	            hasEffect = false;
+	            toSelf = false;
+	            lastingEffect = false;
+	            description = "A God has mercy for His slaves";	            
+	        	break;
 	        case Splash: 
 	        	attackName = "Splash";
 	        	type = "Normal";
@@ -68,6 +92,7 @@ public class Move {
                 hasEffect = true;
                 toSelf = true;
                 lastingEffect = false;
+                effectAttribute = "Attack";
                 description = "Attack boosted by 20";
                 modifier = 20;
                 break;       

@@ -5,8 +5,8 @@ public class Compkemon {
     Move[] moveset;
     int health;
     int currentHealth;
-    int attack;
-    int defense;
+    float attack;
+    float defense;
     int speed;
     
     CompkemonList compkemonList;
@@ -17,8 +17,8 @@ public class Compkemon {
         this.type = "";
         this.health = 0;
         this.currentHealth = 0;
-        this.attack = 0;
-        this.defense = 0;
+        this.attack = 0.0f;
+        this.defense = 0.0f;
         this.speed = 0; 
         this.moveset = new Move[4];
     }
@@ -32,10 +32,10 @@ public class Compkemon {
 			case Prototype: 
 				this.name = "Prototype";
 		        this.type = "Normal";
-		        this.health = 100;
-		        this.currentHealth = 100;
-		        this.attack = 80;
-		        this.defense = 80;
+		        this.health = 150;
+		        this.currentHealth = 150;
+		        this.attack = 80.0f;
+		        this.defense = 70.0f;
 		        this.speed = 80; 
 		        this.moveset = new Move[4];
 		
@@ -47,15 +47,15 @@ public class Compkemon {
 			case Wrightson:
 				this.name = "Wrightson";
 				this.type = "God";
-				this.health = 100;
-				this.currentHealth = 100;
-				this.attack = 100;
-				this.defense = 100;
+				this.health = 999;
+				this.currentHealth = 999;
+				this.attack = 90.0f;
+				this.defense = 100.0f;
 				this.speed = 100;
 				this.moveset = new Move[4];
 				
 		        moveset[0] = new Move(MoveName.AlmightyPush);
-		        moveset[1] = new Move();
+		        moveset[1] = new Move(MoveName.Mercy);
 		        moveset[2] = new Move();
 		        moveset[3] = new Move();
 		        break;
@@ -81,7 +81,7 @@ public class Compkemon {
     	this.currentHealth = health;
     }
     
-    public int getAttack() {
+    public float getAttack() {
     	return attack;
     }
     
@@ -89,7 +89,7 @@ public class Compkemon {
     	this.attack = attack;
     }
     
-    public int getDefense() {
+    public float getDefense() {
     	return defense;
     }
     

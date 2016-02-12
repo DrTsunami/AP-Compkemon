@@ -1,4 +1,4 @@
 public enum MoveName
 {
-	AlmightyPush, Growl, SwordsDance, Splash, Tackle, 
+	AlmightyPush, Creator, Growl, Mercy, SwordsDance, Splash, Tackle, 
 }

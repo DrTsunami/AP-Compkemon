@@ -61,17 +61,7 @@ public class Main {
 				System.out.println(myCompkemon + " used " + myMoveUsed);
 				
 				// Alpha damage calculator and applier
-				if (myMoveUsed.power > 0) {
-					System.out.println(enemy + " took damage!");
-					enemy.setHealth(enemy.currentHealth - myMoveUsed.power);
-					if (enemy.currentHealth <= 0) {
-						System.out.println(enemy + " HP: 0");
-					} else {
-						System.out.println(enemy + " HP: " + enemy.currentHealth);
-					}
-					
-					damageCalculator(myCompkemon, enemy, myMoveUsed);
-				} 
+				
 				
 				// Check for move effect. If true, effects are applied
 				if (myMoveUsed.hasEffect) {
@@ -166,11 +156,18 @@ public class Main {
 		
 		float damage = 0.0f;
 		float userAttack = user.getAttack();
-		float targetDefense = target.getDefense();
+		float targetDefense = target.getDefense();		
 		
-		damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
-		
-		System.out.println("System out test for damage: " + damage);
+		if (userMove.power > 0) {			
+			damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
+			System.out.println(target + " took damage!");
+			target.setHealth(target.currentHealth - (int)(damage));
+			if (target.currentHealth <= 0) {
+				System.out.println(target + " HP: 0");
+			} else {
+				System.out.println(target + " HP: " + target.currentHealth);
+			}
+		} 
 		
 	}
 }

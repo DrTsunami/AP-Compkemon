@@ -61,6 +61,15 @@ public class Main {
 				System.out.println(myCompkemon + " used " + myMoveUsed);
 				
 				// Alpha damage calculator and applier
+				if (myMoveUsed.power > 0) {
+					System.out.println(enemy + " took damage!");
+					enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));
+					if (enemy.currentHealth <= 0) {
+						System.out.println(enemy + " HP: 0");
+					} else {
+						System.out.println(enemy + " HP: " + enemy.currentHealth);
+					}
+				}
 				
 				
 				// Check for move effect. If true, effects are applied
@@ -87,7 +96,7 @@ public class Main {
 				// Alpha damage calculator and applier
 				if (enemyMoveUsed.power > 0) {
 					System.out.println(myCompkemon + " took damage!");
-					myCompkemon.setHealth(myCompkemon.currentHealth - enemyMoveUsed.power);
+					myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
 					if (myCompkemon.currentHealth <= 0) {
 						System.out.println(myCompkemon + " HP: 0");
 					} else {
@@ -152,22 +161,107 @@ public class Main {
 		
 	} // end passiveModifier
 	
-	public static void damageCalculator(Compkemon user, Compkemon target, Move userMove) {
+	public static float damageCalculator(Compkemon user, Compkemon target, Move userMove) {
 		
 		float damage = 0.0f;
 		float userAttack = user.getAttack();
 		float targetDefense = target.getDefense();		
 		
-		if (userMove.power > 0) {			
-			damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
-			System.out.println(target + " took damage!");
-			target.setHealth(target.currentHealth - (int)(damage));
-			if (target.currentHealth <= 0) {
-				System.out.println(target + " HP: 0");
-			} else {
-				System.out.println(target + " HP: " + target.currentHealth);
-			}
-		} 
+		damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
+		
+		return damage;
 		
 	}
+	
+	public static float damageMultiplier(Compkemon user, Compkemon target, Move userMove) {
+		
+		float multiplier = 0.0f;
+		int userType = 0;
+		int targetType = 0;		
+		float[][] damageTable = new float[6][6];
+		
+		switch (user.type) {
+			case "Moron" :
+				userType = 0;
+				break;
+			case "Meat" : 
+				userType = 1;				
+				break;
+			case "Cynic" :
+				userType = 2;
+				break;
+			case "Enlightened" :
+				userType = 3;
+				break;
+			case "Musician" :
+				userType = 4;
+				break;
+			case "God" :
+				userType = 5;
+				break;				
+		}
+		
+		switch (target.type) {
+			case "Moron" :
+				targetType = 0;
+				break;
+			case "Meat" : 
+				targetType = 1;				
+				break;
+			case "Cynic" :
+				targetType = 2;
+				break;
+			case "Enlightened" :
+				targetType = 3;
+				break;
+			case "Musician" :
+				targetType = 4;
+				break;
+			case "God" :
+				targetType = 5;
+				break;				
+		}
+		
+		damageTable[0][0] = ;
+		damageTable[0][1] = ;
+		damageTable[0][2] = ;
+		damageTable[0][3] = ;
+		damageTable[0][4] = ;
+		damageTable[0][5] = ;
+		damageTable[1][0] = ;
+		damageTable[1][1] = ;
+		damageTable[1][2] = ;
+		damageTable[1][3] = ;
+		damageTable[1][4] = ;
+		damageTable[1][5] = ;
+		damageTable[2][0] = ;
+		damageTable[2][1] = ;
+		damageTable[2][2] = ;
+		damageTable[2][3] = ;
+		damageTable[2][4] = ;
+		damageTable[2][5] = ;
+		damageTable[3][0] = ;
+		damageTable[3][1] = ;
+		damageTable[3][2] = ;
+		damageTable[3][3] = ;
+		damageTable[3][4] = ;
+		damageTable[3][5] = ;
+		damageTable[4][0] = ;
+		damageTable[4][1] = ;
+		damageTable[4][2] = ;
+		damageTable[4][3] = ;
+		damageTable[4][4] = ;
+		damageTable[4][5] = ;
+		damageTable[5][0] = ;
+		damageTable[5][1] = ;
+		damageTable[5][2] = ;
+		damageTable[5][3] = ;
+		damageTable[5][4] = ;
+		damageTable[5][5] = ;
+		
+		
+		return multiplier;
+		
+	}
+	
 }

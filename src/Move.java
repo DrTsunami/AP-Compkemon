@@ -33,8 +33,8 @@ public class Move {
 	        case AlmightyPush:
 	        	attackName = "Almighty Push";
 	        	type = "God";
-	        	power = 120;
-	        	accuracy = 1.0f;
+	        	power = 10;
+	        	accuracy = 0.5f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -53,7 +53,7 @@ public class Move {
 	        	break;
 	        case Growl:
 	        	attackName = "Growl";
-	        	type = "Normal";
+	        	type = "Meat";
 	            power = 0;
 	            accuracy = 1.0f;
 	            hasEffect = true;
@@ -75,7 +75,7 @@ public class Move {
 	        	break;
 	        case Splash: 
 	        	attackName = "Splash";
-	        	type = "Normal";
+	        	type = "Moron";
 	            power = 0;
 	            accuracy = 1.0f;
 	            hasEffect = false;
@@ -86,7 +86,7 @@ public class Move {
 	            break;
 	        case SwordsDance: 
             	attackName = "Swords Dance";
-            	type = "Normal";
+            	type = "Meat";
                 power = 0;
                 accuracy = 1.0f;
                 hasEffect = true;
@@ -98,8 +98,8 @@ public class Move {
                 break;       
             case Tackle:
             	attackName = "Tackle";
-            	type = "Normal";
-                power = 50;
+            	type = "Meat";
+                power = 51;
                 accuracy = .95f;
                 hasEffect = false;
                 lastingEffect = false;

@@ -5,6 +5,7 @@ public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
+	static TypeTable typeTable = new TypeTable();
 	
 	public static void main(String[] args) {
 		
@@ -58,31 +59,34 @@ public class Main {
 			
 			if (myCompkemon.speed > enemy.speed) {	
 				// ---------- USER FASTER THAN ENEMY ----------
+				displayHealth(myCompkemon, enemy);
+				
+				// User move begin
 				System.out.println(myCompkemon + " used " + myMoveUsed);
 				
-				// Alpha damage calculator and applier
-				if (myMoveUsed.power > 0) {
-					System.out.println(enemy + " took damage!");
-					enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));
-					if (enemy.currentHealth <= 0) {
-						System.out.println(enemy + " HP: 0");
-					} else {
-						System.out.println(enemy + " HP: " + enemy.currentHealth);
+				// Move hit/miss
+				if (hitMiss(myMoveUsed)) {
+					// Alpha damage calculator and applier
+					if (myMoveUsed.power > 0) {
+						System.out.println(enemy + " took damage!");
+						enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));	
+						if (enemy.currentHealth <= 0) {
+							enemy.currentHealth = 0;
+						}
+						displayHealth(myCompkemon, enemy);					
 					}
+					
+					
+					// Check for move effect. If true, effects are applied
+					if (myMoveUsed.hasEffect) {
+						passiveModifier(myCompkemon, enemy, myMoveUsed);
+					}
+					
+					// Splash salute - not done
+	
+				} else {
+					System.out.println(myCompkemon + "'s attack missed!");
 				}
-				
-				
-				// Check for move effect. If true, effects are applied
-				if (myMoveUsed.hasEffect) {
-					passiveModifier(myCompkemon, enemy, myMoveUsed);
-				}
-				
-				// Splash salute 
-				/*
-				if (!myMoveUsed.hasEffect || myMoveUsed.power == 0) {
-					System.out.println("Nothing happened. You literally suck.");
-				}
-				*/
 				
 				// Check for enemy health. If fainted, end the game
 				if (enemy.currentHealth <= 0) {
@@ -91,31 +95,34 @@ public class Main {
 				}
 				
 				// Enemy move begin
-				System.out.println(enemy + " used " + enemyMoveUsed);				
-
-				// Alpha damage calculator and applier
-				if (enemyMoveUsed.power > 0) {
-					System.out.println(myCompkemon + " took damage!");
-					myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
-					if (myCompkemon.currentHealth <= 0) {
-						System.out.println(myCompkemon + " HP: 0");
-					} else {
-						System.out.println(myCompkemon + " HP: " + myCompkemon.currentHealth);
+				System.out.println(enemy + " used " + enemyMoveUsed);	
+				
+				// Hit or miss
+				if (hitMiss(enemyMoveUsed)) {						
+					// Alpha damage calculator and applier
+					if (enemyMoveUsed.power > 0) {
+						System.out.println(myCompkemon + " took damage!");
+						myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
+						if (myCompkemon.currentHealth <= 0) {
+							myCompkemon.currentHealth = 0;
+						}
+						displayHealth(myCompkemon, enemy);
 					}
-
+					
+					// Check for move effect. If true, effects are applied
+					if (enemyMoveUsed.hasEffect) {
+						passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+					}
+					
+					// Splash salute
+					/*
+					if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
+						System.out.println("Nothing happened. The enemy literally sucks.");
+					}
+					*/
+				} else  {
+					System.out.println(enemy + "'s attack missed!");
 				}
-				
-				// Check for move effect. If true, effects are applied
-				if (enemyMoveUsed.hasEffect) {
-					passiveModifier(enemy, myCompkemon, enemyMoveUsed);
-				}
-				
-				// Splash salute
-				/*
-				if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
-					System.out.println("Nothing happened. The enemy literally sucks.");
-				}
-				*/
 				
 				// Check for user health. If fainted, end the game
 				if (myCompkemon.currentHealth <= 0) {
@@ -124,12 +131,120 @@ public class Main {
 				}
 				
 			} else {
-				// ---------- USER SLOWER THAN ENEMY ----------				
+				// ---------- USER SLOWER THAN ENEMY ----------		
+				displayHealth(myCompkemon, enemy);				
+				// Enemy move begin
+				System.out.println(enemy + " used " + enemyMoveUsed);	
+				
+				// Hit or miss
+				if (hitMiss(enemyMoveUsed)) {						
+					// Alpha damage calculator and applier
+					if (enemyMoveUsed.power > 0) {
+						System.out.println(myCompkemon + " took damage!");
+						myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
+						if (myCompkemon.currentHealth <= 0) {
+							myCompkemon.currentHealth = 0;
+						}
+						displayHealth(myCompkemon, enemy);
+					}
+					
+					// Check for move effect. If true, effects are applied
+					if (enemyMoveUsed.hasEffect) {
+						passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+					}
+					
+					// Splash salute
+					/*
+					if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
+						System.out.println("Nothing happened. The enemy literally sucks.");
+					}
+					*/
+				} else  {
+					System.out.println(enemy + "'s attack missed!");
+				}
+				
+				// Check for user health. If fainted, end the game
+				if (myCompkemon.currentHealth <= 0) {
+					loser = myCompkemon;
+					break;					
+				}
+				
+				// User move begin
+				System.out.println(myCompkemon + " used " + myMoveUsed);
+				
+				// Move hit/miss
+				if (hitMiss(myMoveUsed)) {
+					// Alpha damage calculator and applier
+					if (myMoveUsed.power > 0) {
+						System.out.println(enemy + " took damage!");
+						enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));	
+						if (enemy.currentHealth <= 0) {
+							enemy.currentHealth = 0;
+						}
+						displayHealth(myCompkemon, enemy);					
+					}
+					
+					
+					// Check for move effect. If true, effects are applied
+					if (myMoveUsed.hasEffect) {
+						passiveModifier(myCompkemon, enemy, myMoveUsed);
+					}
+					
+					// Splash salute - not done
+	
+				} else {
+					System.out.println(myCompkemon + "'s attack missed!");
+				}
+				
+				// Check for enemy health. If fainted, end the game
+				if (enemy.currentHealth <= 0) {
+					loser = enemy;
+					break;					
+				}
+				
 			}
 		}
 		
 		System.out.println(loser + " has fainted");
 	} // end battleScene
+	
+	// Method that displays health bar
+	public static void displayHealth(Compkemon user, Compkemon enemy) {
+		
+		// Print user health bar
+		System.out.print(user + " HP: " + user.currentHealth + "/" + user.health + "\t" + "[");
+		for (int i = 0; i < user.health; i = i+3) {
+			if (user.currentHealth <= 0) {
+				System.out.print(" ");
+			} else {
+				if (i < user.currentHealth) {
+					System.out.print("/");	
+				} else {
+					System.out.print(" ");
+				}	
+			}				
+		}		
+		System.out.print("]");		
+		System.out.println(); // insert line
+
+		
+		// Print enemy health bar
+		System.out.print(enemy + " HP: " + enemy.currentHealth + "/" + enemy.health + "\t" + "[");
+		for (int i = 0; i < enemy.health; i = i+3) {
+			if (enemy.currentHealth <= 0) {
+				System.out.print(" ");
+			} else {
+				if (i < enemy.currentHealth) {
+					System.out.print("/");	
+				} else {
+					System.out.print(" ");
+				}
+			}					
+		}
+		System.out.print("]");		
+		System.out.println(); // insert line
+	
+	}
 	
 	public static void passiveModifier(Compkemon user, Compkemon target, Move moveUsed) {		
 		
@@ -143,7 +258,25 @@ public class Main {
 						System.out.println(user + "'s" + " Attack sharply increased!");
 						user.attack += moveUsed.modifier;						
 					}
-					break;		
+					break;
+				case "Defense":
+					if (moveUsed.modifier == 10) {
+						System.out.println(user + "'s" + " Defense increased!");
+						user.defense += moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(user + "'s" + " Defense sharply increased!");
+						user.defense += moveUsed.modifier;						
+					}
+					break;
+				case "Speed":
+					if (moveUsed.modifier == 10) {
+						System.out.println(user + "'s" + " Speed increased!");
+						user.speed += moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(user + "'s" + " Speed sharply increased!");
+						user.speed += moveUsed.modifier;						
+					}
+					break;
 			}
 		} else {
 			switch (moveUsed.effectAttribute) {
@@ -154,6 +287,24 @@ public class Main {
 					} else if (moveUsed.modifier == 20) {
 						System.out.println(target + "'s" + " Attack sharply decreased!");
 						target.attack -= moveUsed.modifier;
+					}
+					break;
+				case "Defense":
+					if (moveUsed.modifier == 10) {
+						System.out.println(target + "'s" + " Defense decreased!");
+						target.defense -= moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(target + "'s" + " Defense sharply decreased!");
+						target.defense -= moveUsed.modifier;
+					}
+					break;
+				case "Speed":
+					if (moveUsed.modifier == 10) {
+						System.out.println(target + "'s" + " Speed decreased!");
+						target.speed -= moveUsed.modifier;
+					} else if (moveUsed.modifier == 20) {
+						System.out.println(target + "'s" + " Speed sharply decreased!");
+						target.speed -= moveUsed.modifier;
 					}
 					break;
 			}
@@ -167,7 +318,7 @@ public class Main {
 		float userAttack = user.getAttack();
 		float targetDefense = target.getDefense();		
 		
-		damage = (int)(.85 * ((userAttack)/(targetDefense)) * (userMove.power));
+		damage = (int)((.85 * ((userAttack)/(targetDefense)) * (userMove.power)) * damageMultiplier(user, target, userMove));
 		
 		return damage;
 		
@@ -176,28 +327,31 @@ public class Main {
 	public static float damageMultiplier(Compkemon user, Compkemon target, Move userMove) {
 		
 		float multiplier = 0.0f;
-		int userType = 0;
+		int moveType = 0;
 		int targetType = 0;		
-		float[][] damageTable = new float[6][6];
 		
-		switch (user.type) {
+		float typeMultiplier = 0.0f;
+		float sameTypeMultiplier = 0.0f;
+
+		
+		switch (userMove.type) {
 			case "Moron" :
-				userType = 0;
+				moveType = 0;
 				break;
 			case "Meat" : 
-				userType = 1;				
+				moveType = 1;				
 				break;
 			case "Cynic" :
-				userType = 2;
+				moveType = 2;
 				break;
 			case "Enlightened" :
-				userType = 3;
+				moveType = 3;
 				break;
 			case "Musician" :
-				userType = 4;
+				moveType = 4;
 				break;
 			case "God" :
-				userType = 5;
+				moveType = 5;
 				break;				
 		}
 		
@@ -222,46 +376,54 @@ public class Main {
 				break;				
 		}
 		
-		damageTable[0][0] = ;
-		damageTable[0][1] = ;
-		damageTable[0][2] = ;
-		damageTable[0][3] = ;
-		damageTable[0][4] = ;
-		damageTable[0][5] = ;
-		damageTable[1][0] = ;
-		damageTable[1][1] = ;
-		damageTable[1][2] = ;
-		damageTable[1][3] = ;
-		damageTable[1][4] = ;
-		damageTable[1][5] = ;
-		damageTable[2][0] = ;
-		damageTable[2][1] = ;
-		damageTable[2][2] = ;
-		damageTable[2][3] = ;
-		damageTable[2][4] = ;
-		damageTable[2][5] = ;
-		damageTable[3][0] = ;
-		damageTable[3][1] = ;
-		damageTable[3][2] = ;
-		damageTable[3][3] = ;
-		damageTable[3][4] = ;
-		damageTable[3][5] = ;
-		damageTable[4][0] = ;
-		damageTable[4][1] = ;
-		damageTable[4][2] = ;
-		damageTable[4][3] = ;
-		damageTable[4][4] = ;
-		damageTable[4][5] = ;
-		damageTable[5][0] = ;
-		damageTable[5][1] = ;
-		damageTable[5][2] = ;
-		damageTable[5][3] = ;
-		damageTable[5][4] = ;
-		damageTable[5][5] = ;
+		if (userMove.type.equals(user.type)) {
+			sameTypeMultiplier = 1.5f;
+		} else {
+			sameTypeMultiplier = 1.0f;
+		}		
+		typeMultiplier = typeTable.getMultiplier(moveType, targetType);	
 		
+		multiplier = typeMultiplier * sameTypeMultiplier;
 		
-		return multiplier;
+		System.out.println("Multiplier is : " + multiplier);
 		
+		// Print out multiplier statement
+		if (typeMultiplier == 0.1f) {
+			System.out.println("It pales in comparison to a God!");
+		} else if (typeMultiplier == 0.5f) {
+			System.out.println("It's not very effective");
+		} else if (typeMultiplier == 1.0f) {
+			// Normal damage
+		} else if (typeMultiplier == 2.0f) {
+			System.out.println("It's super-effective!");
+		} else if (typeMultiplier == 3.0f) {
+			System.out.println(target + " has been subjected to the Wrightocracy!");
+		} else if (typeMultiplier == 10.0f) {
+			System.out.println("A God has been converted to moronic Satanism! It's ultra-effective!!");
+		}
+
+		return multiplier;		
+	}
+	
+	public static boolean hitMiss(Move move) {
+		boolean didHit = false;
+		float accuracy = move.accuracy;
+		float percentCalc = (float)Math.random();
+		
+		if (percentCalc <= accuracy) {
+			didHit = true;
+		}
+		
+		return didHit;
+	}
+	
+	// Checks move input
+	public boolean verifyInput(int input) {		
+		boolean isValid = false;		
+		if (input == 1 || input == 2 || input == 3 || input == 4) {
+			isValid = true;
+		}
+		return isValid;		
 	}
 	
 }

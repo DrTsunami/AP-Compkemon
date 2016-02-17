@@ -32,8 +32,8 @@ public class Compkemon {
 			case Prototype: 
 				this.name = "Prototype";
 		        this.type = "Normal";
-		        this.health = 150;
-		        this.currentHealth = 150;
+		        this.health = 100;
+		        this.currentHealth = 100;
 		        this.attack = 80.0f;
 		        this.defense = 70.0f;
 		        this.speed = 80; 
@@ -47,8 +47,8 @@ public class Compkemon {
 			case Wrightson:
 				this.name = "Wrightson";
 				this.type = "God";
-				this.health = 999;
-				this.currentHealth = 999;
+				this.health = 100;
+				this.currentHealth = 100;
 				this.attack = 90.0f;
 				this.defense = 100.0f;
 				this.speed = 100;

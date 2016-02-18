@@ -1,4 +1,6 @@
 
 public enum CompkemonList {
-	Prototype, Wrightson,
+	Prototype, 
+	Wrightson,
+	Alex,
 } // Complete list of available Compkemon

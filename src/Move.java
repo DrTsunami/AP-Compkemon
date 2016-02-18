@@ -40,6 +40,17 @@ public class Move {
 	        	lastingEffect = false;
 	        	description = "Massive gravitational expulsion of energy. Only the fat survive";
 	        	break;
+	        case Apathy:
+	        	attackName = "Apathy";
+	        	type = "Cynic";
+	        	power = 0;
+	        	accuracy = 0.85f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = true;
+	        	effectAttribute = "";
+	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1";
+	        	break;
 	        case Creator:
 	        	attackName = "Creator";
 	        	type = "God";
@@ -50,6 +61,39 @@ public class Move {
 	        	lastingEffect = false;
 	        	effectAttribute = "";
 	        	description = "Move for debugging. A God's creation...";
+	        	break;
+	        case DogmaticBurst:
+	        	attackName = "DogmaticBurst";
+	        	type = "Enlightened";
+	        	power = 90;
+	        	accuracy = 1.0f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	effectAttribute = "";
+	        	description = "User lectures target";
+	        	break;
+	        case Enslave:
+	        	attackName = "Enslave";
+	        	type = "God";
+	        	power = 70;
+	        	accuracy = 100.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	effectAttribute = "";
+	        	description = "Target is enslaved to Wrightson. Life force is enslaved, Wrigtson gains health";
+	        	break;	        	
+	        case EstablishWrightocracy:
+	           	attackName = "Establish Wrightocracy";
+	        	type = "God";
+	        	power = 0;
+	        	accuracy = 100.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = true;
+	        	effectAttribute = "";
+	        	description = "Wrightocracy is established over battle. 0.5 multipliers to 0.1 and 2.0 multipliers to 3.0";
 	        	break;
 	        case Growl:
 	        	attackName = "Growl";

@@ -49,15 +49,30 @@ public class Compkemon {
 				this.type = "God";
 				this.health = 100;
 				this.currentHealth = 100;
-				this.attack = 90.0f;
+				this.attack = 100.0f;
 				this.defense = 100.0f;
 				this.speed = 100;
 				this.moveset = new Move[4];
 				
 		        moveset[0] = new Move(MoveName.AlmightyPush);
 		        moveset[1] = new Move(MoveName.Mercy);
-		        moveset[2] = new Move();
-		        moveset[3] = new Move();
+		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
+		        moveset[3] = new Move(MoveName.Enslave);
+		        break;
+			case Alex:
+				this.name = "Alex";
+				this.type = "Cynic";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 50.0f;
+				this.defense = 90.0f;
+				this.speed = 70;
+				this.moveset = new Move[4];
+				
+				moveset[0] = new Move(MoveName.Apathy);
+		        moveset[1] = new Move(MoveName.DogmaticBurst);
+		        moveset[2] = new Move(MoveName.LSD);
+		        moveset[3] = new Move(MoveName.StateOfAscendancy);
 		        break;
     	}
 

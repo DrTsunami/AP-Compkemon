@@ -30,11 +30,21 @@ public class Move {
         moveName = name;
 
         switch (moveName) {
+	        case AlmightyKush:
+	        	attackName = "Almighty Kush";
+	        	type = "Moron";
+	        	power = 100;
+	        	accuracy = 1.0f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	description = "Massive expulsion of kush. Only the moronic survive";
+	        	break;
 	        case AlmightyPush:
 	        	attackName = "Almighty Push";
 	        	type = "God";
-	        	power = 10;
-	        	accuracy = 0.5f;
+	        	power = 150;
+	        	accuracy = 1.0f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -49,7 +59,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
-	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1";
+	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1. Exerts bad influence damage over time";
 	        	break;
 	        case Creator:
 	        	attackName = "Creator";
@@ -61,6 +71,17 @@ public class Move {
 	        	lastingEffect = false;
 	        	effectAttribute = "";
 	        	description = "Move for debugging. A God's creation...";
+	        	break;
+	        case Dab:
+	        	attackName = "Dab";
+	        	type = "Moron";
+	        	power = 0;
+	        	accuracy = 0.5f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = true;
+	        	effectAttribute = "";
+	        	description = "User dabs out of the way. Because it's a moronic move, it doesn't work very often";
 	        	break;
 	        case DogmaticBurst:
 	        	attackName = "DogmaticBurst";
@@ -117,6 +138,28 @@ public class Move {
 	            lastingEffect = false;
 	            description = "A God has mercy for His slaves";	            
 	        	break;
+	        case LSD:
+	        	attackName = "LSD";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 100.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	effectAttribute = "Speed";
+	        	description = "User understands everything in a new light. Speed sharply increases";
+	        	break;	
+	        case SatanicMissionary:
+	        	attackName = "Satanic Missionary";
+	        	type = "Moron";
+	        	power = 0;
+	        	accuracy = 0.75f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = true;
+	        	effectAttribute = "";
+	        	description = "Target is converted to worship Satan. Target becomes Moronic type";
+	        	break;
 	        case Splash: 
 	        	attackName = "Splash";
 	        	type = "Moron";
@@ -128,6 +171,28 @@ public class Move {
 	            description = "You suck";
 	            modifier = 0;
 	            break;
+	        case Squint:
+	        	attackName = "Squint";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = true;
+	        	effectAttribute = "Accuracy";
+	        	description = "User squints and sees clearer. Next attack to hit without fail";
+	        	break;
+	        case StateOfAscendancy:
+	        	attackName = "State of Ascendancy";
+	        	type = "Cynic";
+	        	power = 0;
+	        	accuracy = 0.8f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = true;
+	        	effectAttribute = "";
+	        	description = "Target is angered by inferiority, 50% chance attacking itself";
+	        	break;	
 	        case SwordsDance: 
             	attackName = "Swords Dance";
             	type = "Meat";

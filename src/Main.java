@@ -46,6 +46,7 @@ public class Main {
 		
 		int myMove;
 		int enemyMove;
+		int turnCounter = 0;
 		Compkemon loser = new Compkemon();
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
@@ -130,6 +131,9 @@ public class Main {
 					break;					
 				}
 				
+				// Turn tracker increases
+				turnCounter++;
+				
 			} else {
 				// ---------- USER SLOWER THAN ENEMY ----------		
 				displayHealth(myCompkemon, enemy);				
@@ -203,6 +207,7 @@ public class Main {
 				}
 				
 			}
+			turnCounter++;
 		}
 		
 		System.out.println(loser + " has fainted");

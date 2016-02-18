@@ -74,6 +74,22 @@ public class Compkemon {
 		        moveset[2] = new Move(MoveName.LSD);
 		        moveset[3] = new Move(MoveName.StateOfAscendancy);
 		        break;
+			case Jeremiah:
+				this.name = "Jeremiah";
+				this.type = "Moron";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 30.0f;
+				this.defense = 30.0f;
+				this.speed = 30;
+				this.moveset = new Move[4];
+				
+				moveset[0] = new Move(MoveName.Apathy);
+		        moveset[1] = new Move(MoveName.DogmaticBurst);
+		        moveset[2] = new Move(MoveName.LSD);
+		        moveset[3] = new Move(MoveName.StateOfAscendancy);
+		        break;
+	        
     	}
 
     }

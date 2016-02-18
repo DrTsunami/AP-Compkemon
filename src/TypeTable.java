@@ -50,6 +50,8 @@ public class TypeTable {
 		float multiplier = damageTable[x][y];
 		return multiplier;
 	}
+	
+
 
 	
 }

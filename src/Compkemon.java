@@ -5,6 +5,7 @@ public class Compkemon {
     String name;
     String type;
     Move[] moveset;
+    Move currentMove;
     int health;
     int currentHealth;
     float attack;
@@ -26,6 +27,7 @@ public class Compkemon {
         this.speed = 0.0f; 
         this.evasion = 1.0f;
         this.moveset = new Move[4];
+        this.currentMove = new Move();
         this.effect = new ArrayList<Effect>();
     }
     
@@ -46,6 +48,7 @@ public class Compkemon {
 		        this.evasion = 1.0f;
 		        this.effect = new ArrayList<Effect>();
 		        this.moveset = new Move[4];
+		        this.currentMove = new Move();
 		
 		        moveset[0] = new Move(MoveName.Tackle);
 		        moveset[1] = new Move(MoveName.Growl);
@@ -63,6 +66,7 @@ public class Compkemon {
 				this.evasion = 1.0f;
 				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
+		        this.currentMove = new Move();
 				
 		        moveset[0] = new Move(MoveName.AlmightyPush);
 		        moveset[1] = new Move(MoveName.Mercy);
@@ -80,6 +84,7 @@ public class Compkemon {
 				this.evasion = 1.0f;
 				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
+		        this.currentMove = new Move();
 				
 				moveset[0] = new Move(MoveName.Apathy);
 		        moveset[1] = new Move(MoveName.DogmaticBurst);
@@ -97,6 +102,7 @@ public class Compkemon {
 				this.evasion = 1.0f;
 				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
+		        this.currentMove = new Move();
 				
 				moveset[0] = new Move(MoveName.Apathy);
 		        moveset[1] = new Move(MoveName.DogmaticBurst);

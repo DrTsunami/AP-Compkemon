@@ -13,6 +13,8 @@ public class Effect {
 		// empty 
 	}
 	
+
+	
 	public Effect (EffectType effect, Compkemon user , Compkemon target, int initTurn) {
 		effectType = effect;		
 		this.user = user;
@@ -52,7 +54,13 @@ public class Effect {
 				System.out.println("User understands things in a new light! Speed sharply increased!");
 				break;
 			case StateOfAscendancy : 
-				float moveAccuracy = (float) Math.random();
+				float accuracy = (float) Math.random();
+				System.out.println(target + "is feeling inferior to" + user);
+				if (accuracy > 0.5f) {
+					// TODO State of Ascendancy handlers
+				} else {
+					
+				}
 				break;
 		
 		}

@@ -2,23 +2,59 @@
 public class Effect {
 	
 	String name;
-		
-	public Effect () {		
-		this.name = "";
+	EffectType effectType;
+	int initTurnTracker;
+	Compkemon user;
+	Compkemon target;
+	boolean finished;
+	
+	
+	public Effect() {
+		// empty 
 	}
 	
-	public Effect (String name) {
-		this.name = name;
-	}
-	
-	public void Apathy(Compkemon user, Compkemon target, TypeTable typeTable) {
-		for (int i = 0; i < typeTable.damageTable.length; i++) {
-			typeTable.damageTable[2][i] = 0.1f;
-			System.out.println("Hey: " + "Damage table [2][" + i + "] = " + typeTable.damageTable[2][i]);			
-		}
-		
+	public Effect (EffectType effect, Compkemon user , Compkemon target, int initTurn) {
+		effectType = effect;		
+		this.user = user;
+		this.target = target;
+		this.initTurnTracker = initTurn;
 
+		this.finished = false;
 	}
 	
 	
+	public void Update() {
+		
+		float[][] typeTable = Main.typeTable.damageTable;
+		int turnCounter = Main.turnCounter;
+		int effectTurns = turnCounter - initTurnTracker;
+		
+		switch (effectType) {
+			case Apathy :
+				if (effectTurns == 0) {
+					System.out.println("Alex became apathetic!");				
+					for(int i = 0; i < typeTable[2].length; i++) {
+						typeTable[2][i] = 0.1f;
+					}
+				} else if (effectTurns < 5) {
+					System.out.println("Alex is exerting bad influence. Turn: " + effectTurns);
+					
+				} else if (effectTurns == 5) {
+					System.out.println("Alex started caring a little bit. End Effect Turn: " + effectTurns);
+					for(int i = 0; i < typeTable[2].length; i++) {
+						typeTable[2][i] = 0.5f;
+					}
+					finished = true;					
+				}				
+				break;
+			case LSD :
+				user.speed += 20;
+				System.out.println("User understands things in a new light! Speed sharply increased!");
+				break;
+			case StateOfAscendancy : 
+				float moveAccuracy = (float) Math.random();
+				
+		
+		}
+	}
 }

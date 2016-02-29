@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Compkemon {
 
     String name;
@@ -7,7 +9,9 @@ public class Compkemon {
     int currentHealth;
     float attack;
     float defense;
-    int speed;
+    float speed;
+    float evasion;
+    ArrayList<Effect> effect;
     
     CompkemonList compkemonList;
     
@@ -19,8 +23,10 @@ public class Compkemon {
         this.currentHealth = 0;
         this.attack = 0.0f;
         this.defense = 0.0f;
-        this.speed = 0; 
+        this.speed = 0.0f; 
+        this.evasion = 1.0f;
         this.moveset = new Move[4];
+        this.effect = new ArrayList<Effect>();
     }
     
     // List of available Compkemon. Arg constructor for Compkemon
@@ -36,7 +42,9 @@ public class Compkemon {
 		        this.currentHealth = 100;
 		        this.attack = 80.0f;
 		        this.defense = 70.0f;
-		        this.speed = 80; 
+		        this.speed = 50.0f; 
+		        this.evasion = 1.0f;
+		        this.effect = new ArrayList<Effect>();
 		        this.moveset = new Move[4];
 		
 		        moveset[0] = new Move(MoveName.Tackle);
@@ -51,13 +59,15 @@ public class Compkemon {
 				this.currentHealth = 100;
 				this.attack = 100.0f;
 				this.defense = 100.0f;
-				this.speed = 100;
+				this.speed = 100.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
 				
 		        moveset[0] = new Move(MoveName.AlmightyPush);
 		        moveset[1] = new Move(MoveName.Mercy);
 		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
-		        moveset[3] = new Move(MoveName.Enslave);
+		        moveset[3] = new Move(MoveName.Apathy);
 		        break;
 			case Alex:
 				this.name = "Alex";
@@ -66,7 +76,9 @@ public class Compkemon {
 				this.currentHealth = 100;
 				this.attack = 50.0f;
 				this.defense = 90.0f;
-				this.speed = 70;
+				this.speed = 70.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
 				
 				moveset[0] = new Move(MoveName.Apathy);
@@ -81,7 +93,9 @@ public class Compkemon {
 				this.currentHealth = 100;
 				this.attack = 30.0f;
 				this.defense = 30.0f;
-				this.speed = 30;
+				this.speed = 30.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
 				
 				moveset[0] = new Move(MoveName.Apathy);
@@ -128,13 +142,14 @@ public class Compkemon {
     	this.defense = defense;
     }
     
-    public int getSpeed() {
+    public float getSpeed() {
     	return speed;
     }
     
-    public void setSpeed(int speed) {
+    public void setSpeed(float speed) {
     	this.speed = speed;
     }
+    
     
     // Gets Compkemon move set and returns moves as a string
     public String getMoveset() {

@@ -9,7 +9,7 @@ public class Move {
     boolean lastingEffect;
     String effectAttribute;
     String description;
-    int modifier;
+    int priority;
     MoveName moveName;
     
     public Move() {
@@ -21,7 +21,9 @@ public class Move {
     	this.toSelf = false;
     	this.lastingEffect = false;
     	this.effectAttribute = "";
+    	this.priority = 0;
     	this.description = "";
+    	
     }
 
     // Complete list of moves. Arg constructor for Move class
@@ -38,6 +40,7 @@ public class Move {
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
+	        	priority = 0;
 	        	description = "Massive expulsion of kush. Only the moronic survive";
 	        	break;
 	        case AlmightyPush:
@@ -48,6 +51,7 @@ public class Move {
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
+	        	priority = 0;
 	        	description = "Massive gravitational expulsion of energy. Only the fat survive";
 	        	break;
 	        case Apathy:
@@ -59,6 +63,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1. Exerts bad influence damage over time";
 	        	break;
 	        case Creator:
@@ -70,6 +75,7 @@ public class Move {
 	        	toSelf = false;
 	        	lastingEffect = false;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "Move for debugging. A God's creation...";
 	        	break;
 	        case Dab:
@@ -81,6 +87,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
+	        	priority = 3;
 	        	description = "User dabs out of the way. Because it's a moronic move, it doesn't work very often";
 	        	break;
 	        case DogmaticBurst:
@@ -92,6 +99,7 @@ public class Move {
 	        	toSelf = false;
 	        	lastingEffect = false;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "User lectures target";
 	        	break;
 	        case Enslave:
@@ -103,6 +111,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = false;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "Target is enslaved to Wrightson. Life force is enslaved, Wrigtson gains health";
 	        	break;	        	
 	        case EstablishWrightocracy:
@@ -114,6 +123,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "Wrightocracy is established over battle. 0.5 multipliers to 0.1 and 2.0 multipliers to 3.0";
 	        	break;
 	        case Growl:
@@ -125,8 +135,8 @@ public class Move {
 	            toSelf = false;
 	            lastingEffect = false;
 	            effectAttribute = "Attack";
+	            priority = 0;
 	            description = "Opponent's attack lowered by 10";	            
-	            modifier = 10;
 	            break;
 	        case Mercy:
 	        	attackName = "Mercy";
@@ -136,6 +146,7 @@ public class Move {
 	            hasEffect = false;
 	            toSelf = false;
 	            lastingEffect = false;
+	            priority = 0;
 	            description = "A God has mercy for His slaves";	            
 	        	break;
 	        case LSD:
@@ -147,6 +158,7 @@ public class Move {
 	        	toSelf = true;
 	        	lastingEffect = false;
 	        	effectAttribute = "Speed";
+	        	priority = 0;
 	        	description = "User understands everything in a new light. Speed sharply increases";
 	        	break;	
 	        case SatanicMissionary:
@@ -158,6 +170,7 @@ public class Move {
 	        	toSelf = false;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
+	        	priority = 0;
 	        	description = "Target is converted to worship Satan. Target becomes Moronic type";
 	        	break;
 	        case Splash: 
@@ -168,8 +181,8 @@ public class Move {
 	            hasEffect = false;
 	            toSelf = false;
 	            lastingEffect = false;
+	            priority = 0;
 	            description = "You suck";
-	            modifier = 0;
 	            break;
 	        case Squint:
 	        	attackName = "Squint";
@@ -191,6 +204,7 @@ public class Move {
 	        	toSelf = false;
 	        	lastingEffect = true;
 	        	effectAttribute = "";
+	        	priority = 3;
 	        	description = "Target is angered by inferiority, 50% chance attacking itself";
 	        	break;	
 	        case SwordsDance: 
@@ -202,8 +216,8 @@ public class Move {
                 toSelf = true;
                 lastingEffect = false;
                 effectAttribute = "Attack";
+                priority = 0;
                 description = "Attack boosted by 20";
-                modifier = 20;
                 break;       
             case Tackle:
             	attackName = "Tackle";
@@ -212,6 +226,7 @@ public class Move {
                 accuracy = .95f;
                 hasEffect = false;
                 lastingEffect = false;
+                priority = 0;
                 description = "The most mediocre attack in the world. User rushes recklessly at target";
                 break;    
         }          
@@ -250,9 +265,20 @@ public class Move {
     public String getDescription() {
     	return description;    	
     }
+
     
-    public int getModifier() {
-    	return modifier;
+    // returns effect if there is one 
+    public Effect getEffect(Compkemon user, Compkemon target) {
+    	Effect effect = new Effect();
+    	int effectInitCounter = Main.turnCounter;
+    	switch (this.attackName) {
+    		case "Apathy" :
+    			effect = new Effect(EffectType.Apathy, user, target, effectInitCounter);
+    			break;
+    		case "LSD" : 
+    			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);
+    	}
+    	return effect;	
     }
 
     // toString method that prints out the attack name when called

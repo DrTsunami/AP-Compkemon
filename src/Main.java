@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 	
@@ -6,6 +7,7 @@ public class Main {
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
 	static TypeTable typeTable = new TypeTable();
+	static int turnCounter;
 	
 	public static void main(String[] args) {
 		
@@ -14,7 +16,7 @@ public class Main {
 		enemy = new Compkemon();
 		
 		// Gets user input for compkemon
-		System.out.println("1. Prototype" + "\n" + "2. Wrightson" + "\n" + 
+		System.out.println("1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + 
 							"Enter number corresponding to the Compkemon you wish to hack with: ");
 		myCompkemonScanned = scanner.nextInt();
 		
@@ -24,6 +26,9 @@ public class Main {
 				break;
 			case 2:
 				myCompkemon =  new Compkemon(CompkemonList.Wrightson);
+				break;
+			case 3:
+				myCompkemon = new Compkemon(CompkemonList.Alex);
 				break;
 		}
 		
@@ -41,12 +46,13 @@ public class Main {
 		System.out.println("Battle has concluded");	
 	} // end main method
 	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		
 		int myMove;
 		int enemyMove;
-		int turnCounter = 0;
+		int priority;
+		turnCounter = 0;
 		Compkemon loser = new Compkemon();
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
@@ -58,9 +64,24 @@ public class Main {
 			Move myMoveUsed = myCompkemon.moveset[myMove - 1];
 			Move enemyMoveUsed = enemy.moveset[enemyMove];
 			
-			if (myCompkemon.speed > enemy.speed) {	
+			priority = priorityCalculator(myCompkemon, myMoveUsed, enemy, enemyMoveUsed);
+			
+			ArrayList<Effect> myEffects = myCompkemon.effect;
+			ArrayList<Effect> enemyEffects = enemy.effect;
+			
+			if (priority == 1) {	
 				// ---------- USER FASTER THAN ENEMY ----------
 				displayHealth(myCompkemon, enemy);
+				
+				// Check for lingering effects
+				if (myEffects.size() > 0) {
+					for (int i = 0; i < myEffects.size(); i++) {
+						myEffects.get(i).Update();
+						if (myEffects.get(i).finished) {
+							myEffects.remove(i);
+						}
+					}
+				}
 				
 				// User move begin
 				System.out.println(myCompkemon + " used " + myMoveUsed);
@@ -80,8 +101,26 @@ public class Main {
 					
 					// Check for move effect. If true, effects are applied
 					if (myMoveUsed.hasEffect) {
-						passiveModifier(myCompkemon, enemy, myMoveUsed);
+						Effect effect = myMoveUsed.getEffect(myCompkemon, enemy);
+						
+						if (myMoveUsed.toSelf) {
+							myEffects.add(effect);
+							for (int i = 0; i < myEffects.size(); i++) {
+								myEffects.get(i).Update();
+							} 
+						} else {
+							enemyEffects.add(effect);
+							for (int i = 0; i < enemyEffects.size(); i++) {
+								enemyEffects.get(i).Update();
+								if (enemyEffects.get(i).finished) {
+									enemyEffects.remove(i);
+								}
+							}
+						}
+						
+						System.out.println("Added an effect!");
 					}
+					
 					
 					// Splash salute - not done
 	
@@ -112,7 +151,7 @@ public class Main {
 					
 					// Check for move effect. If true, effects are applied
 					if (enemyMoveUsed.hasEffect) {
-						passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+						//passiveModifier(enemy, myCompkemon, enemyMoveUsed);
 					}
 					
 					// Splash salute
@@ -154,7 +193,7 @@ public class Main {
 					
 					// Check for move effect. If true, effects are applied
 					if (enemyMoveUsed.hasEffect) {
-						passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+						//passiveModifier(enemy, myCompkemon, enemyMoveUsed);
 					}
 					
 					// Splash salute
@@ -191,7 +230,7 @@ public class Main {
 					
 					// Check for move effect. If true, effects are applied
 					if (myMoveUsed.hasEffect) {
-						passiveModifier(myCompkemon, enemy, myMoveUsed);
+						//passiveModifier(myCompkemon, enemy, myMoveUsed);
 					}
 					
 					// Splash salute - not done
@@ -205,13 +244,37 @@ public class Main {
 					loser = enemy;
 					break;					
 				}
-				
+				turnCounter++;
 			}
-			turnCounter++;
+
 		}
 		
 		System.out.println(loser + " has fainted");
 	} // end battleScene
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Determines Speed and Priority
+	
+	public static int priorityCalculator(Compkemon user, Move userMove, Compkemon enemy, Move enemyMove) {
+		int priority = 0;
+		
+		if (userMove.priority > enemyMove.priority) {
+			priority = 1;
+		} else if (userMove.priority < enemyMove.priority) {
+			priority = 0;
+		} else if (userMove.priority == enemyMove.priority) {
+			if (user.speed > enemy.speed) {
+				priority = 1;
+			} else if  (user.speed < enemy.speed) {
+				priority = 0;
+			}
+		}		
+		return priority;
+	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Method that displays health bar
 	public static void displayHealth(Compkemon user, Compkemon enemy) {
@@ -250,6 +313,10 @@ public class Main {
 		System.out.println(); // insert line
 	
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
 	
 	public static void passiveModifier(Compkemon user, Compkemon target, Move moveUsed) {		
 		
@@ -317,6 +384,10 @@ public class Main {
 		
 	} // end passiveModifier
 	
+	*/
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public static float damageCalculator(Compkemon user, Compkemon target, Move userMove) {
 		
 		float damage = 0.0f;
@@ -328,6 +399,8 @@ public class Main {
 		return damage;
 		
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static float damageMultiplier(Compkemon user, Compkemon target, Move userMove) {
 		
@@ -410,6 +483,8 @@ public class Main {
 		return multiplier;		
 	}
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public static boolean hitMiss(Move move) {
 		boolean didHit = false;
 		float accuracy = move.accuracy;
@@ -421,6 +496,8 @@ public class Main {
 		
 		return didHit;
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Checks move input
 	public boolean verifyInput(int input) {		

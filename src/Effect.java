@@ -53,7 +53,7 @@ public class Effect {
 				break;
 			case StateOfAscendancy : 
 				float moveAccuracy = (float) Math.random();
-				
+				break;
 		
 		}
 	}

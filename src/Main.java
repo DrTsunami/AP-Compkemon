@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class Main {
 	
@@ -10,6 +11,13 @@ public class Main {
 	static int turnCounter;
 	
 	public static void main(String[] args) {
+		
+		JFrame f = new JFrame("Title");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		TestDrawer t = new TestDrawer();
+		f.add(t);
+		f.setSize(400, 250);
+		f.setVisible(true);
 		
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
@@ -83,7 +91,6 @@ public class Main {
 				secondMove = myCompkemon.currentMove;
 			}
 			
-			
 			ArrayList<Effect> firstEffects = first.effect;
 			ArrayList<Effect> secondEffects = second.effect;
 			
@@ -93,6 +100,7 @@ public class Main {
 			// Check for lingering Effects on first 
 			if (firstEffects.size() > 0) {
 				for (int i = 0; i < firstEffects.size(); i++) {
+					firstEffects.get(i).didApplyThisTurn = false;
 					firstEffects.get(i).Update();
 					if (firstEffects.get(i).finished) {
 						firstEffects.remove(i);
@@ -100,7 +108,7 @@ public class Main {
 				}
 			} 
 			
-			if (firstMove != null) {
+			if (first.currentMove != null) {
 				// User move begin					
 				System.out.println(first + " used " + firstMove);
 				
@@ -124,19 +132,29 @@ public class Main {
 						if (firstMove.toSelf) {
 							firstEffects.add(effect);
 							for (int i = 0; i < firstEffects.size(); i++) {
-								firstEffects.get(i).Update();
+								if (!firstEffects.get(i).didApplyThisTurn) {
+									firstEffects.get(i).Update();
+									if (firstEffects.get(i).finished) {
+										firstEffects.remove(i);
+										i--;
+									}
+								}								
 							} 
 						} else {
 							secondEffects.add(effect);
 							for (int i = 0; i < secondEffects.size(); i++) {
-								secondEffects.get(i).Update();
-								if (secondEffects.get(i).finished) {
-									secondEffects.remove(i);
-								}
+								if (!secondEffects.get(i).didApplyThisTurn) {
+									secondEffects.get(i).Update();
+									if (secondEffects.get(i).finished) {
+										secondEffects.remove(i);
+										i--;
+									}
+								}	
 							}
 						}
 						
 						System.out.println("Added an effect!");
+						displayHealth(myCompkemon, enemy);
 					}
 					
 					
@@ -145,25 +163,28 @@ public class Main {
 				} else {
 					System.out.println(first + "'s attack missed!");
 				}
+			}
 				
-				// Check for enemy health. If fainted, end the game
-				if (second.currentHealth <= 0) {
-					loser = second;
-					break;					
-				}
+			// Check for enemy health. If fainted, end the game
+			if (second.currentHealth <= 0) {
+				loser = second;
+				break;					
+			}
 				
-				// Enemy move begin
-				
-				// Check for lingering effects on second Compkemon
-				if (secondEffects.size() > 0) {
-					for (int i = 0; i < secondEffects.size(); i++) {
-						secondEffects.get(i).Update();
-						if (secondEffects.get(i).finished) {
-							secondEffects.remove(i);
-						}
+			// Enemy move begin
+			
+			// Check for lingering effects on second Compkemon
+			if (secondEffects.size() > 0) {
+				for (int i = 0; i < secondEffects.size(); i++) {
+					secondEffects.get(i).didApplyThisTurn = false;
+					secondEffects.get(i).Update();
+					if (secondEffects.get(i).finished) {
+						secondEffects.remove(i);
 					}
 				}
-				
+			}
+			
+			if (second.currentMove != null) {
 				System.out.println(second + " used " + secondMove);	
 				
 				// Hit or miss
@@ -180,8 +201,36 @@ public class Main {
 					
 					// Check for move effect. If true, effects are applied
 					if (secondMove.hasEffect) {
-						//passiveModifier(enemy, myCompkemon, enemyMoveUsed);
+						Effect effect = secondMove.getEffect(second, first);
+						
+						if (secondMove.toSelf) {
+							secondEffects.add(effect);
+							for (int i = 0; i < secondEffects.size(); i++) {
+								if (!secondEffects.get(i).didApplyThisTurn) {
+									secondEffects.get(i).Update();
+									if (secondEffects.get(i).finished) {
+										secondEffects.remove(i);
+										i--;
+									}
+								}
+							} 
+						} else {
+							firstEffects.add(effect);
+							for (int i = 0; i < firstEffects.size(); i++) {
+								if (!firstEffects.get(i).didApplyThisTurn) {
+									firstEffects.get(i).Update();
+									if (firstEffects.get(i).finished) {
+										firstEffects.remove(i);
+										i--;
+									}
+								}
+							}
+						}
+						
+						System.out.println("Added an effect!");
+						displayHealth(myCompkemon, enemy);
 					}
+					
 					
 					// Splash salute
 					/*
@@ -193,15 +242,16 @@ public class Main {
 					System.out.println(second + "'s attack missed!");
 				}
 				
-				// Check for user health. If fainted, end the game
-				if (first.currentHealth <= 0) {
-					loser = first;
-					break;					
-				}
-				
-				// Turn tracker increases
-				turnCounter++;
 			}
+			// Check for user health. If fainted, end the game
+			if (first.currentHealth <= 0) {
+				loser = first;
+				break;					
+			}
+			
+			// Turn tracker increases
+			turnCounter++;
+			
 		}
 		
 		System.out.println(loser + " has fainted");

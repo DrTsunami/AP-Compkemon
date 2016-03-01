@@ -275,8 +275,15 @@ public class Move {
     		case "Apathy" :
     			effect = new Effect(EffectType.Apathy, user, target, effectInitCounter);
     			break;
+    		case "Enslave" :
+    			effect = new Effect(EffectType.Enslave, user, target,effectInitCounter);
+    			break;
     		case "LSD" : 
     			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);
+    			break;
+    		case "State of Ascendancy" : 
+    			effect = new Effect(EffectType.StateOfAscendancy, user, target, effectInitCounter);
+    			break;
     	}
     	return effect;	
     }

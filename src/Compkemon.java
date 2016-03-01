@@ -44,15 +44,15 @@ public class Compkemon {
 		        this.currentHealth = 100;
 		        this.attack = 80.0f;
 		        this.defense = 70.0f;
-		        this.speed = 50.0f; 
+		        this.speed = 80.0f; 
 		        this.evasion = 1.0f;
 		        this.effect = new ArrayList<Effect>();
 		        this.moveset = new Move[4];
 		        this.currentMove = new Move();
 		
 		        moveset[0] = new Move(MoveName.Tackle);
-		        moveset[1] = new Move(MoveName.Growl);
-		        moveset[2] = new Move(MoveName.SwordsDance);
+		        moveset[1] = new Move(MoveName.Splash);
+		        moveset[2] = new Move(MoveName.Splash);
 		        moveset[3] = new Move(MoveName.Splash);
 		        break;
 			case Wrightson:
@@ -71,7 +71,7 @@ public class Compkemon {
 		        moveset[0] = new Move(MoveName.AlmightyPush);
 		        moveset[1] = new Move(MoveName.Mercy);
 		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
-		        moveset[3] = new Move(MoveName.Apathy);
+		        moveset[3] = new Move(MoveName.Enslave);
 		        break;
 			case Alex:
 				this.name = "Alex";

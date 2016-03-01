@@ -53,7 +53,7 @@ public class Effect {
 				user.speed += 20;
 				System.out.println("User understands things in a new light! Speed sharply increased!");
 				break;
-			case StateOfAscendancy : 
+/*			case StateOfAscendancy : 
 				float accuracy = (float) Math.random();
 				System.out.println(target + "is feeling inferior to" + user);
 				if (accuracy > 0.5f) {
@@ -62,6 +62,8 @@ public class Effect {
 					
 				}
 				break;
+				
+				*/
 		
 		}
 	}

@@ -51,6 +51,8 @@ public class Main {
 		
 		int myMove;
 		int enemyMove;
+		Move firstMove = new Move();
+		Move secondMove = new Move();
 		int priority;
 		turnCounter = 0;
 		Compkemon loser = new Compkemon();
@@ -68,164 +70,116 @@ public class Main {
 			Compkemon first = new Compkemon();
 			Compkemon second = new Compkemon();
 			
+			// Establish priority
 			if (priority == 1) {
 				first = myCompkemon;
 				second = enemy;
-				Move firstMove = myCompkemon.currentMove;
+				firstMove = myCompkemon.currentMove;
+				secondMove = enemy.currentMove;
 			} else if (priority == 0) {
 				first = enemy;
 				second = myCompkemon;
+				firstMove = enemy.currentMove;
+				secondMove = myCompkemon.currentMove;
 			}
+			
 			
 			ArrayList<Effect> firstEffects = first.effect;
 			ArrayList<Effect> secondEffects = second.effect;
-				
-			// TODO proper priority 
-			ArrayList<Effect> myEffects = myCompkemon.effect;
-			ArrayList<Effect> enemyEffects = enemy.effect;
 			
-			
-			
-
-			
+			// Display health bars
 			displayHealth(myCompkemon, enemy);		
 			
+			// Check for lingering Effects on first 
+			if (firstEffects.size() > 0) {
+				for (int i = 0; i < firstEffects.size(); i++) {
+					firstEffects.get(i).Update();
+					if (firstEffects.get(i).finished) {
+						firstEffects.remove(i);
+					}
+				}
+			} 
 			
-			// FIXME new priority!!!!!!!!
-			
-			
-			
-			
-			
-			if (priority == 1) {	
-				// ---------- USER FASTER THAN ENEMY ----------
-				displayHealth(myCompkemon, enemy);
+			if (firstMove != null) {
+				// User move begin					
+				System.out.println(first + " used " + firstMove);
 				
-				// Check for lingering effects
-				if (myEffects.size() > 0) {
-					for (int i = 0; i < myEffects.size(); i++) {
-						myEffects.get(i).Update();
-						if (myEffects.get(i).finished) {
-							myEffects.remove(i);
+				// Move hit/miss
+				if (hitMiss(firstMove)) {
+					// Alpha damage calculator and applier
+					if (firstMove.power > 0) {
+						System.out.println(second + " took damage!");
+						second.setHealth(second.currentHealth - ((int)damageCalculator(first, second, firstMove)));	
+						if (second.currentHealth <= 0) {
+							second.currentHealth = 0;
+						}
+						displayHealth(myCompkemon, enemy);					
+					}
+					
+					
+					// Check for move effect. If true, effects are applied
+					if (firstMove.hasEffect) {
+						Effect effect = firstMove.getEffect(first, second);
+						
+						if (firstMove.toSelf) {
+							firstEffects.add(effect);
+							for (int i = 0; i < firstEffects.size(); i++) {
+								firstEffects.get(i).Update();
+							} 
+						} else {
+							secondEffects.add(effect);
+							for (int i = 0; i < secondEffects.size(); i++) {
+								secondEffects.get(i).Update();
+								if (secondEffects.get(i).finished) {
+									secondEffects.remove(i);
+								}
+							}
+						}
+						
+						System.out.println("Added an effect!");
+					}
+					
+					
+					// Splash salute - not done
+	
+				} else {
+					System.out.println(first + "'s attack missed!");
+				}
+				
+				// Check for enemy health. If fainted, end the game
+				if (second.currentHealth <= 0) {
+					loser = second;
+					break;					
+				}
+				
+				// Enemy move begin
+				
+				// Check for lingering effects on second Compkemon
+				if (secondEffects.size() > 0) {
+					for (int i = 0; i < secondEffects.size(); i++) {
+						secondEffects.get(i).Update();
+						if (secondEffects.get(i).finished) {
+							secondEffects.remove(i);
 						}
 					}
 				}
 				
-				
-				
-				if (myMoveUsed != null) {
-					// User move begin					
-					System.out.println(myCompkemon + " used " + myMoveUsed);
-					
-					// Move hit/miss
-					if (hitMiss(myMoveUsed)) {
-						// Alpha damage calculator and applier
-						if (myMoveUsed.power > 0) {
-							System.out.println(enemy + " took damage!");
-							enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));	
-							if (enemy.currentHealth <= 0) {
-								enemy.currentHealth = 0;
-							}
-							displayHealth(myCompkemon, enemy);					
-						}
-						
-						
-						// Check for move effect. If true, effects are applied
-						if (myMoveUsed.hasEffect) {
-							Effect effect = myMoveUsed.getEffect(myCompkemon, enemy);
-							
-							if (myMoveUsed.toSelf) {
-								myEffects.add(effect);
-								for (int i = 0; i < myEffects.size(); i++) {
-									myEffects.get(i).Update();
-								} 
-							} else {
-								enemyEffects.add(effect);
-								for (int i = 0; i < enemyEffects.size(); i++) {
-									enemyEffects.get(i).Update();
-									if (enemyEffects.get(i).finished) {
-										enemyEffects.remove(i);
-									}
-								}
-							}
-							
-							System.out.println("Added an effect!");
-						}
-						
-						
-						// Splash salute - not done
-		
-					} else {
-						System.out.println(myCompkemon + "'s attack missed!");
-					}
-					
-					// Check for enemy health. If fainted, end the game
-					if (enemy.currentHealth <= 0) {
-						loser = enemy;
-						break;					
-					}
-					
-					// Enemy move begin
-					System.out.println(enemy + " used " + enemyMoveUsed);	
-					
-					// Hit or miss
-					if (hitMiss(enemyMoveUsed)) {						
-						// Alpha damage calculator and applier
-						if (enemyMoveUsed.power > 0) {
-							System.out.println(myCompkemon + " took damage!");
-							myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
-							if (myCompkemon.currentHealth <= 0) {
-								myCompkemon.currentHealth = 0;
-							}
-							displayHealth(myCompkemon, enemy);
-						}
-						
-						// Check for move effect. If true, effects are applied
-						if (enemyMoveUsed.hasEffect) {
-							//passiveModifier(enemy, myCompkemon, enemyMoveUsed);
-						}
-						
-						// Splash salute
-						/*
-						if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
-							System.out.println("Nothing happened. The enemy literally sucks.");
-						}
-						*/
-					} else  {
-						System.out.println(enemy + "'s attack missed!");
-					}
-					
-					// Check for user health. If fainted, end the game
-					if (myCompkemon.currentHealth <= 0) {
-						loser = myCompkemon;
-						break;					
-					}
-					
-					// Turn tracker increases
-					turnCounter++;
-				} // end turn 
-				
-				
-			} else {
-				// ---------- USER SLOWER THAN ENEMY ----------		
-				displayHealth(myCompkemon, enemy);				
-				// Enemy move begin
-				System.out.println(enemy + " used " + enemyMoveUsed);	
+				System.out.println(second + " used " + secondMove);	
 				
 				// Hit or miss
-				if (hitMiss(enemyMoveUsed)) {						
+				if (hitMiss(secondMove)) {						
 					// Alpha damage calculator and applier
-					if (enemyMoveUsed.power > 0) {
-						System.out.println(myCompkemon + " took damage!");
-						myCompkemon.setHealth(myCompkemon.currentHealth - ((int)damageCalculator(enemy, myCompkemon, enemyMoveUsed)));
-						if (myCompkemon.currentHealth <= 0) {
-							myCompkemon.currentHealth = 0;
+					if (secondMove.power > 0) {
+						System.out.println(first + " took damage!");
+						first.setHealth(first.currentHealth - ((int)damageCalculator(second, first, secondMove)));
+						if (first.currentHealth <= 0) {
+							first.currentHealth = 0;
 						}
 						displayHealth(myCompkemon, enemy);
 					}
 					
 					// Check for move effect. If true, effects are applied
-					if (enemyMoveUsed.hasEffect) {
+					if (secondMove.hasEffect) {
 						//passiveModifier(enemy, myCompkemon, enemyMoveUsed);
 					}
 					
@@ -236,50 +190,18 @@ public class Main {
 					}
 					*/
 				} else  {
-					System.out.println(enemy + "'s attack missed!");
+					System.out.println(second + "'s attack missed!");
 				}
 				
 				// Check for user health. If fainted, end the game
-				if (myCompkemon.currentHealth <= 0) {
-					loser = myCompkemon;
+				if (first.currentHealth <= 0) {
+					loser = first;
 					break;					
 				}
 				
-				// User move begin
-				System.out.println(myCompkemon + " used " + myMoveUsed);
-				
-				// Move hit/miss
-				if (hitMiss(myMoveUsed)) {
-					// Alpha damage calculator and applier
-					if (myMoveUsed.power > 0) {
-						System.out.println(enemy + " took damage!");
-						enemy.setHealth(enemy.currentHealth - ((int)damageCalculator(myCompkemon, enemy, myMoveUsed)));	
-						if (enemy.currentHealth <= 0) {
-							enemy.currentHealth = 0;
-						}
-						displayHealth(myCompkemon, enemy);					
-					}
-					
-					
-					// Check for move effect. If true, effects are applied
-					if (myMoveUsed.hasEffect) {
-						//passiveModifier(myCompkemon, enemy, myMoveUsed);
-					}
-					
-					// Splash salute - not done
-	
-				} else {
-					System.out.println(myCompkemon + "'s attack missed!");
-				}
-				
-				// Check for enemy health. If fainted, end the game
-				if (enemy.currentHealth <= 0) {
-					loser = enemy;
-					break;					
-				}
+				// Turn tracker increases
 				turnCounter++;
 			}
-
 		}
 		
 		System.out.println(loser + " has fainted");

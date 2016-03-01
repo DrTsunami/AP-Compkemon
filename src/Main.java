@@ -61,16 +61,17 @@ public class Main {
 			myMove = scanner.nextInt();	
 			enemyMove = (int)(Math.random() * enemy.moveset.length);
 			
-			priority = priorityCalculator(myCompkemon, myMoveUsed, enemy, enemyMoveUsed);
+			myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
+			enemy.currentMove = enemy.moveset[enemyMove];	
+			
+			priority = priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 			Compkemon first = new Compkemon();
 			Compkemon second = new Compkemon();
-			
-			myCompkemon.currentMove =  myCompkemon.moveset[myMove - 1];;
-			enemy.currentMove = enemy.moveset[enemyMove];	
 			
 			if (priority == 1) {
 				first = myCompkemon;
 				second = enemy;
+				Move firstMove = myCompkemon.currentMove;
 			} else if (priority == 0) {
 				first = enemy;
 				second = myCompkemon;

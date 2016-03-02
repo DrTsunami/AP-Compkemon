@@ -82,7 +82,7 @@ public class Effect {
 			case Enslave : 
 				System.out.println(target + " was enslaved to the Wrightocracy!");
 				System.out.println(target + "'s energy was drained!");
-				float drain = 0.5f * (Game.damageCalculator(user, target, new Move(MoveName.Enslave)));
+				float drain = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
 				user.currentHealth += (int)drain;
 				if (user.currentHealth > 100) {
 					user.currentHealth = 100;

@@ -55,4 +55,7 @@ public class Vector2
 	{
 		return Math.sqrt(DistanceSquared(a,b));
 	}
+	public static Vector2 Zero(){
+		return new Vector2(0,0);
+	}
 }

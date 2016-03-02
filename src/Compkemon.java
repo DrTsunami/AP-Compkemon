@@ -139,46 +139,6 @@ public class Compkemon {
     
     // Getters and Setters for attributes
     
-    public String getName() {
-    	return name;
-    }
-    
-    public String getType() {
-    	return type;
-    }
-    
-    public int getHealth() {
-    	return health;
-    }
-    
-    public void setHealth(int health) {
-    	this.currentHealth = health;
-    }
-    
-    public float getAttack() {
-    	return attack;
-    }
-    
-    public void setAttack(int attack) {
-    	this.attack = attack;
-    }
-    
-    public float getDefense() {
-    	return defense;
-    }
-    
-    public void setDefense(int defense) {
-    	this.defense = defense;
-    }
-    
-    public float getSpeed() {
-    	return speed;
-    }
-    
-    public void setSpeed(float speed) {
-    	this.speed = speed;
-    }
-    
     
     // Gets Compkemon move set and returns moves as a string
     public String getMoveset() {

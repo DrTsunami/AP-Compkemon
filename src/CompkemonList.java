@@ -1,8 +1,11 @@
 
 public enum CompkemonList {
 	Prototype, 
-	Wrightson,
 	Alex,
+	Jackson,
 	Jeremiah,
+	Wrightson,
+
+
 	
 } // Complete list of available Compkemon

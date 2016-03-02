@@ -7,7 +7,6 @@ public class Move {
     boolean hasEffect;
     boolean toSelf;
     boolean lastingEffect;
-    String effectAttribute;
     String description;
     int priority;
     MoveName moveName;
@@ -20,7 +19,6 @@ public class Move {
     	this.hasEffect = false;
     	this.toSelf = false;
     	this.lastingEffect = false;
-    	this.effectAttribute = "";
     	this.priority = 0;
     	this.description = "";
     }
@@ -61,7 +59,6 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = true;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1. Exerts bad influence damage over time";
 	        	break;
@@ -73,7 +70,6 @@ public class Move {
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "Move for debugging. A God's creation...";
 	        	break;
@@ -85,8 +81,7 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = true;
-	        	effectAttribute = "";
-	        	priority = 3;
+	        	priority = 4;
 	        	description = "User dabs out of the way. Because it's a moronic move, it doesn't work very often";
 	        	break;
 	        case DogmaticBurst:
@@ -97,9 +92,19 @@ public class Move {
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "User lectures target";
+	        	break;
+	        case Eat:
+	        	attackName = "Eat";
+	        	type = "Meat";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Consumption of unfathomable amounts of food regenerates health";
 	        	break;
 	        case Enslave:
 	        	attackName = "Enslave";
@@ -109,7 +114,6 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = false;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "Target is enslaved to Wrightson. Life force is enslaved, Wrigtson gains health";
 	        	break;	        	
@@ -121,7 +125,6 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = true;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "Wrightocracy is established over battle. 0.5 multipliers to 0.1 and 2.0 multipliers to 3.0";
 	        	break;
@@ -133,7 +136,6 @@ public class Move {
 	            hasEffect = true;
 	            toSelf = false;
 	            lastingEffect = false;
-	            effectAttribute = "Attack";
 	            priority = 0;
 	            description = "Opponent's attack lowered by 10";	            
 	            break;
@@ -156,10 +158,42 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = false;
-	        	effectAttribute = "Speed";
 	        	priority = 0;
 	        	description = "User understands everything in a new light. Speed sharply increases";
 	        	break;	
+	        case MeatDance:
+	        	attackName = "Meat Dance";
+	        	type = "Meat";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Ritual dance performed by flailing meaty arms in every which way. Boosts spirit. Attack sharply increases";
+	        	break;
+	        case Meatpin:
+	        	attackName = "Meatpin";
+	        	type = "Meat";
+	        	power = 50;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Target is pinned by a big piece of meat. Target's speed lowered";
+        		break;
+	        case Meatquake:
+	        	attackName = "Meatquake";
+	        	type = "Meat";
+	        	power = 100;
+	        	accuracy = 1.0f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Massive quake created by a big piece of meat.";
+        		break;
 	        case SatanicMissionary:
 	        	attackName = "Satanic Missionary";
 	        	type = "Moron";
@@ -168,14 +202,13 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = false;
 	        	lastingEffect = true;
-	        	effectAttribute = "";
 	        	priority = 0;
 	        	description = "Target is converted to worship Satan. Target becomes Moronic type";
 	        	break;
 	        case Splash: 
 	        	attackName = "Splash";
 	        	type = "Moron";
-	            power = 0;
+	            power = 100;
 	            accuracy = 1.0f;
 	            hasEffect = false;
 	            toSelf = false;
@@ -191,7 +224,6 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = true;
-	        	effectAttribute = "Accuracy";
 	        	description = "User squints and sees clearer. Next attack to hit without fail";
 	        	break;
 	        case StateOfAscendancy:
@@ -202,7 +234,6 @@ public class Move {
 	        	hasEffect = true;
 	        	toSelf = false;
 	        	lastingEffect = true;
-	        	effectAttribute = "";
 	        	priority = 3;
 	        	description = "Target is angered by inferiority, 50% chance attacking itself";
 	        	break;	
@@ -214,7 +245,6 @@ public class Move {
                 hasEffect = true;
                 toSelf = true;
                 lastingEffect = false;
-                effectAttribute = "Attack";
                 priority = 0;
                 description = "Attack boosted by 20";
                 break;       
@@ -269,16 +299,28 @@ public class Move {
     // returns effect if there is one 
     public Effect getEffect(Compkemon user, Compkemon target) {
     	Effect effect = new Effect();
-    	int effectInitCounter = Main.turnCounter;
+    	int effectInitCounter = Game.turnCounter;
     	switch (this.attackName) {
     		case "Apathy" :
     			effect = new Effect(EffectType.Apathy, user, target, effectInitCounter);
+    			break;
+    		case "Dab" :
+    			effect = new Effect(EffectType.Dab, user, target, effectInitCounter);
+    			break;
+    		case "Eat" :
+    			effect = new Effect(EffectType.Eat, user, target, effectInitCounter);
     			break;
     		case "Enslave" :
     			effect = new Effect(EffectType.Enslave, user, target,effectInitCounter);
     			break;
     		case "LSD" : 
     			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);
+    			break;
+    		case "Meat Dance" :
+    			effect = new Effect(EffectType.MeatDance, user, target, effectInitCounter);
+    			break;
+    		case "Meatpin" :
+    			effect = new Effect(EffectType.Meatpin, user, target, effectInitCounter);
     			break;
     		case "Satanic Missionary" :
     			effect = new Effect(EffectType.SatanicMissionary, user, target, effectInitCounter);

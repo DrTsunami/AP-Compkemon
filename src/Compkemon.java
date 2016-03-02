@@ -55,24 +55,7 @@ public class Compkemon {
 		        moveset[2] = new Move(MoveName.Splash);
 		        moveset[3] = new Move(MoveName.Splash);
 		        break;
-			case Wrightson:
-				this.name = "Wrightson";
-				this.type = "God";
-				this.health = 100;
-				this.currentHealth = 100;
-				this.attack = 100.0f;
-				this.defense = 100.0f;
-				this.speed = 100.0f;
-				this.evasion = 1.0f;
-				this.effect = new ArrayList<Effect>();
-				this.moveset = new Move[4];
-		        this.currentMove = new Move();
-				
-		        moveset[0] = new Move(MoveName.AlmightyPush);
-		        moveset[1] = new Move(MoveName.Mercy);
-		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
-		        moveset[3] = new Move(MoveName.Enslave);
-		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
 			case Alex:
 				this.name = "Alex";
 				this.type = "Cynic";
@@ -91,6 +74,26 @@ public class Compkemon {
 		        moveset[2] = new Move(MoveName.LSD);
 		        moveset[3] = new Move(MoveName.StateOfAscendancy);
 		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+			case Jackson:
+				this.name = "Jackson";
+				this.type = "Meat";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 70.0f;
+				this.defense = 95.0f;
+				this.speed = 50.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.Meatquake);
+				moveset[1] = new Move(MoveName.Meatpin);
+		        moveset[2] = new Move(MoveName.MeatDance);
+		        moveset[3] = new Move(MoveName.Eat);
+		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
 			case Jeremiah:
 				this.name = "Jeremiah";
 				this.type = "Moron";
@@ -109,7 +112,27 @@ public class Compkemon {
 		        moveset[2] = new Move(MoveName.Squint);
 		        moveset[3] = new Move(MoveName.Dab);
 		        break;
-	        
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
+			case Wrightson:
+				this.name = "Wrightson";
+				this.type = "God";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 100.0f;
+				this.defense = 100.0f;
+				this.speed = 100.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+		        this.currentMove = new Move();
+				
+		        moveset[0] = new Move(MoveName.AlmightyPush);
+		        moveset[1] = new Move(MoveName.Mercy);
+		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
+		        moveset[3] = new Move(MoveName.Enslave);
+		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+   
     	}
 
     }

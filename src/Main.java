@@ -7,8 +7,6 @@ public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
-	static TypeTable typeTable = new TypeTable();
-	static int turnCounter;
 	static Game game = new Game();
 	
 	public static void main(String[] args) {
@@ -18,7 +16,7 @@ public class Main {
 		enemy = new Compkemon();
 		
 		// Gets user input for compkemon
-		System.out.println("1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + 
+		System.out.println("1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n" + 
 							"Enter number corresponding to the Compkemon you wish to hack with: ");
 		myCompkemonScanned = scanner.nextInt();
 		
@@ -34,6 +32,8 @@ public class Main {
 				break;
 			case 4:
 				myCompkemon = new Compkemon(CompkemonList.Jeremiah);
+			case 5:
+				myCompkemon = new Compkemon(CompkemonList.Jackson);
 		}
 		
 		System.out.println("Congratulations, your chosen Compkemon is: " + myCompkemon);

@@ -1,4 +1,3 @@
-
 public class Effect {
 	
 	String name;
@@ -9,8 +8,8 @@ public class Effect {
 	boolean finished;
 	boolean didApplyThisTurn;
 	
-	Move[] origMoves = new Move[4];
-	
+	Move tempMove;
+	float tempFloat;
 	
 	public Effect() {
 		// empty 
@@ -25,12 +24,14 @@ public class Effect {
 		this.initTurnTracker = initTurn;
 		this.didApplyThisTurn = false;
 		this.finished = false;
+		this.tempMove = new Move();
+		this.tempFloat = 0.0f;
 	}
 	
 	public void Update() {
 		
-		float[][] typeTable = Main.typeTable.damageTable;
-		int turnCounter = Main.turnCounter;
+		float[][] typeTable = Game.typeTable.damageTable;
+		int turnCounter = Game.turnCounter;
 		int effectTurns = turnCounter - initTurnTracker;
 		
 		switch (effectType) {
@@ -43,8 +44,7 @@ public class Effect {
 					}
 				} else if (effectTurns < 5) {
 					System.out.println("Alex is exerting bad influence. Turn: " + effectTurns);
-					target.currentHealth -= 8;
-					
+					target.currentHealth -= 8;					
 				} else if (effectTurns == 5) {
 					System.out.println("Alex started caring a little bit. End Effect Turn: " + effectTurns);
 					for(int i = 0; i < typeTable[2].length; i++) {
@@ -53,6 +53,30 @@ public class Effect {
 					finished = true;					
 				}				
 				didApplyThisTurn = true;
+				break;
+			case Dab :
+				if (effectTurns == 0) {	
+					System.out.println(target + " dabbed out of harm's way!");
+					tempMove = target.currentMove;
+					tempFloat = target.currentMove.accuracy;
+					target.currentMove.accuracy = 0.0f;
+					didApplyThisTurn = true;
+				} else if (effectTurns == 1) {
+					tempMove.accuracy = tempFloat;
+					didApplyThisTurn= true;
+					finished = true;
+				}
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case Eat :
+				System.out.println(user + " consumed a big piece of meat! ");
+				System.out.println(user + " recovered health!");
+				user.currentHealth += 33;
+				if (user.currentHealth > 100) {
+					user.currentHealth = 100;
+				}
+				didApplyThisTurn = true;
+				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Enslave : 
@@ -69,8 +93,20 @@ public class Effect {
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
 				user.speed += 20;
-				System.out.println("User understands things in a new light! Speed sharply increased!");
+				System.out.println(user + " understands things in a new light! Speed sharply increased!");
 				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case MeatDance:
+				user.attack += 20;
+				System.out.println(user + "'s attack sharply rose!");
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case Meatpin:
+				target.speed -= 10;
+				System.out.println(target + " was pinned down by" + user + "!");
+				System.out.println(target + "'s speed decreased!");
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////			
 			case SatanicMissionary:
@@ -85,27 +121,23 @@ public class Effect {
 					didApplyThisTurn = true;
 					finished = true;
 				}
-				
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Squint:
-				if (effectTurns == 0) {			
-					this.origMoves = user.moveset;
+				if (effectTurns == 0) {	
 					System.out.println(user + " can see with clarity!");
-					for (Move m : user.moveset) {
-						m.accuracy = 1.0f;
-					}
 					didApplyThisTurn = true;
 				} else if (effectTurns < 2) {
-					// nothing!
+					tempMove = user.currentMove;
+					tempFloat = user.currentMove.accuracy;
+					user.currentMove.accuracy = 1.0f;
 					didApplyThisTurn = true;
 				} else if (effectTurns == 2) {
-					user.moveset = origMoves;
+					tempMove.accuracy = tempFloat;
 					didApplyThisTurn= true;
 					finished = true;
 				}
 				break;
-				//FIXME squint doesn't revert to original moves
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case StateOfAscendancy : 
 				float accuracy = (float) Math.random();

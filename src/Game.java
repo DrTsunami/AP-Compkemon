@@ -13,8 +13,8 @@ public class Game {
 	static Scanner scanner = new Scanner(System.in);
 	static Compkemon myCompkemon = Main.myCompkemon;
 	static Compkemon enemy = Main.enemy;
-	static TypeTable typeTable = Main.typeTable;
-	static int turnCounter = Main.turnCounter;
+	static TypeTable typeTable = new TypeTable();
+	static int turnCounter;
 	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////

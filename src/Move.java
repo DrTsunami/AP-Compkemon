@@ -23,7 +23,6 @@ public class Move {
     	this.effectAttribute = "";
     	this.priority = 0;
     	this.description = "";
-    	
     }
 
     // Complete list of moves. Arg constructor for Move class
@@ -36,7 +35,7 @@ public class Move {
 	        	attackName = "Almighty Kush";
 	        	type = "Moron";
 	        	power = 100;
-	        	accuracy = 1.0f;
+	        	accuracy = 0.0f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -222,7 +221,7 @@ public class Move {
             case Tackle:
             	attackName = "Tackle";
             	type = "Meat";
-                power = 51;
+                power = 50;
                 accuracy = .95f;
                 hasEffect = false;
                 lastingEffect = false;
@@ -280,6 +279,12 @@ public class Move {
     			break;
     		case "LSD" : 
     			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);
+    			break;
+    		case "Satanic Missionary" :
+    			effect = new Effect(EffectType.SatanicMissionary, user, target, effectInitCounter);
+    			break;
+    		case "Squint":
+    			effect = new Effect(EffectType.Squint, user, target, effectInitCounter);
     			break;
     		case "State of Ascendancy" : 
     			effect = new Effect(EffectType.StateOfAscendancy, user, target, effectInitCounter);

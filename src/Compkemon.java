@@ -39,7 +39,7 @@ public class Compkemon {
     	switch(compkemon) {
 			case Prototype: 
 				this.name = "Prototype";
-		        this.type = "Normal";
+		        this.type = "Meat";
 		        this.health = 100;
 		        this.currentHealth = 100;
 		        this.attack = 80.0f;
@@ -50,7 +50,7 @@ public class Compkemon {
 		        this.moveset = new Move[4];
 		        this.currentMove = new Move();
 		
-		        moveset[0] = new Move(MoveName.Tackle);
+		        moveset[0] = new Move(MoveName.Splash);
 		        moveset[1] = new Move(MoveName.Splash);
 		        moveset[2] = new Move(MoveName.Splash);
 		        moveset[3] = new Move(MoveName.Splash);
@@ -104,10 +104,10 @@ public class Compkemon {
 				this.moveset = new Move[4];
 		        this.currentMove = new Move();
 				
-				moveset[0] = new Move(MoveName.Apathy);
-		        moveset[1] = new Move(MoveName.DogmaticBurst);
-		        moveset[2] = new Move(MoveName.LSD);
-		        moveset[3] = new Move(MoveName.StateOfAscendancy);
+				moveset[0] = new Move(MoveName.AlmightyKush);
+				moveset[1] = new Move(MoveName.SatanicMissionary);
+		        moveset[2] = new Move(MoveName.Squint);
+		        moveset[3] = new Move(MoveName.Dab);
 		        break;
 	        
     	}

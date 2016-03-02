@@ -9,6 +9,8 @@ public class Effect {
 	boolean finished;
 	boolean didApplyThisTurn;
 	
+	Move[] origMoves = new Move[4];
+	
 	
 	public Effect() {
 		// empty 
@@ -56,11 +58,13 @@ public class Effect {
 			case Enslave : 
 				System.out.println(target + " was enslaved to the Wrightocracy!");
 				System.out.println(target + "'s energy was drained!");
-				float drain = 0.5f * (Main.damageCalculator(user, target, new Move(MoveName.Enslave)));
+				float drain = 0.5f * (Game.damageCalculator(user, target, new Move(MoveName.Enslave)));
 				user.currentHealth += (int)drain;
 				if (user.currentHealth > 100) {
 					user.currentHealth = 100;
 				}
+				didApplyThisTurn = true;
+				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
@@ -68,7 +72,41 @@ public class Effect {
 				System.out.println("User understands things in a new light! Speed sharply increased!");
 				didApplyThisTurn = true;
 				break;
-////////////////////////////////////////////////////////////////////////////////////////////				
+////////////////////////////////////////////////////////////////////////////////////////////			
+			case SatanicMissionary:
+				String originalType = target.type;
+				if (effectTurns == 0) {
+					System.out.println(user + " has summoned the forces of darkness to convert the sane.");
+					target.type = "Moron";
+					didApplyThisTurn = true;
+				} else if (effectTurns == 5) {
+					System.out.println("Darkness has lifted");
+					target.type = originalType;
+					didApplyThisTurn = true;
+					finished = true;
+				}
+				
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case Squint:
+				if (effectTurns == 0) {			
+					this.origMoves = user.moveset;
+					System.out.println(user + " can see with clarity!");
+					for (Move m : user.moveset) {
+						m.accuracy = 1.0f;
+					}
+					didApplyThisTurn = true;
+				} else if (effectTurns < 2) {
+					// nothing!
+					didApplyThisTurn = true;
+				} else if (effectTurns == 2) {
+					user.moveset = origMoves;
+					didApplyThisTurn= true;
+					finished = true;
+				}
+				break;
+				//FIXME squint doesn't revert to original moves
+////////////////////////////////////////////////////////////////////////////////////////////
 			case StateOfAscendancy : 
 				float accuracy = (float) Math.random();
 				System.out.println(target + " is feeling inferior to " + user);								

@@ -10,8 +10,6 @@ import java.awt.event.*;
  *
  */
 class GamePanel extends JPanel{
-	
-	
 	public GameWindow mainWindow;
 	public Game game;
 	

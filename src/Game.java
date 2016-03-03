@@ -21,14 +21,42 @@ public class Game {
 	GameState state;
 	GamePanel panel;
 	
+	String commandLine = "";
+	TextBox textBox;
+	
+	public void ProcessCommand(String command){
+		textBox.AnimateText(command);
+		// TODO handle a command
+		switch (state){
+		case SELECTING_COMPKEMON:{
+			
+			
+			break;
+		}
+		}
+	}
+	
 	public void KeyPress(KeyEvent keyCode){
-		// TODO handle key press
+		char c = keyCode.getKeyChar();
+		int i = (int)c;
+		if (i == 10){ // enter
+			ProcessCommand(commandLine);
+			commandLine = "";
+		} else {
+			if (i >= 32 && i < 127) // other keys
+				commandLine += c;
+			else if (i == 8) // backspace
+				if (commandLine.length() > 0)
+					commandLine = commandLine.substring(0, commandLine.length() - 1);
+		}
+		panel.repaint();
 	}
 	public void MousePress(MouseEvent e){
-		// TODO handle mouse press
+		
 	}
 
-	public void init() {	
+	public void init() {
+		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
 	}
@@ -72,7 +100,6 @@ public class Game {
 		
 		System.out.println("Battle has concluded");	
 	}
-
 	
 	static Scanner scanner = new Scanner(System.in);
 	static Compkemon myCompkemon;
@@ -282,43 +309,32 @@ public class Game {
 		System.out.println(loser + " has fainted");
 	} // end battleScene
 	
-
-	JTextArea textInput;
-	
 	public void draw(Graphics2D g2d) {
-		
 		int windowWidth = GameWindow.ScreenWidth;
 		int windowHeight = GameWindow.ScreenHeight; 
+		g2d.setColor(Color.black);
+		g2d.fillRect(0, 0, windowWidth, windowHeight);
+		
+		textBox.Position = new Vector2(10, windowHeight - 130);
+		textBox.Size = new Vector2(windowWidth - 20, 100);
 		
 		switch (state){
 		case SELECTING_COMPKEMON:{
 			
-			// Set Background
-			g2d.setColor(Color.BLACK);
-//			g2d.fillRect(0, 0, windowWidth, windowHeight);
-			Rectangle2D inputBox = new Rectangle2D.Double(0.0, (double)(windowHeight - 100), (double)windowWidth, 100.0);
-			g2d.draw(inputBox);
-			g2d.setColor(Color.GREEN);
-			g2d.drawLine(0, windowHeight - 100, windowWidth, windowHeight - 100);
-			textInput = new JTextArea(5, 30);
-			panel.add(textInput);
-			
-			
-			Font font = new Font("consolas", Font.PLAIN, 12);
+			Font font = new Font("consolas", Font.PLAIN, 18);
 			g2d.setFont(font);
 			g2d.setColor(Color.GREEN);
 			GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
 			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
 			
+			g2d.setColor(Color.GREEN);
+			g2d.drawString(commandLine, 20, windowHeight - 10);
 			
-			
+			textBox.Draw(g2d);
 			break;
 		}
 		}
 	}
-	
-	
-	
 }
 
 

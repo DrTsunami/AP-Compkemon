@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -282,26 +283,28 @@ public class Game {
 		System.out.println(loser + " has fainted");
 	} // end battleScene
 	
+
 	
 	public void draw(Graphics2D g2d) {
 		switch (state){
 		case SELECTING_COMPKEMON:{
 			
-			Font font = new Font("consolas", Font.PLAIN, 12);
+			// Set Background
+			g2d.setColor(Color.BLACK);
+			g2d.fillRect(0, 0, GameWindow.ScreenWidth, GameWindow.ScreenHeight);
 			
+			Font font = new Font("consolas", Font.PLAIN, 12);
 			g2d.setFont(font);
 			g2d.setColor(Color.GREEN);
-			g2d.drawString("test" + "\n" + "test2", 100, 100);
-			System.out.println(g2d.getFont());
-			
-			/*
-			g2d.drawString("1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n" + 
+			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n" + 
 								"Enter number corresponding to the Compkemon you wish to hack with: ", 100, 100);
-			*/
+			
 			break;
 		}
 		}
 	}
+	
+	
 	
 }
 

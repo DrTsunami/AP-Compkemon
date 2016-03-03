@@ -2,10 +2,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 
 enum GameState{
@@ -23,13 +28,7 @@ public class Game {
 		// TODO handle mouse press
 	}
 
-	public void init() {
-
-		
-		// Gets user input for compkemon
-		System.out.println("1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n" + 
-							"Enter number corresponding to the Compkemon you wish to hack with: ");
-		
+	public void init() {	
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
 	}
@@ -284,20 +283,34 @@ public class Game {
 	} // end battleScene
 	
 
+	JTextArea textInput;
 	
 	public void draw(Graphics2D g2d) {
+		
+		int windowWidth = GameWindow.ScreenWidth;
+		int windowHeight = GameWindow.ScreenHeight; 
+		
 		switch (state){
 		case SELECTING_COMPKEMON:{
 			
 			// Set Background
 			g2d.setColor(Color.BLACK);
-			g2d.fillRect(0, 0, GameWindow.ScreenWidth, GameWindow.ScreenHeight);
+//			g2d.fillRect(0, 0, windowWidth, windowHeight);
+			Rectangle2D inputBox = new Rectangle2D.Double(0.0, (double)(windowHeight - 100), (double)windowWidth, 100.0);
+			g2d.draw(inputBox);
+			g2d.setColor(Color.GREEN);
+			g2d.drawLine(0, windowHeight - 100, windowWidth, windowHeight - 100);
+			textInput = new JTextArea(5, 30);
+			panel.add(textInput);
+			
 			
 			Font font = new Font("consolas", Font.PLAIN, 12);
 			g2d.setFont(font);
 			g2d.setColor(Color.GREEN);
-			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n" + 
-								"Enter number corresponding to the Compkemon you wish to hack with: ", 100, 100);
+			GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
+			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
+			
+			
 			
 			break;
 		}

@@ -17,8 +17,7 @@ class GamePanel extends JPanel{
 	
 	public GamePanel(GameWindow window){
 		mainWindow = window;
-		setBackground(Color.black);
-    	setOpaque(true);
+    	setOpaque(false);
     	setSize(mainWindow.getSize());
 	}
 	
@@ -72,7 +71,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
     	setSize(new Dimension(900, 690));
     	
     	//setUndecorated(true); // borderless (fullscreen) window
-    	setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH); // maximize window
+    	//setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH); // maximize window
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Game");
@@ -151,6 +150,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
         
         gamePanel.addMouseListener(this);
         gamePanel.addMouseMotionListener(this);
+       
         
         gamePanel.init();
     }

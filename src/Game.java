@@ -20,6 +20,17 @@ public class Game {
 	
 	String commandLine = "";
 	TextBox textBox;
+
+
+	public void init() {
+		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
+		state = GameState.SELECTING_COMPKEMON;
+		panel.repaint();
+		textBox.AnimateText("This is a test animation");
+		textBox.AnimateText("ur mom");
+		textBox.AnimateText("ayy lmao");
+		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
+	}
 	
 	public void ProcessCommand(String command){
 		
@@ -58,14 +69,6 @@ public class Game {
 	
 	public void MousePress(MouseEvent e){
 		
-	}
-
-	public void init() {
-		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
-		state = GameState.SELECTING_COMPKEMON;
-		panel.repaint();
-		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
-		textBox.AnimateText("This is a test animation");
 	}
 		
 	static Compkemon myCompkemon;

@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class TextBox {
 	Vector2 Position;
@@ -10,8 +11,10 @@ public class TextBox {
 	String Text;
 	
 	Thread animateThread;
-	boolean animationDone;
-	
+	ArrayList<String> animateQueue = new ArrayList<String>();
+	int animateCounter = 0;
+
+	boolean animating;
 	
 	public TextBox(Vector2 pos, Vector2  size){
 		Position = pos;
@@ -20,53 +23,47 @@ public class TextBox {
 	}
 	
 	public void AnimateText(final String text){
-		if (animateThread != null) {
-			animateThread.interrupt();
-		}
-		//FIXME make arraylist of threads. then use for each loop to iterate in order of threads to print text
-			
-		animateThread = new Thread(){
-			public void run(){
-				for (int i = 0; i <= text.length() + 1; i++){
-					if (i <= text.length()) {
-						animationDone = false;
-						Text = text.substring(0, i);
-						GameWindow.gameWindow.gamePanel.repaint();
-						
+		if (animateThread == null) {
+			animateThread = new Thread(){
+				public void run(){
+					while (this != null){
+						if (animateQueue.size() > 0){
+							animating = true;
+							if (animateCounter < animateQueue.get(0).length()){
+								animateCounter++;
+								Text = animateQueue.get(0).substring(0, animateCounter);
+								GameWindow.gameWindow.gamePanel.repaint();
+							} 
+							while (animateCounter == animateQueue.get(0).length()) {
+								animating = false;
+								Text += "_";
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) { }
+								GameWindow.gameWindow.gamePanel.repaint();
+								Text = animateQueue.get(0).substring(0, animateCounter);
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) { }
+								GameWindow.gameWindow.gamePanel.repaint();
+							}
+						}
 						try {
 							Thread.sleep(15);
-						} catch (InterruptedException e) {
-							break;
-						}
-					} else if (i == text.length() + 1) {
-						animationDone = true;
+						} catch (InterruptedException e) { }
 					}
-					
-					while (animationDone) {
-						Text += "_";
-						GameWindow.gameWindow.gamePanel.repaint();
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							break;
-						}
-						Text = Text.substring(0, text.length());
-						GameWindow.gameWindow.gamePanel.repaint();
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							break;
-						}
-					}									
 				}
-			}
-		};
-		animateThread.start();
+			};
+			animateThread.start();
+		}
+		animateQueue.add(text);
+	
 	}
 	
 	public void ClickToContinue(MouseEvent k) {
-		if (animateThread != null && animationDone) {
-			animationDone = false; // stops current animation
+		if (animateQueue.size() > 0){
+			animateQueue.remove(0);
+			animateCounter = 0;
 		}
 	}
 	

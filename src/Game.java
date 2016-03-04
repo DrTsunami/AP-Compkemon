@@ -5,11 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 
@@ -25,12 +22,12 @@ public class Game {
 	TextBox textBox;
 	
 	public void ProcessCommand(String command){
-		textBox.AnimateText(command);
+		
+		String text = "";
 		// TODO handle a command
 		switch (state){
-		case SELECTING_COMPKEMON:{
-			
-			
+		case SELECTING_COMPKEMON:{	
+			Select();
 			break;
 		}
 		}
@@ -51,6 +48,14 @@ public class Game {
 		}
 		panel.repaint();
 	}
+
+	
+	public void consoleKeyDetector (KeyEvent k) {
+		char c = k.getKeyChar();
+		System.out.println(c);
+	}
+	
+	
 	public void MousePress(MouseEvent e){
 		
 	}
@@ -59,15 +64,22 @@ public class Game {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
+		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
+		textBox.AnimateText("This is a test animation");
 	}
 		
+	static Compkemon myCompkemon;
+	static Compkemon enemy;
+	static TypeTable typeTable = new TypeTable();
+	static int turnCounter;
+	
 	public void Select() {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
 		
-		myCompkemonScanned = scanner.nextInt();
-		// TODO wait for user to select comple
+		// TODO wait for user to select compkemon
+		myCompkemonScanned = Integer.parseInt(commandLine);
 		
 		switch(myCompkemonScanned) {
 			case 1:
@@ -87,25 +99,20 @@ public class Game {
 				break;
 		}
 		
-		System.out.println("Congratulations, your chosen Compkemon is: " + myCompkemon);
+		textBox.AnimateText("Congratulations, your chosen Compkemon is: " + myCompkemon);
 		
 		// set enemy compkemon here;
 		enemy = new Compkemon(CompkemonList.Prototype);
 		
-		System.out.println("An enemy Compkemon hacked! You are under attack!");
-		System.out.println("A wild " + enemy + " appeared!");
-		System.out.println("Fight!");
+		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!");
+		textBox.AnimateText("A wild " + enemy + " appeared!");
+		textBox.AnimateText("Fight!");
 		
-		Game.battleScene(myCompkemon, enemy);
+		//Game.battleScene(myCompkemon, enemy);
 		
 		System.out.println("Battle has concluded");	
 	}
-	
-	static Scanner scanner = new Scanner(System.in);
-	static Compkemon myCompkemon;
-	static Compkemon enemy;
-	static TypeTable typeTable = new TypeTable();
-	static int turnCounter;
+	/*
 	
 	public static void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		
@@ -284,12 +291,7 @@ public class Game {
 					}
 					
 					
-					// Splash salute
-					/*
-					if (!enemyMoveUsed.hasEffect || enemyMoveUsed.power == 0) {
-						System.out.println("Nothing happened. The enemy literally sucks.");
-					}
-					*/
+					
 				} else  {
 					System.out.println(second + "'s attack missed!");
 				}
@@ -308,10 +310,13 @@ public class Game {
 		
 		System.out.println(loser + " has fainted");
 	} // end battleScene
+
+	*/
 	
 	public void draw(Graphics2D g2d) {
 		int windowWidth = GameWindow.ScreenWidth;
 		int windowHeight = GameWindow.ScreenHeight; 
+		// Sets background
 		g2d.setColor(Color.black);
 		g2d.fillRect(0, 0, windowWidth, windowHeight);
 		
@@ -328,7 +333,9 @@ public class Game {
 			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
 			
 			g2d.setColor(Color.GREEN);
-			g2d.drawString(commandLine, 20, windowHeight - 10);
+			
+			g2d.drawString("> ", 10, windowHeight - 10);
+			g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 			
 			textBox.Draw(g2d);
 			break;

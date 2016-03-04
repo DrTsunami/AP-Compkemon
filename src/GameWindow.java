@@ -84,7 +84,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
             	gamePanel.game.KeyPress(e);
     	}
         
-    	if (Input.Typing){
+    	if (Input.Typing) {
 	    	int i = (int)c;
 	    	if (i >= 32 && i < 127)
 	    		Input.Typed = Input.Typed + c;
@@ -98,6 +98,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
         char c = e.getKeyChar();
         if ( c != KeyEvent.CHAR_UNDEFINED )
             Input.keys[e.getKeyCode()] = false;
+        	//TODO cursor
     }
 
     public void keyTyped( KeyEvent e ) { }
@@ -116,6 +117,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
 
         if (gamePanel != null && gamePanel.game != null)
         	gamePanel.game.MousePress(e);
+        	gamePanel.game.textBox.ClickToContinue(e);
     }
 
     public void mouseReleased( MouseEvent e ) {

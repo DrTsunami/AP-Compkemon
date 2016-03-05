@@ -26,16 +26,8 @@ public class Game {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
-<<<<<<< HEAD
 		textBox.AnimateText("Welcome to the world of hacking!");
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
-
-=======
-		textBox.AnimateText("This is a test animation");
-		textBox.AnimateText("ur mom");
-		textBox.AnimateText("ayy lmao");
-		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
->>>>>>> origin/master
 	}
 	
 	public void ProcessCommand(String command){

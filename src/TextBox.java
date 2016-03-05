@@ -13,18 +13,14 @@ public class TextBox {
 	Thread animateThread;
 	ArrayList<String> animateQueue = new ArrayList<String>();
 	int animateCounter = 0;
-
-<<<<<<< HEAD
 	int dashCounter = 0;
-=======
-	boolean animating;
->>>>>>> origin/master
+
 	
 	public TextBox(Vector2 pos, Vector2  size){
 		Position = pos;
 		Size = size;
 		Text = "";
-<<<<<<< HEAD
+
 		
 		animateThread = new Thread(){
 			public void run(){
@@ -42,51 +38,16 @@ public class TextBox {
 					try {
 						Thread.sleep(15);
 					} catch (InterruptedException e) { }
-=======
-	}
-	
-	public void AnimateText(final String text){
-		if (animateThread == null) {
-			animateThread = new Thread(){
-				public void run(){
-					while (this != null){
-						if (animateQueue.size() > 0){
-							animating = true;
-							if (animateCounter < animateQueue.get(0).length()){
-								animateCounter++;
-								Text = animateQueue.get(0).substring(0, animateCounter);
-								GameWindow.gameWindow.gamePanel.repaint();
-							} 
-							while (animateCounter == animateQueue.get(0).length()) {
-								animating = false;
-								Text += "_";
-								try {
-									Thread.sleep(500);
-								} catch (InterruptedException e) { }
-								GameWindow.gameWindow.gamePanel.repaint();
-								Text = animateQueue.get(0).substring(0, animateCounter);
-								try {
-									Thread.sleep(500);
-								} catch (InterruptedException e) { }
-								GameWindow.gameWindow.gamePanel.repaint();
-							}
-						}
-						try {
-							Thread.sleep(15);
-						} catch (InterruptedException e) { }
-					}
->>>>>>> origin/master
 				}
 			};
-			animateThread.start();
-		}
-		animateQueue.add(text);
-	
+
+		};
 	}
 	
 	public void AnimateText(final String text){
 		animateQueue.add(text);
 	}
+
 	
 	public void EnterToContinue(KeyEvent k) {
 		if (animateQueue.size() > 1){
@@ -96,11 +57,8 @@ public class TextBox {
 	}
 	
 	public void ClickToContinue(MouseEvent k) {
-<<<<<<< HEAD
+
 		if (animateQueue.size() > 1){
-=======
-		if (animateQueue.size() > 0){
->>>>>>> origin/master
 			animateQueue.remove(0);
 			animateCounter = 0;
 		}

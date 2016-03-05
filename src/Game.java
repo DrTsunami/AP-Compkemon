@@ -26,28 +26,39 @@ public class Game {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
+<<<<<<< HEAD
+		textBox.AnimateText("Welcome to the world of hacking!");
+		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
+
+=======
 		textBox.AnimateText("This is a test animation");
 		textBox.AnimateText("ur mom");
 		textBox.AnimateText("ayy lmao");
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
+>>>>>>> origin/master
 	}
 	
 	public void ProcessCommand(String command){
-		
 		String text = "";
 		// TODO handle a command
-		switch (state){
-		case SELECTING_COMPKEMON:{	
-			Select();
-			break;
+		
+		if (command.length() > 0) {
+			switch (state){
+			case SELECTING_COMPKEMON:{	
+				Select();
+				break;
+			}
+			}
 		}
-		}
+		
 	}
 	
 	public void KeyPress(KeyEvent keyCode){
 		char c = keyCode.getKeyChar();
 		int i = (int)c;
 		if (i == 10){ // enter
+			//if waiting for enter to continue
+			//	continue
 			ProcessCommand(commandLine);
 			commandLine = "";
 		} else {
@@ -80,6 +91,7 @@ public class Game {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
+	
 		
 		// TODO wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);
@@ -110,14 +122,15 @@ public class Game {
 		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!");
 		textBox.AnimateText("A wild " + enemy + " appeared!");
 		textBox.AnimateText("Fight!");
+	
 		
-		//Game.battleScene(myCompkemon, enemy);
+		battleScene(myCompkemon, enemy);
 		
 		System.out.println("Battle has concluded");	
 	}
-	/*
 	
-	public static void battleScene(Compkemon myCompkemon, Compkemon enemy) {
+	
+	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		
 		int myMove;
 		int enemyMove;
@@ -129,6 +142,8 @@ public class Game {
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
+			//FIXME do something proper here! You fucked up the battle scene method
+			textBox.AnimateText("Hello");
 			System.out.println("Choose move: " + myCompkemon.getMoveset());
 			myMove = scanner.nextInt();	
 			enemyMove = (int)(Math.random() * enemy.moveset.length);
@@ -314,7 +329,7 @@ public class Game {
 		System.out.println(loser + " has fainted");
 	} // end battleScene
 
-	*/
+	
 	
 	public void draw(Graphics2D g2d) {
 		int windowWidth = GameWindow.ScreenWidth;

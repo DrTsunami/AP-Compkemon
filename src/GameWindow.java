@@ -92,6 +92,11 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
 	    		if (Input.Typed.length() > 0)
 	    			Input.Typed = Input.Typed.substring(0, Input.Typed.length() - 1);
 	    }
+    	
+    	int i = (int)c;
+    	if (i == 10) {
+    		gamePanel.game.textBox.EnterToContinue(e);
+    	}
     }
 
     public void keyReleased( KeyEvent e ) {

@@ -9,16 +9,18 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 
-
+// Handles the GameStates
 enum GameState{
-	SELECTING_COMPKEMON
+	SELECTING_COMPKEMON,
+	BATTLE,
+	CHOOSING_MOVE,
 }
 
 public class Game {
 	GameState state;
 	GamePanel panel;
 	
-	String commandLine = "";
+	static String commandLine = "";
 	TextBox textBox;
 
 
@@ -26,8 +28,9 @@ public class Game {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
-		textBox.AnimateText("Welcome to the world of hacking!");
-		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ");
+		textBox.AnimateText("Welcome to the world of hacking!", false);
+		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
+
 	}
 	
 	public void ProcessCommand(String command){
@@ -36,13 +39,21 @@ public class Game {
 		
 		if (command.length() > 0) {
 			switch (state){
-			case SELECTING_COMPKEMON:{	
-				Select();
-				break;
+				case SELECTING_COMPKEMON:{	
+					Select();
+					commandLine = "";
+					break;
+				}
+				case BATTLE : {
+					
+					break;
+				}
+				case CHOOSING_MOVE : {
+					
+					break;
+				}
 			}
-			}
-		}
-		
+		}		
 	}
 	
 	public void KeyPress(KeyEvent keyCode){
@@ -62,18 +73,15 @@ public class Game {
 		}
 		panel.repaint();
 	}
-
-	
-	public void consoleKeyDetector (KeyEvent k) {
-		char c = k.getKeyChar();
-		System.out.println(c);
-	}
-	
 	
 	public void MousePress(MouseEvent e){
 		
 	}
-		
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
 	static TypeTable typeTable = new TypeTable();
@@ -83,6 +91,8 @@ public class Game {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
+		
+		enemy = new Compkemon(CompkemonList.Prototype);
 	
 		
 		// TODO wait for user to select compkemon
@@ -106,15 +116,10 @@ public class Game {
 				break;
 		}
 		
-		textBox.AnimateText("Congratulations, your chosen Compkemon is: " + myCompkemon);
-		
-		// set enemy compkemon here;
-		enemy = new Compkemon(CompkemonList.Prototype);
-		
-		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!");
-		textBox.AnimateText("A wild " + enemy + " appeared!");
-		textBox.AnimateText("Fight!");
-	
+		textBox.AnimateText("Congratulations, your chosen Compkemon is: " + myCompkemon, false);	
+		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!", false);
+		textBox.AnimateText("A wild " + enemy + " appeared!", false);
+		textBox.AnimateText("Fight!", false);
 		
 		battleScene(myCompkemon, enemy);
 		
@@ -134,10 +139,13 @@ public class Game {
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
+			state = GameState.BATTLE;
+			
 			//FIXME do something proper here! You fucked up the battle scene method
-			textBox.AnimateText("Hello");
-			System.out.println("Choose move: " + myCompkemon.getMoveset());
-			myMove = scanner.nextInt();	
+			textBox.AnimateText("Hello, welcome to a battle!", false);
+			textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
+			//myMove = scanner.nextInt();	
+			myMove = Integer.parseInt(commandLine);
 			enemyMove = (int)(Math.random() * enemy.moveset.length);
 			
 			myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];

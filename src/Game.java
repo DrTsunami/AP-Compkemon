@@ -45,11 +45,11 @@ public class Game {
 					break;
 				}
 				case BATTLE : {
-					
+					commandLine = "";
 					break;
 				}
 				case CHOOSING_MOVE : {
-					
+					commandLine = "";
 					break;
 				}
 			}
@@ -137,9 +137,12 @@ public class Game {
 		turnCounter = 0;
 		Compkemon loser = new Compkemon();
 		
+		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
+			//FIXME break up battle into more methods
 			state = GameState.BATTLE;
+			System.out.println("switched to Battle state");
 			
 			//FIXME do something proper here! You fucked up the battle scene method
 			textBox.AnimateText("Hello, welcome to a battle!", false);

@@ -82,6 +82,7 @@ public class TextBox {
 			// FIXME this thing - have to somehow wait for input
 			//Thread.interrupt();
 			// Check for input
+			
 			if (keyCode == 10 && Game.commandLine.length() > 0) {
 				
 			}

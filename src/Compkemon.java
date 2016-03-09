@@ -149,6 +149,28 @@ public class Compkemon {
     	return moves;
     }
     
+    public void selectMove() {
+    	Compkemon myCompkemon = Game.myCompkemon;
+    	
+    	int myMove = Integer.parseInt(Game.commandLine);
+		switch (myMove) {
+			case 1 : 
+				myCompkemon.currentMove = myCompkemon.moveset[1];
+				break;
+			case 2 : 
+				myCompkemon.currentMove = myCompkemon.moveset[2];
+				break;
+			case 3 : 
+				myCompkemon.currentMove = myCompkemon.moveset[3];
+				break;
+			case 4 : 
+				myCompkemon.currentMove = myCompkemon.moveset[4];
+				break;
+		}
+		
+		System.out.println("Move is " + (myMove + 1) + ".");
+    }
+    
     public String toString() {
         String output = new String();
         output = this.name;

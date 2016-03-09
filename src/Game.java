@@ -30,7 +30,6 @@ public class Game {
 		panel.repaint();
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
-
 	}
 	
 	public void ProcessCommand(String command){
@@ -42,18 +41,23 @@ public class Game {
 				case SELECTING_COMPKEMON:{	
 					Select();
 					commandLine = "";
+					state = GameState.BATTLE;
+					System.out.println("State switched to Battle");
+					System.out.println("CommandLine is deleted");
+					ChooseMove();
 					break;
 				}
 				case BATTLE : {
 					break;
 				}
 				case CHOOSING_MOVE : {
-					ChooseMove();
+					myCompkemon.selectMove();
 					commandLine = "";
+					System.out.println("CommandLine is deleted");
 					break;
 				}
 			}
-		}		
+		} 
 	}
 	
 	public void KeyPress(KeyEvent keyCode){
@@ -79,8 +83,7 @@ public class Game {
 	}
 	
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
@@ -119,10 +122,10 @@ public class Game {
 		textBox.AnimateText("A wild " + enemy + " appeared!", false);
 		textBox.AnimateText("Fight!", false);
 		
-		battleScene(myCompkemon, enemy);
-		
-		System.out.println("Battle has concluded");	
 	}
+	
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	static int myMove;
 	static int enemyMove;
@@ -131,57 +134,31 @@ public class Game {
 	static int priority;
 	static Compkemon loser = new Compkemon();
 	
-	
-	// Test method please get rid of TODO get rid of 
-	public void BatIntro() {
-		textBox.AnimateText("A wild " + enemy + " hacked!", false);
-		System.out.println("Finished intro");
-		state = GameState.CHOOSING_MOVE;
-	}
-	
-	// Test scene check TODO get rid of
-	public void BatChooseMove() {	
-		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
-		
-		myMove = Integer.parseInt(commandLine);
-		enemyMove = (int)(Math.random() * enemy.moveset.length);
-		
-		myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
-		enemy.currentMove = enemy.moveset[enemyMove];	
-	
-		System.out.println("Move chosen is " + myMove);
-		System.out.println("reached breakpoint");
-		
-	}
-	
 	public void ChooseMove() {
-		myMove = Integer.parseInt(commandLine);
-		myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
+		
+		state = GameState.CHOOSING_MOVE;
+		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
+		enemyMove = (int)(Math.random() * enemy.moveset.length);
+		enemy.currentMove = enemy.moveset[enemyMove];	
 		
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 
+		// Battle starts
 		turnCounter = 0;
+		System.out.println("switched to Battle state");
+		textBox.AnimateText("Hello, welcome to a battle!", false);
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
-			//FIXME break up battle into more methods
-			state = GameState.BATTLE;
-			commandLine = "";
-			System.out.println("switched to Battle state");
-			//FIXME do something proper here! You fucked up the battle scene method
-			textBox.AnimateText("Hello, welcome to a battle!", false);
-			
-			//myMove = scanner.nextInt();	
-			//myMove = Integer.parseInt(commandLine);
-			
-			state = GameState.CHOOSING_MOVE;
-			textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
-			enemyMove = (int)(Math.random() * enemy.moveset.length);
-			
-			myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
-			enemy.currentMove = enemy.moveset[enemyMove];	
+			//FIXME break up battle into more method
+			ChooseMove();
 			
 			priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 			Compkemon first = new Compkemon();
@@ -199,14 +176,14 @@ public class Game {
 				firstMove = enemy.currentMove;
 				secondMove = myCompkemon.currentMove;
 			}
-			
+		
 			ArrayList<Effect> firstEffects = first.effect;
 			ArrayList<Effect> secondEffects = second.effect;
+			
 			
 			// Display health bars
 			BattleHandler.displayHealth(myCompkemon, enemy);	
 			
-			System.out.println("reached a breakpoint");
 			
 			// Check for lingering Effects on first 
 			if (firstEffects.size() > 0) {
@@ -358,7 +335,8 @@ public class Game {
 			// Turn tracker increases
 			turnCounter++;
 			
-		}
+			
+		} // end while loop
 		
 		System.out.println(loser + " has fainted");
 	} // end battleScene
@@ -375,23 +353,35 @@ public class Game {
 		textBox.Position = new Vector2(10, windowHeight - 130);
 		textBox.Size = new Vector2(windowWidth - 20, 100);
 		
+		Font font = new Font("consolas", Font.PLAIN, 18);
+		g2d.setFont(font);
+		g2d.setColor(Color.GREEN);
+		
 		switch (state){
-		case SELECTING_COMPKEMON:{
+			case SELECTING_COMPKEMON: {
+
+				GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
+				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
+				
+				g2d.setColor(Color.GREEN);
+				
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
+				
+				textBox.Draw(g2d);
+				break;
+			}
 			
-			Font font = new Font("consolas", Font.PLAIN, 18);
-			g2d.setFont(font);
-			g2d.setColor(Color.GREEN);
-			GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
-			GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
+			case CHOOSING_MOVE: {
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
+				
+				textBox.Draw(g2d);
+				break;
+			}
 			
-			g2d.setColor(Color.GREEN);
+		
 			
-			g2d.drawString("> ", 10, windowHeight - 10);
-			g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
-			
-			textBox.Draw(g2d);
-			break;
-		}
 		}
 	}
 }

@@ -17,7 +17,7 @@ enum GameState{
 }
 
 public class Game {
-	GameState state;
+	static GameState state;
 	GamePanel panel;
 	
 	static String commandLine = "";
@@ -45,10 +45,10 @@ public class Game {
 					break;
 				}
 				case BATTLE : {
-					commandLine = "";
 					break;
 				}
 				case CHOOSING_MOVE : {
+					ChooseMove();
 					commandLine = "";
 					break;
 				}
@@ -91,9 +91,7 @@ public class Game {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
-		
 		enemy = new Compkemon(CompkemonList.Prototype);
-	
 		
 		// TODO wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);
@@ -126,29 +124,60 @@ public class Game {
 		System.out.println("Battle has concluded");	
 	}
 	
+	static int myMove;
+	static int enemyMove;
+	static Move firstMove = new Move();
+	static Move secondMove = new Move();
+	static int priority;
+	static Compkemon loser = new Compkemon();
+	
+	
+	// Test method please get rid of TODO get rid of 
+	public void BatIntro() {
+		textBox.AnimateText("A wild " + enemy + " hacked!", false);
+		System.out.println("Finished intro");
+		state = GameState.CHOOSING_MOVE;
+	}
+	
+	// Test scene check TODO get rid of
+	public void BatChooseMove() {	
+		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
+		
+		myMove = Integer.parseInt(commandLine);
+		enemyMove = (int)(Math.random() * enemy.moveset.length);
+		
+		myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
+		enemy.currentMove = enemy.moveset[enemyMove];	
+	
+		System.out.println("Move chosen is " + myMove);
+		System.out.println("reached breakpoint");
+		
+	}
+	
+	public void ChooseMove() {
+		myMove = Integer.parseInt(commandLine);
+		myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
+		
+	}
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
-		
-		int myMove;
-		int enemyMove;
-		Move firstMove = new Move();
-		Move secondMove = new Move();
-		int priority;
+
 		turnCounter = 0;
-		Compkemon loser = new Compkemon();
-		
 		
 		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
 			//FIXME break up battle into more methods
 			state = GameState.BATTLE;
+			commandLine = "";
 			System.out.println("switched to Battle state");
-			
 			//FIXME do something proper here! You fucked up the battle scene method
 			textBox.AnimateText("Hello, welcome to a battle!", false);
-			textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
+			
 			//myMove = scanner.nextInt();	
-			myMove = Integer.parseInt(commandLine);
+			//myMove = Integer.parseInt(commandLine);
+			
+			state = GameState.CHOOSING_MOVE;
+			textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
 			enemyMove = (int)(Math.random() * enemy.moveset.length);
 			
 			myCompkemon.currentMove = myCompkemon.moveset[myMove - 1];
@@ -175,7 +204,9 @@ public class Game {
 			ArrayList<Effect> secondEffects = second.effect;
 			
 			// Display health bars
-			BattleHandler.displayHealth(myCompkemon, enemy);		
+			BattleHandler.displayHealth(myCompkemon, enemy);	
+			
+			System.out.println("reached a breakpoint");
 			
 			// Check for lingering Effects on first 
 			if (firstEffects.size() > 0) {

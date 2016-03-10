@@ -144,7 +144,7 @@ public class Compkemon {
     public String getMoveset() {
     	String moves = "";
     	for (int i = 0; i < moveset.length; i++) {
-    		moves += (i+1) + ". " + moveset[i] + "\t"; 
+    		moves += (i+1) + ". " + moveset[i] + "   "; 
     	}
     	return moves;
     }

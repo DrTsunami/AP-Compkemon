@@ -14,6 +14,7 @@ enum GameState{
 	SELECTING_COMPKEMON,
 	BATTLE,
 	CHOOSING_MOVE,
+	APPLYING_EFFECTS,
 }
 
 public class Game {
@@ -44,7 +45,8 @@ public class Game {
 					state = GameState.BATTLE;
 					System.out.println("State switched to Battle");
 					System.out.println("CommandLine is deleted");
-					ChooseMove();
+					//ChooseMove();
+					battleScene(myCompkemon, enemy);
 					break;
 				}
 				case BATTLE : {
@@ -54,6 +56,7 @@ public class Game {
 					myCompkemon.selectMove();
 					commandLine = "";
 					System.out.println("CommandLine is deleted");
+					
 					break;
 				}
 			}
@@ -127,6 +130,7 @@ public class Game {
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// Declare static variables
 	static int myMove;
 	static int enemyMove;
 	static Move firstMove = new Move();
@@ -144,8 +148,84 @@ public class Game {
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void EffectHandler(Compkemon compkemon) {
+		if (compkemon.effect.size() > 0) {
+			for (int i = 0; i < compkemon.effect.size(); i++) {
+				compkemon.effect.get(i).didApplyThisTurn = false;
+				compkemon.effect.get(i).Update();
+				if (compkemon.effect.get(i).finished) {
+					compkemon.effect.remove(i);
+				}
+			}
+		} 
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void MoveHandler(Compkemon current, Compkemon other) {
+		if (current.currentMove != null) {
+			// User move begin					
+			System.out.println(current + " used " + firstMove);
+			
+			// Move hit/miss
+			if (BattleHandler.hitMiss(firstMove)) {
+				// Alpha damage calculator and applier
+				if (firstMove.power > 0) {
+					System.out.println(other + " took damage!");
+					other.health = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, firstMove)));	
+					if (other.currentHealth <= 0) {
+						other.currentHealth = 0;
+					}
+					BattleHandler.displayHealth(myCompkemon, enemy);					
+				}
+				
+				
+				// Check for move effect. If true, effects are applied
+				if (firstMove.hasEffect) {
+					Effect effect = firstMove.getEffect(current, other);
+					
+					if (firstMove.toSelf) {
+						current.effect.add(effect);
+						for (int i = 0; i < current.effect.size(); i++) {
+							if (!current.effect.get(i).didApplyThisTurn) {
+								current.effect.get(i).Update();
+								if (current.effect.get(i).finished) {
+									current.effect.remove(i);
+									i--;
+								}
+							}								
+						} 
+					} else {
+						other.effect.add(effect);
+						for (int i = 0; i < other.effect.size(); i++) {
+							if (!other.effect.get(i).didApplyThisTurn) {
+								other.effect.get(i).Update();
+								if (other.effect.get(i).finished) {
+									other.effect.remove(i);
+									i--;
+								}
+							}	
+						}
+					}
+					
+					System.out.println("Added an effect!");
+					BattleHandler.displayHealth(myCompkemon, enemy);
+				}
+				
+				
+				// Splash salute - not done
+
+			} else {
+				System.out.println(current + "'s attack missed!");
+			}
+		}
+		
+	}
 	
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
@@ -155,11 +235,14 @@ public class Game {
 		System.out.println("switched to Battle state");
 		textBox.AnimateText("Hello, welcome to a battle!", false);
 		
-		while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
+		//while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
 			//FIXME break up battle into more method
+			
+			// Choose move
 			ChooseMove();
 			
+			// Priority handler
 			priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 			Compkemon first = new Compkemon();
 			Compkemon second = new Compkemon();
@@ -177,166 +260,35 @@ public class Game {
 				secondMove = myCompkemon.currentMove;
 			}
 		
-			ArrayList<Effect> firstEffects = first.effect;
-			ArrayList<Effect> secondEffects = second.effect;
-			
-			
 			// Display health bars
 			BattleHandler.displayHealth(myCompkemon, enemy);	
 			
-			
-			// Check for lingering Effects on first 
-			if (firstEffects.size() > 0) {
-				for (int i = 0; i < firstEffects.size(); i++) {
-					firstEffects.get(i).didApplyThisTurn = false;
-					firstEffects.get(i).Update();
-					if (firstEffects.get(i).finished) {
-						firstEffects.remove(i);
-					}
-				}
-			} 
-			
-			if (first.currentMove != null) {
-				// User move begin					
-				System.out.println(first + " used " + firstMove);
-				
-				// Move hit/miss
-				if (BattleHandler.hitMiss(firstMove)) {
-					// Alpha damage calculator and applier
-					if (firstMove.power > 0) {
-						System.out.println(second + " took damage!");
-						second.health = (second.currentHealth - ((int)BattleHandler.damageCalculator(first, second, firstMove)));	
-						if (second.currentHealth <= 0) {
-							second.currentHealth = 0;
-						}
-						BattleHandler.displayHealth(myCompkemon, enemy);					
-					}
-					
-					
-					// Check for move effect. If true, effects are applied
-					if (firstMove.hasEffect) {
-						Effect effect = firstMove.getEffect(first, second);
-						
-						if (firstMove.toSelf) {
-							firstEffects.add(effect);
-							for (int i = 0; i < firstEffects.size(); i++) {
-								if (!firstEffects.get(i).didApplyThisTurn) {
-									firstEffects.get(i).Update();
-									if (firstEffects.get(i).finished) {
-										firstEffects.remove(i);
-										i--;
-									}
-								}								
-							} 
-						} else {
-							secondEffects.add(effect);
-							for (int i = 0; i < secondEffects.size(); i++) {
-								if (!secondEffects.get(i).didApplyThisTurn) {
-									secondEffects.get(i).Update();
-									if (secondEffects.get(i).finished) {
-										secondEffects.remove(i);
-										i--;
-									}
-								}	
-							}
-						}
-						
-						System.out.println("Added an effect!");
-						BattleHandler.displayHealth(myCompkemon, enemy);
-					}
-					
-					
-					// Splash salute - not done
-	
-				} else {
-					System.out.println(first + "'s attack missed!");
-				}
-			}
+			// Check for lingering effects on first
+			EffectHandler(first);
+			MoveHandler(first, second);
 				
 			// Check for enemy health. If fainted, end the game
+			// TODO make sure this block does not get deleted
 			if (second.currentHealth <= 0) {
 				loser = second;
-				break;					
+				//break;					
 			}
-				
+
 			// Enemy move begin
-			
-			// Check for lingering effects on second Compkemon
-			if (secondEffects.size() > 0) {
-				for (int i = 0; i < secondEffects.size(); i++) {
-					secondEffects.get(i).didApplyThisTurn = false;
-					secondEffects.get(i).Update();
-					if (secondEffects.get(i).finished) {
-						secondEffects.remove(i);
-					}
-				}
-			}
-			
-			if (second.currentMove != null) {
-				System.out.println(second + " used " + secondMove);	
+			EffectHandler(second);
+			MoveHandler(second, first);
 				
-				// Hit or miss
-				if (BattleHandler.hitMiss(secondMove)) {						
-					// Alpha damage calculator and applier
-					if (secondMove.power > 0) {
-						System.out.println(first + " took damage!");
-						first.health = (first.currentHealth - ((int)BattleHandler.damageCalculator(second, first, secondMove)));
-						if (first.currentHealth <= 0) {
-							first.currentHealth = 0;
-						}
-						BattleHandler.displayHealth(myCompkemon, enemy);
-					}
-					
-					// Check for move effect. If true, effects are applied
-					if (secondMove.hasEffect) {
-						Effect effect = secondMove.getEffect(second, first);
-						
-						if (secondMove.toSelf) {
-							secondEffects.add(effect);
-							for (int i = 0; i < secondEffects.size(); i++) {
-								if (!secondEffects.get(i).didApplyThisTurn) {
-									secondEffects.get(i).Update();
-									if (secondEffects.get(i).finished) {
-										secondEffects.remove(i);
-										i--;
-									}
-								}
-							} 
-						} else {
-							firstEffects.add(effect);
-							for (int i = 0; i < firstEffects.size(); i++) {
-								if (!firstEffects.get(i).didApplyThisTurn) {
-									firstEffects.get(i).Update();
-									if (firstEffects.get(i).finished) {
-										firstEffects.remove(i);
-										i--;
-									}
-								}
-							}
-						}
-						
-						System.out.println("Added an effect!");
-						BattleHandler.displayHealth(myCompkemon, enemy);
-					}
-					
-					
-					
-				} else  {
-					System.out.println(second + "'s attack missed!");
-				}
-				
-			}
-			// Check for user health. If fainted, end the game
+			// Check for first health. If fainted, end the game
 			if (first.currentHealth <= 0) {
 				loser = first;
-				break;					
+				//break;					
 			}
 			
 			// Turn tracker increases
 			turnCounter++;
 			
 			
-		} // end while loop
+		//} // end while loop
 		
 		System.out.println(loser + " has fainted");
 	} // end battleScene
@@ -367,7 +319,6 @@ public class Game {
 				
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
-				
 				textBox.Draw(g2d);
 				break;
 			}
@@ -375,7 +326,13 @@ public class Game {
 			case CHOOSING_MOVE: {
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
-				
+				textBox.Draw(g2d);
+				break;
+			}
+			
+			case APPLYING_EFFECTS: {
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				break;
 			}

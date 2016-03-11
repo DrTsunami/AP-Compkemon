@@ -14,6 +14,7 @@ enum GameState{
 	SELECTING_COMPKEMON,
 	BATTLE,
 	CHOOSING_MOVE,
+	APPLYING_MOVE,
 	APPLYING_EFFECTS,
 }
 
@@ -55,8 +56,8 @@ public class Game {
 				case CHOOSING_MOVE : {
 					myCompkemon.selectMove();
 					commandLine = "";
-					System.out.println("CommandLine is deleted");
-					
+					System.out.println("CommandLine is cleared");
+					System.out.println("REACHED END OF CHOOSINGMOVE");
 					break;
 				}
 			}
@@ -141,10 +142,12 @@ public class Game {
 	public void ChooseMove() {
 		
 		state = GameState.CHOOSING_MOVE;
+		
 		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
+		int moveInput = Integer.parseInt(commandLine);
+		myCompkemon.currentMove = myCompkemon.moveset[(moveInput - 1)];
 		enemyMove = (int)(Math.random() * enemy.moveset.length);
 		enemy.currentMove = enemy.moveset[enemyMove];	
-		
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,7 +244,7 @@ public class Game {
 			
 			// Choose move
 			ChooseMove();
-			
+			System.out.println("Move has been chosen! IM HERE");
 			// Priority handler
 			priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 			Compkemon first = new Compkemon();
@@ -259,6 +262,8 @@ public class Game {
 				firstMove = enemy.currentMove;
 				secondMove = myCompkemon.currentMove;
 			}
+			
+			System.out.println("PRIORITY HAS BEEN SET");
 		
 			// Display health bars
 			BattleHandler.displayHealth(myCompkemon, enemy);	

@@ -21,7 +21,6 @@ public class TextBox {
 	Thread animateThread;
 	ArrayList<String> animateQueue = new ArrayList<String>();	
 	int animateCounter = 0;
-
 	int dashCounter = 0;
 	
 	public TextBox(Vector2 pos, Vector2 size){

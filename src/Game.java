@@ -33,6 +33,7 @@ public class Game {
 		panel.repaint();
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
+		// FIXME send previous gameState after input is received!
 	}
 	
 	public void ProcessCommand(String command){
@@ -41,6 +42,12 @@ public class Game {
 		
 		if (command.length() > 0) {
 			switch (state){
+				case WAITING_FOR_INPUT: {
+					while (command.length() == 0) {
+						// do nothing
+					}
+					break;
+				}
 				case SELECTING_COMPKEMON:{	
 					Select();
 					state = GameState.BATTLE;
@@ -58,7 +65,7 @@ public class Game {
 					break;
 				}
 			}
-		} 
+		}
 	}
 	
 	public void KeyPress(KeyEvent keyCode){
@@ -178,7 +185,7 @@ public class Game {
 				// Alpha damage calculator and applier
 				if (firstMove.power > 0) {
 					System.out.println(other + " took damage!");
-					other.health = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, firstMove)));	
+					other.currentHealth = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, firstMove)));	
 					if (other.currentHealth <= 0) {
 						other.currentHealth = 0;
 					}
@@ -246,7 +253,7 @@ public class Game {
 			
 			// Choose move
 			ChooseMove();
-			System.out.println("Move has been chosen! IM HERE");
+			System.out.println("Move has been chosen!");
 			// Priority handler
 			priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 			Compkemon first = new Compkemon();
@@ -316,12 +323,19 @@ public class Game {
 		g2d.setFont(font);
 		g2d.setColor(Color.GREEN);
 		
-		switch (state){
-			case SELECTING_COMPKEMON: {
 
-				GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
-				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
-				
+		GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
+		GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
+		
+		
+		switch (state){
+			case WAITING_FOR_INPUT: {
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
+				textBox.Draw(g2d);
+				break;
+			}
+			case SELECTING_COMPKEMON: {
 				g2d.setColor(Color.GREEN);
 				
 				g2d.drawString("> ", 10, windowHeight - 10);

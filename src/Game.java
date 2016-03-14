@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 // Handles the GameStates
 enum GameState{
+	WAITING_FOR_INPUT,
 	SELECTING_COMPKEMON,
 	BATTLE,
 	CHOOSING_MOVE,
@@ -42,10 +43,8 @@ public class Game {
 			switch (state){
 				case SELECTING_COMPKEMON:{	
 					Select();
-					commandLine = "";
 					state = GameState.BATTLE;
 					System.out.println("State switched to Battle");
-					System.out.println("CommandLine is deleted");
 					//ChooseMove();
 					battleScene(myCompkemon, enemy);
 					break;
@@ -55,8 +54,6 @@ public class Game {
 				}
 				case CHOOSING_MOVE : {
 					myCompkemon.selectMove();
-					commandLine = "";
-					System.out.println("CommandLine is cleared");
 					System.out.println("REACHED END OF CHOOSINGMOVE");
 					break;
 				}
@@ -67,17 +64,22 @@ public class Game {
 	public void KeyPress(KeyEvent keyCode){
 		char c = keyCode.getKeyChar();
 		int i = (int)c;
-		if (i == 10){ // enter
+		if (i == 10 && commandLine.length() > 0){ // enter
 			//if waiting for enter to continue
 			//	continue
 			ProcessCommand(commandLine);
 			commandLine = "";
+			System.out.println("commandLine cleared");
 		} else {
 			if (i >= 32 && i < 127) // other keys
 				commandLine += c;
-			else if (i == 8) // backspace
+			else if (i == 8) { // backspace
 				if (commandLine.length() > 0)
 					commandLine = commandLine.substring(0, commandLine.length() - 1);
+			} else if (i == 10) {
+	    		textBox.EnterToContinue(keyCode);
+			}
+			
 		}
 		panel.repaint();
 	}

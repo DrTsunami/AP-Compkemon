@@ -24,10 +24,11 @@ public class TextBox {
 
 	int dashCounter = 0;
 	
-	public TextBox(Vector2 pos, Vector2  size){
+	public TextBox(Vector2 pos, Vector2 size){
 		Position = pos;
 		Size = size;
 		Text = "";
+		NeedsInput = false;
 		
 		animateThread = new Thread(){	// Creates new thread
 			public void run(){	// Run thread
@@ -43,6 +44,10 @@ public class TextBox {
 							// Adds to counter, counter managed by equation in Draw method ***
 							dashCounter++;	
 							state = TextState.DONE;
+							
+							if (NeedsInput) {
+								Game.state = GameState.WAITING_FOR_INPUT;
+							}
 						}
 						GameWindow.gameWindow.gamePanel.repaint();
 					}
@@ -66,29 +71,6 @@ public class TextBox {
 			animateQueue.remove(0);
 			animateCounter = 0;
 		}
-	}
-	
-	public void ClickToContinue(MouseEvent k) {
-		if (animateQueue.size() > 1){
-			animateQueue.remove(0);
-			animateCounter = 0;
-		}
-	}
-	
-	public void EnterCommand(KeyEvent k) {
-		int i = 0;
-		int keyCode = k.getKeyCode();
-		while (i == 0) {
-			// FIXME this thing - have to somehow wait for input
-			//Thread.interrupt();
-			// Check for input
-			
-			if (keyCode == 10 && Game.commandLine.length() > 0) {
-				
-			}
-				
-		}
-		
 	}
 	
 	public void Draw(Graphics2D g2d){

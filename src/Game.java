@@ -17,6 +17,7 @@ enum GameState{
 	CHOOSING_MOVE,
 	APPLYING_MOVE,
 	APPLYING_EFFECTS,
+	END_GAME,
 }
 
 public class Game {
@@ -27,7 +28,21 @@ public class Game {
 	static String commandLine = "";
 	TextBox textBox;
 
-
+	
+	static Compkemon myCompkemon;
+	static Compkemon enemy;
+	static TypeTable typeTable = new TypeTable();
+	static int turnCounter;
+	
+	// Declare static variables
+	static int myMove;
+	static int enemyMove;
+	static Move firstMove = new Move();
+	static Move secondMove = new Move();
+	static int priority;
+	static Compkemon loser = new Compkemon();
+	static boolean gameOver = false;
+	
 	public void init() {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
@@ -43,7 +58,6 @@ public class Game {
 				battleScene(myCompkemon, enemy);
 			}
 		};
-		// FIXME send previous gameState after input is received!
 	}
 	
 	public void ProcessCommand(String command){
@@ -112,11 +126,7 @@ public class Game {
 	
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	static Compkemon myCompkemon;
-	static Compkemon enemy;
-	static TypeTable typeTable = new TypeTable();
-	static int turnCounter;
+
 	
 	public void Select() {
 		int myCompkemonScanned = 0;
@@ -155,13 +165,7 @@ public class Game {
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// Declare static variables
-	static int myMove;
-	static int enemyMove;
-	static Move firstMove = new Move();
-	static Move secondMove = new Move();
-	static int priority;
-	static Compkemon loser = new Compkemon();
+
 	
 	public void ChooseMove() {
 		
@@ -206,25 +210,27 @@ public class Game {
 					
 				// Check for enemy health. If fainted, end the game
 				// TODO make sure this block does not get deleted
-				if (second.currentHealth <= 0) {
-					loser = second;
-					//break;					
-				}
 
-				// Enemy move begin
-				EffectHandler(second);
-				MoveHandler(second, first);
+				if (gameOver) {
+					endGame(loser);
+				} else {
+					// Enemy move begin
+					EffectHandler(second);
+					MoveHandler(second, first);
 					
-				// Check for first health. If fainted, end the game
-				if (first.currentHealth <= 0) {
-					loser = first;
-					//break;					
+					if (gameOver) {
+						endGame(loser);		
+					} else {
+						ChooseMove();
+					}
 				}
-				
 				// Turn tracker increases
 				turnCounter++;
+			
 				
-				ChooseMove();
+			
+				
+				
 			}
 		};
 	}
@@ -249,14 +255,14 @@ public class Game {
 		// FIXME something is mixed up between first and second compkemon. Check through here to figure out why everyone is only using Splash
 		if (current.currentMove != null) {
 			// User move begin					
-			System.out.println(current + " used " + firstMove);
+			System.out.println(current + " used " + current.currentMove);
 			
 			// Move hit/miss
-			if (BattleHandler.hitMiss(firstMove)) {
+			if (BattleHandler.hitMiss(current.currentMove)) {
 				// Alpha damage calculator and applier
-				if (firstMove.power > 0) {
+				if (current.currentMove.power > 0) {
 					System.out.println(other + " took damage!");
-					other.currentHealth = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, firstMove)));	
+					other.currentHealth = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, current.currentMove)));	
 					if (other.currentHealth <= 0) {
 						other.currentHealth = 0;
 					}
@@ -265,10 +271,10 @@ public class Game {
 				
 				
 				// Check for move effect. If true, effects are applied
-				if (firstMove.hasEffect) {
-					Effect effect = firstMove.getEffect(current, other);
+				if (current.currentMove.hasEffect) {
+					Effect effect = current.currentMove.getEffect(current, other);
 					
-					if (firstMove.toSelf) {
+					if (current.currentMove.toSelf) {
 						current.effect.add(effect);
 						for (int i = 0; i < current.effect.size(); i++) {
 							if (!current.effect.get(i).didApplyThisTurn) {
@@ -302,6 +308,14 @@ public class Game {
 			} else {
 				System.out.println(current + "'s attack missed!");
 			}
+			
+			
+		}
+		
+		if (other.currentHealth <= 0) {
+			System.out.println("I'm here! game over here!");
+			loser = other;
+			gameOver = true;
 		}
 		
 	}
@@ -323,6 +337,22 @@ public class Game {
 		System.out.println(loser + " has fainted");
 	} // end battleScene
 
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void endGame(Compkemon loser) {
+		commandProcessor = new CommandProcessor(){
+			public void processCommand(String txt){
+				// this will be called next time we press enter;
+				state = GameState.END_GAME;
+			}
+		};
+		
+		// FIXME fix the end of the game. Allow to wrap if you need to
+		
+		System.out.println(loser + " has fainted!");
+		
+	}
 	
 	
 	public void draw(Graphics2D g2d) {
@@ -374,7 +404,15 @@ public class Game {
 				break;
 			}
 			
-		
+			case END_GAME: {
+				g2d.setColor(Color.black);
+				g2d.fillRect(0, 0, windowWidth, windowHeight);
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
+				g2d.drawString(loser + " has fainted! Game over!", 50, 50);
+				textBox.Draw(g2d);
+				break;
+			}
 			
 		}
 	}

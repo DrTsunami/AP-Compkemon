@@ -22,6 +22,7 @@ enum GameState{
 public class Game {
 	static GameState state;
 	GamePanel panel;
+	CommandProcessor commandProcessor;
 	
 	static String commandLine = "";
 	TextBox textBox;
@@ -33,14 +34,28 @@ public class Game {
 		panel.repaint();
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
+		
+		commandProcessor = new CommandProcessor(){
+			public void processCommand(String txt){
+				// this will be called next time we press enter;
+				Select();
+				state = GameState.BATTLE;
+				battleScene(myCompkemon, enemy);
+			}
+		};
 		// FIXME send previous gameState after input is received!
 	}
 	
 	public void ProcessCommand(String command){
+
 		String text = "";
 		// TODO handle a command
 		
 		if (command.length() > 0) {
+			if (commandProcessor != null)
+				commandProcessor.processCommand(text);
+		
+		/*
 			switch (state){
 				case WAITING_FOR_INPUT: {
 					while (command.length() == 0) {
@@ -64,7 +79,7 @@ public class Game {
 					System.out.println("REACHED END OF CHOOSINGMOVE");
 					break;
 				}
-			}
+			}*/
 		}
 	}
 	
@@ -153,10 +168,65 @@ public class Game {
 		state = GameState.CHOOSING_MOVE;
 		
 		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
-		int moveInput = Integer.parseInt(commandLine);
-		myCompkemon.currentMove = myCompkemon.moveset[(moveInput - 1)];
-		enemyMove = (int)(Math.random() * enemy.moveset.length);
-		enemy.currentMove = enemy.moveset[enemyMove];	
+		commandProcessor = new CommandProcessor(){
+			public void processCommand(String txt){
+				txt = commandLine;
+				int moveInput = Integer.parseInt(txt);
+				myCompkemon.currentMove = myCompkemon.moveset[(moveInput - 1)];
+				enemyMove = (int)(Math.random() * enemy.moveset.length);
+				enemy.currentMove = enemy.moveset[enemyMove];
+
+				System.out.println("Move has been chosen!");
+				// Priority handler
+				priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
+				Compkemon first = new Compkemon();
+				Compkemon second = new Compkemon();
+				
+				// Establish priority
+				if (priority == 1) {
+					first = myCompkemon;
+					second = enemy;
+					firstMove = myCompkemon.currentMove;
+					secondMove = enemy.currentMove;
+				} else if (priority == 0) {
+					first = enemy;
+					second = myCompkemon;
+					firstMove = enemy.currentMove;
+					secondMove = myCompkemon.currentMove;
+				}
+				
+				System.out.println("PRIORITY HAS BEEN SET");
+			
+				// Display health bars
+				BattleHandler.displayHealth(myCompkemon, enemy);	
+				
+				// Check for lingering effects on first
+				EffectHandler(first);
+				MoveHandler(first, second);
+					
+				// Check for enemy health. If fainted, end the game
+				// TODO make sure this block does not get deleted
+				if (second.currentHealth <= 0) {
+					loser = second;
+					//break;					
+				}
+
+				// Enemy move begin
+				EffectHandler(second);
+				MoveHandler(second, first);
+					
+				// Check for first health. If fainted, end the game
+				if (first.currentHealth <= 0) {
+					loser = first;
+					//break;					
+				}
+				
+				// Turn tracker increases
+				turnCounter++;
+				
+				ChooseMove();
+			}
+		};
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +246,7 @@ public class Game {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void MoveHandler(Compkemon current, Compkemon other) {
+		// FIXME something is mixed up between first and second compkemon. Check through here to figure out why everyone is only using Splash
 		if (current.currentMove != null) {
 			// User move begin					
 			System.out.println(current + " used " + firstMove);
@@ -246,64 +317,9 @@ public class Game {
 		turnCounter = 0;
 		System.out.println("switched to Battle state");
 		textBox.AnimateText("Hello, welcome to a battle!", false);
-		
-		//while (myCompkemon.currentHealth > 0 || enemy.currentHealth > 0) {
 			
 			//FIXME break up battle into more method
-			
-			// Choose move
-			ChooseMove();
-			System.out.println("Move has been chosen!");
-			// Priority handler
-			priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
-			Compkemon first = new Compkemon();
-			Compkemon second = new Compkemon();
-			
-			// Establish priority
-			if (priority == 1) {
-				first = myCompkemon;
-				second = enemy;
-				firstMove = myCompkemon.currentMove;
-				secondMove = enemy.currentMove;
-			} else if (priority == 0) {
-				first = enemy;
-				second = myCompkemon;
-				firstMove = enemy.currentMove;
-				secondMove = myCompkemon.currentMove;
-			}
-			
-			System.out.println("PRIORITY HAS BEEN SET");
-		
-			// Display health bars
-			BattleHandler.displayHealth(myCompkemon, enemy);	
-			
-			// Check for lingering effects on first
-			EffectHandler(first);
-			MoveHandler(first, second);
-				
-			// Check for enemy health. If fainted, end the game
-			// TODO make sure this block does not get deleted
-			if (second.currentHealth <= 0) {
-				loser = second;
-				//break;					
-			}
-
-			// Enemy move begin
-			EffectHandler(second);
-			MoveHandler(second, first);
-				
-			// Check for first health. If fainted, end the game
-			if (first.currentHealth <= 0) {
-				loser = first;
-				//break;					
-			}
-			
-			// Turn tracker increases
-			turnCounter++;
-			
-			
-		//} // end while loop
-		
+		ChooseMove();
 		System.out.println(loser + " has fainted");
 	} // end battleScene
 

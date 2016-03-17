@@ -69,7 +69,7 @@ public class Game {
 	public void ProcessCommand(String command){
 
 		String text = "";
-		// TODO handle a command
+		// Handle a command
 		
 		if (command.length() > 0) {
 			if (commandProcessor != null)
@@ -140,7 +140,7 @@ public class Game {
 		enemy = new Compkemon();
 		enemy = new Compkemon(CompkemonList.Prototype);
 		
-		// TODO wait for user to select compkemon
+		// wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);
 		
 		switch(myCompkemonScanned) {
@@ -337,7 +337,6 @@ public class Game {
 		System.out.println("switched to Battle state");
 		textBox.AnimateText("Hello, welcome to a battle!", false);
 		ChooseMove();
-		System.out.println(loser + " has fainted");
 	} // end battleScene
 
 	
@@ -363,9 +362,6 @@ public class Game {
 				
 			}
 		};
-		
-		// FIXME fix the end of the game. Allow to wrap if you need to
-		
 		System.out.println(loser + " has fainted!");
 		
 	}

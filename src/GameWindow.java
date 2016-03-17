@@ -98,7 +98,6 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
         char c = e.getKeyChar();
         if ( c != KeyEvent.CHAR_UNDEFINED )
             Input.keys[e.getKeyCode()] = false;
-        	//TODO cursor
     }
 
     public void keyTyped( KeyEvent e ) { }

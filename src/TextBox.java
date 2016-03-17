@@ -73,9 +73,13 @@ public class TextBox {
 	}
 	
 	public void Draw(Graphics2D g2d){
+		
+		// Draw the background
 		g2d.setColor(Color.black);
 		g2d.fillRect((int)Position.x, (int)Position.y, (int)Size.x, (int)Size.y);
-		g2d.setColor(Color.green); // TODO replace with bg
+		
+		// Draw border for textbox
+		g2d.setColor(Color.green);
 		g2d.drawRect((int)Position.x, (int)Position.y, (int)Size.x, (int)Size.y);
 
 		g2d.setFont(new Font("consolas", Font.PLAIN, 18));

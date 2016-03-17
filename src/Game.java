@@ -47,6 +47,12 @@ public class Game {
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
+		Start();
+		
+	}
+	
+	public void Start() {
+		state = GameState.SELECTING_COMPKEMON;
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
 		
@@ -252,7 +258,6 @@ public class Game {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void MoveHandler(Compkemon current, Compkemon other) {
-		// FIXME something is mixed up between first and second compkemon. Check through here to figure out why everyone is only using Splash
 		if (current.currentMove != null) {
 			// User move begin					
 			System.out.println(current + " used " + current.currentMove);
@@ -331,8 +336,6 @@ public class Game {
 		turnCounter = 0;
 		System.out.println("switched to Battle state");
 		textBox.AnimateText("Hello, welcome to a battle!", false);
-			
-			//FIXME break up battle into more method
 		ChooseMove();
 		System.out.println(loser + " has fainted");
 	} // end battleScene
@@ -341,10 +344,23 @@ public class Game {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void endGame(Compkemon loser) {
+		state = GameState.END_GAME;
+		textBox.AnimateText("Would you like to battle again? Y/N", true);
+		
 		commandProcessor = new CommandProcessor(){
 			public void processCommand(String txt){
 				// this will be called next time we press enter;
-				state = GameState.END_GAME;
+				switch (commandLine) {
+					case "y" :
+						System.out.println("y detected");
+						Start();
+						break;
+					case "n" :
+						System.out.println("n detected");
+						System.exit(0);
+						break;
+				}
+				
 			}
 		};
 		

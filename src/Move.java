@@ -208,7 +208,7 @@ public class Move {
 	        case Splash: 
 	        	attackName = "Splash";
 	        	type = "Moron";
-	            power = 100;
+	            power = 10;
 	            accuracy = 1.0f;
 	            hasEffect = false;
 	            toSelf = false;

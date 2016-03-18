@@ -21,20 +21,20 @@ enum GameState{
 }
 
 public class Game {
-	static GameState state;
+	
 	GamePanel panel;
+	
+	// Prepare Command Line box
 	CommandProcessor commandProcessor;
-	
 	static String commandLine = "";
-	TextBox textBox;
+	static TextBox textBox;
 
-	
+	// Declare static variables
+	static GameState state;
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
 	static TypeTable typeTable = new TypeTable();
 	static int turnCounter;
-	
-	// Declare static variables
 	static int myMove;
 	static int enemyMove;
 	static Move firstMove = new Move();
@@ -43,82 +43,69 @@ public class Game {
 	static Compkemon loser = new Compkemon();
 	static boolean gameOver = false;
 	
+	// Performed on initialization
 	public void init() {
+		// Draw command line box
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
+		
+		// Go to next stage
 		Start();
 		
 	}
 	
+	// Performed after initialization
 	public void Start() {
+		// Change state and perform welcome messages
 		state = GameState.SELECTING_COMPKEMON;
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
 		
+		// override processCommand for commandProcessor in this state. When input is detected, perform this.
 		commandProcessor = new CommandProcessor(){
 			public void processCommand(String txt){
 				// this will be called next time we press enter;
 				Select();
+				// TODO change gamestate locations to switch at the proper time
 				state = GameState.BATTLE;
 				battleScene(myCompkemon, enemy);
 			}
 		};
 	}
 	
+	// Processes commands
 	public void ProcessCommand(String command){
 
 		String text = "";
-		// Handle a command
 		
 		if (command.length() > 0) {
 			if (commandProcessor != null)
 				commandProcessor.processCommand(text);
-		
-		/*
-			switch (state){
-				case WAITING_FOR_INPUT: {
-					while (command.length() == 0) {
-						// do nothing
-					}
-					break;
-				}
-				case SELECTING_COMPKEMON:{	
-					Select();
-					state = GameState.BATTLE;
-					System.out.println("State switched to Battle");
-					//ChooseMove();
-					battleScene(myCompkemon, enemy);
-					break;
-				}
-				case BATTLE : {
-					break;
-				}
-				case CHOOSING_MOVE : {
-					myCompkemon.selectMove();
-					System.out.println("REACHED END OF CHOOSINGMOVE");
-					break;
-				}
-			}*/
 		}
 	}
 	
+	// Handles key events
 	public void KeyPress(KeyEvent keyCode){
+		// Takes keyCode (key) and gets the character and turns it into the integer
 		char c = keyCode.getKeyChar();
 		int i = (int)c;
-		if (i == 10 && commandLine.length() > 0){ // enter
-			//if waiting for enter to continue
-			//	continue
+		
+		// If enter key detected...
+		if (i == 10 && commandLine.length() > 0){ 
+			// if Enter is pressed and the commandLine receives text, then process it and clear the text
 			ProcessCommand(commandLine);
 			commandLine = "";
-			System.out.println("commandLine cleared");
 		} else {
+			// otherwise, if any other key is pressed, add it to commandLine and continue
 			if (i >= 32 && i < 127) // other keys
 				commandLine += c;
 			else if (i == 8) { // backspace
+				// if Backspace is pressed, delete a character from commandLine
 				if (commandLine.length() > 0)
 					commandLine = commandLine.substring(0, commandLine.length() - 1);
 			} else if (i == 10) {
+				// if Enter is pressed and there's nothing, run EnterToContinue
 	    		textBox.EnterToContinue(keyCode);
 			}
 			
@@ -133,7 +120,7 @@ public class Game {
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
+	// User selects the Compkemon to use
 	public void Select() {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
@@ -172,13 +159,14 @@ public class Game {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 
-	
+	// User chooses move to use
 	public void ChooseMove() {
 		
 		state = GameState.CHOOSING_MOVE;
 		
 		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
 		commandProcessor = new CommandProcessor(){
+			// Overwrite processCommand function for choosing a move
 			public void processCommand(String txt){
 				txt = commandLine;
 				int moveInput = Integer.parseInt(txt);
@@ -186,7 +174,6 @@ public class Game {
 				enemyMove = (int)(Math.random() * enemy.moveset.length);
 				enemy.currentMove = enemy.moveset[enemyMove];
 
-				System.out.println("Move has been chosen!");
 				// Priority handler
 				priority = BattleHandler.priorityCalculator(myCompkemon, myCompkemon.currentMove, enemy, enemy.currentMove);
 				Compkemon first = new Compkemon();
@@ -204,8 +191,6 @@ public class Game {
 					firstMove = enemy.currentMove;
 					secondMove = myCompkemon.currentMove;
 				}
-				
-				System.out.println("PRIORITY HAS BEEN SET");
 			
 				// Display health bars
 				BattleHandler.displayHealth(myCompkemon, enemy);	
@@ -215,7 +200,7 @@ public class Game {
 				MoveHandler(first, second);
 					
 				// Check for enemy health. If fainted, end the game
-				// TODO make sure this block does not get deleted
+				
 
 				if (gameOver) {
 					endGame(loser);
@@ -260,13 +245,14 @@ public class Game {
 	public void MoveHandler(Compkemon current, Compkemon other) {
 		if (current.currentMove != null) {
 			// User move begin					
-			System.out.println(current + " used " + current.currentMove);
 			
+			textBox.AnimateText(current + " used " + current.currentMove, false);
+		
 			// Move hit/miss
 			if (BattleHandler.hitMiss(current.currentMove)) {
 				// Alpha damage calculator and applier
 				if (current.currentMove.power > 0) {
-					System.out.println(other + " took damage!");
+					textBox.AnimateText(other + " took damage!", false);
 					other.currentHealth = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, current.currentMove)));	
 					if (other.currentHealth <= 0) {
 						other.currentHealth = 0;
@@ -303,7 +289,7 @@ public class Game {
 						}
 					}
 					
-					System.out.println("Added an effect!");
+					textBox.AnimateText("Added an effect!", false);
 					BattleHandler.displayHealth(myCompkemon, enemy);
 				}
 				
@@ -311,7 +297,7 @@ public class Game {
 				// Splash salute - not done
 
 			} else {
-				System.out.println(current + "'s attack missed!");
+				textBox.AnimateText(current + "'s attack missed!", false);
 			}
 			
 			
@@ -334,7 +320,6 @@ public class Game {
 
 		// Battle starts
 		turnCounter = 0;
-		System.out.println("switched to Battle state");
 		textBox.AnimateText("Hello, welcome to a battle!", false);
 		ChooseMove();
 	} // end battleScene
@@ -351,18 +336,16 @@ public class Game {
 				// this will be called next time we press enter;
 				switch (commandLine) {
 					case "y" :
-						System.out.println("y detected");
 						Start();
 						break;
 					case "n" :
-						System.out.println("n detected");
 						System.exit(0);
 						break;
 				}
 				
 			}
 		};
-		System.out.println(loser + " has fainted!");
+		textBox.AnimateText(loser + " has fainted!", false);
 		
 	}
 	
@@ -381,11 +364,7 @@ public class Game {
 		g2d.setFont(font);
 		g2d.setColor(Color.GREEN);
 		
-
-		GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
-		GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
-		
-		
+		// FIXME display pertinent text per gamestate
 		switch (state){
 			case WAITING_FOR_INPUT: {
 				g2d.drawString("> ", 10, windowHeight - 10);
@@ -394,8 +373,9 @@ public class Game {
 				break;
 			}
 			case SELECTING_COMPKEMON: {
+				GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
+				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
 				g2d.setColor(Color.GREEN);
-				
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -417,11 +397,8 @@ public class Game {
 			}
 			
 			case END_GAME: {
-				g2d.setColor(Color.black);
 				g2d.fillRect(0, 0, windowWidth, windowHeight);
 				g2d.drawString("> ", 10, windowHeight - 10);
-				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
-				g2d.drawString(loser + " has fainted! Game over!", 50, 50);
 				textBox.Draw(g2d);
 				break;
 			}

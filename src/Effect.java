@@ -1,5 +1,6 @@
 public class Effect {
 	
+	TextBox textBox = Game.textBox;
 	String name;
 	EffectType effectType;
 	int initTurnTracker;
@@ -38,15 +39,15 @@ public class Effect {
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Apathy :
 				if (effectTurns == 0) {
-					System.out.println("Alex became apathetic!");				
+					textBox.AnimateText("Alex became apathetic!", false);				
 					for(int i = 0; i < typeTable[2].length; i++) {
 						typeTable[2][i] = 0.1f;
 					}
 				} else if (effectTurns < 5) {
-					System.out.println("Alex is exerting bad influence. Turn: " + effectTurns);
+					textBox.AnimateText("Alex is exerting bad influence. Turn: " + effectTurns, false);
 					target.currentHealth -= 8;					
 				} else if (effectTurns == 5) {
-					System.out.println("Alex started caring a little bit. End Effect Turn: " + effectTurns);
+					textBox.AnimateText("Alex started caring a little bit. End Effect Turn: " + effectTurns, false);
 					for(int i = 0; i < typeTable[2].length; i++) {
 						typeTable[2][i] = 0.5f;
 					}
@@ -56,7 +57,7 @@ public class Effect {
 				break;
 			case Dab :
 				if (effectTurns == 0) {	
-					System.out.println(target + " dabbed out of harm's way!");
+					textBox.AnimateText(target + " dabbed out of harm's way!", false);
 					tempMove = target.currentMove;
 					tempFloat = target.currentMove.accuracy;
 					target.currentMove.accuracy = 0.0f;
@@ -69,8 +70,8 @@ public class Effect {
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Eat :
-				System.out.println(user + " consumed a big piece of meat! ");
-				System.out.println(user + " recovered health!");
+				textBox.AnimateText(user + " consumed a big piece of meat! ", false);
+				textBox.AnimateText(user + " recovered health!", false);
 				user.currentHealth += 33;
 				if (user.currentHealth > 100) {
 					user.currentHealth = 100;
@@ -80,8 +81,8 @@ public class Effect {
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Enslave : 
-				System.out.println(target + " was enslaved to the Wrightocracy!");
-				System.out.println(target + "'s energy was drained!");
+				textBox.AnimateText(target + " was enslaved to the Wrightocracy!", false);
+				textBox.AnimateText(target + "'s energy was drained!", false);
 				float drain = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
 				user.currentHealth += (int)drain;
 				if (user.currentHealth > 100) {
@@ -93,30 +94,30 @@ public class Effect {
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
 				user.speed += 20;
-				System.out.println(user + " understands things in a new light! Speed sharply increased!");
+				textBox.AnimateText(user + " understands things in a new light! Speed sharply increased!", false);
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case MeatDance:
 				user.attack += 20;
-				System.out.println(user + "'s attack sharply rose!");
+				textBox.AnimateText(user + "'s attack sharply rose!", false);
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Meatpin:
 				target.speed -= 10;
-				System.out.println(target + " was pinned down by" + user + "!");
-				System.out.println(target + "'s speed decreased!");
+				textBox.AnimateText(target + " was pinned down by" + user + "!", false);
+				textBox.AnimateText(target + "'s speed decreased!", false);
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////			
 			case SatanicMissionary:
 				String originalType = target.type;
 				if (effectTurns == 0) {
-					System.out.println(user + " has summoned the forces of darkness to convert the sane.");
+					textBox.AnimateText(user + " has summoned the forces of darkness to convert the sane.", false);
 					target.type = "Moron";
 					didApplyThisTurn = true;
 				} else if (effectTurns == 5) {
-					System.out.println("Darkness has lifted");
+					textBox.AnimateText("Darkness has lifted", false);
 					target.type = originalType;
 					didApplyThisTurn = true;
 					finished = true;
@@ -125,7 +126,7 @@ public class Effect {
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Squint:
 				if (effectTurns == 0) {	
-					System.out.println(user + " can see with clarity!");
+					textBox.AnimateText(user + " can see with clarity!", false);
 					didApplyThisTurn = true;
 				} else if (effectTurns < 2) {
 					tempMove = user.currentMove;
@@ -141,11 +142,11 @@ public class Effect {
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case StateOfAscendancy : 
 				float accuracy = (float) Math.random();
-				System.out.println(target + " is feeling inferior to " + user);								
+				textBox.AnimateText(target + " is feeling inferior to " + user, false);								
 				if (accuracy > 0.5f) {
 					target.currentMove = null;
-					System.out.println("Target move set to null");
-					System.out.println(target + " attacked itself in its fury");
+					textBox.AnimateText("Target move set to null", false);
+					textBox.AnimateText(target + " attacked itself in its fury", false);
 					target.currentHealth -= 20;
 				} 							
 				finished = true;

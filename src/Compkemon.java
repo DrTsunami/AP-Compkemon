@@ -167,8 +167,6 @@ public class Compkemon {
 				myCompkemon.currentMove = myCompkemon.moveset[4];
 				break;
 		}
-		
-		System.out.println("Move is " + (myMove - 1) + ". I'm in the Compkemon Class");
     }
     
     public String toString() {

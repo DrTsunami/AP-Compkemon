@@ -1,5 +1,14 @@
-/CommandProcessor.class
-/Game$1.class
 /Game$2.class
 /Game$3.class
-/Game$4.class
+/Game.class
+/GamePanel.class
+/GameState.class
+/GameWindow.class
+/Input.class
+/Move.class
+/MoveName.class
+/TextBox$1.class
+/TextBox.class
+/TextState.class
+/TypeTable.class
+/Vector2.class

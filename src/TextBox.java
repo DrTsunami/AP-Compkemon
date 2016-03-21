@@ -43,10 +43,6 @@ public class TextBox {
 							// Adds to counter, counter managed by equation in Draw method ***
 							dashCounter++;	
 							state = TextState.DONE;
-							
-							if (NeedsInput) {
-								Game.state = GameState.WAITING_FOR_INPUT;
-							}
 						}
 						GameWindow.gameWindow.gamePanel.repaint();
 					}

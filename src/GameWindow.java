@@ -18,12 +18,7 @@ class GamePanel extends JPanel{
     	setOpaque(false);
     	setSize(mainWindow.getSize());
 	}
-	
-	public static void drawString(Graphics g, String text, int x, int y) {
-        for (String line : text.split("\n"))
-            g.drawString(line, x, y += g.getFontMetrics().getHeight());
-    }
-	
+
 	public void init(){
 		game = new Game();
 		game.panel = this;
@@ -45,6 +40,12 @@ class GamePanel extends JPanel{
 	    	g2d.dispose();
     	}
     }
+    
+	public static void drawString(Graphics g, String text, int x, int y) {
+        for (String line : text.split("\n"))
+            g.drawString(line, x, y += (g.getFontMetrics().getHeight()));
+    }
+	
 }
 
 @SuppressWarnings("serial")

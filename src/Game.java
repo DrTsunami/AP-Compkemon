@@ -29,7 +29,7 @@ public class Game {
 	static String commandLine = "";
 	static TextBox textBox;
 
-	// Declare static variables
+	// Declare static Game variables
 	static GameState state;
 	static Compkemon myCompkemon;
 	static Compkemon enemy;
@@ -43,11 +43,11 @@ public class Game {
 	static Compkemon loser = new Compkemon();
 	static boolean gameOver = false;
 	
+	
 	// Performed on initialization
 	public void init() {
 		// Draw command line box
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
-		state = GameState.SELECTING_COMPKEMON;
 		panel.repaint();
 		
 		// Go to next stage
@@ -68,7 +68,6 @@ public class Game {
 				// this will be called next time we press enter;
 				Select();
 				// TODO change gamestate locations to switch at the proper time
-				state = GameState.BATTLE;
 				battleScene(myCompkemon, enemy);
 			}
 		};
@@ -217,11 +216,6 @@ public class Game {
 				}
 				// Turn tracker increases
 				turnCounter++;
-			
-				
-			
-				
-				
 			}
 		};
 	}
@@ -364,17 +358,22 @@ public class Game {
 		g2d.setFont(font);
 		g2d.setColor(Color.GREEN);
 		
+		
+		
 		// FIXME display pertinent text per gamestate
 		switch (state){
+		/*
 			case WAITING_FOR_INPUT: {
+				System.out.println("waiting for input");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				break;
 			}
+		*/
 			case SELECTING_COMPKEMON: {
-				GamePanel.drawString(g2d, "> Enter number corresponding to the Compkemon you wish to hack with: ", 5, 5);
-				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, (5 + g2d.getFontMetrics().getHeight()));
+				System.out.println("selecting compkemon");
+				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, 5);
 				g2d.setColor(Color.GREEN);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
@@ -382,7 +381,10 @@ public class Game {
 				break;
 			}
 			
+			// TODO make a battle intro state where animation will take place
+			
 			case CHOOSING_MOVE: {
+				System.out.println("choosing move");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -390,6 +392,7 @@ public class Game {
 			}
 			
 			case APPLYING_EFFECTS: {
+				System.out.println("applying effects");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -397,6 +400,7 @@ public class Game {
 			}
 			
 			case END_GAME: {
+				System.out.println("endgame");
 				g2d.fillRect(0, 0, windowWidth, windowHeight);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				textBox.Draw(g2d);

@@ -28,7 +28,6 @@ public class Game {
 	CommandProcessor commandProcessor;
 	static String commandLine = "";
 	static TextBox textBox;
-
 	// Declare static Game variables
 	static GameState state;
 	static Compkemon myCompkemon;
@@ -68,7 +67,8 @@ public class Game {
 				// this will be called next time we press enter;
 				Select();
 				// TODO change gamestate locations to switch at the proper time
-				battleScene(myCompkemon, enemy);
+				//battleScene(myCompkemon, enemy);
+				Intro();
 			}
 		};
 	}
@@ -155,7 +155,7 @@ public class Game {
 	}
 	
 	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 
 	// User chooses move to use
@@ -221,6 +221,23 @@ public class Game {
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void Intro() {
+		// FIXME you did something here to screw up animations
+		state = GameState.BATTLE;
+		
+		commandProcessor = new CommandProcessor(){
+			public void processCommand(String txt) {
+				// This is called next time we press enter
+				if (Animations.done) {
+					battleScene(myCompkemon, enemy);
+				}
+			}
+		};
+		
+		
+
+	}
 
 	public void EffectHandler(Compkemon compkemon) {
 		if (compkemon.effect.size() > 0) {
@@ -307,11 +324,9 @@ public class Game {
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
-
+		System.out.println("Battle STARTS");
 		// Battle starts
 		turnCounter = 0;
 		textBox.AnimateText("Hello, welcome to a battle!", false);
@@ -382,8 +397,14 @@ public class Game {
 			}
 			
 			// TODO make a battle intro state where animation will take place
+			case BATTLE: {
+				System.out.println("Battle animations");
+				Animations.intro(g2d);
+				break;
+			}
 			
 			case CHOOSING_MOVE: {
+
 				System.out.println("choosing move");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);

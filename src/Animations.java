@@ -29,7 +29,11 @@ public class Animations {
 	}
 	
 	public static void damaged(Graphics2D g2d, HealthBox box) {
+		Game.animating = true;
 		box.changeHealth(box.compkemon.currentHealth);
+		if (box.animationDone) {
+			Game.animating = false;
+		}
 		box.draw(g2d);
 	}
 	

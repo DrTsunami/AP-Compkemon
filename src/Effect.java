@@ -17,6 +17,7 @@ public class Effect {
 	}
 	
 
+	// TODO Need to start fixing current effects and add new effects
 	
 	public Effect (EffectType effect, Compkemon user , Compkemon target, int initTurn) {
 		effectType = effect;		
@@ -57,7 +58,7 @@ public class Effect {
 				break;
 			case Dab :
 				if (effectTurns == 0) {	
-					textBox.AnimateText(target + " dabbed out of harm's way!", false);
+					textBox.AnimateText(user + " dabbed out of harm's way!", false);
 					tempMove = target.currentMove;
 					tempFloat = target.currentMove.accuracy;
 					target.currentMove.accuracy = 0.0f;

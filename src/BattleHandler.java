@@ -153,17 +153,17 @@ public class BattleHandler {
 		
 		// Print out multiplier statement
 		if (typeMultiplier == 0.1f) {
-			System.out.println("It pales in comparison to a God!");
+			Game.textBox.AnimateText("It pales in comparison to a God!", false);
 		} else if (typeMultiplier == 0.5f) {
-			System.out.println("It's not very effective");
+			Game.textBox.AnimateText("It's not very effective", false);
 		} else if (typeMultiplier == 1.0f) {
 			// Normal damage
 		} else if (typeMultiplier == 2.0f) {
-			System.out.println("It's super-effective!");
+			Game.textBox.AnimateText("It's super-effective!", false);
 		} else if (typeMultiplier == 3.0f) {
-			System.out.println(target + " has been subjected to the Wrightocracy!");
+			Game.textBox.AnimateText(target + " has been subjected to the Wrightocracy!", false);
 		} else if (typeMultiplier == 10.0f) {
-			System.out.println("A God has been converted to moronic Satanism! It's ultra-effective!!");
+			Game.textBox.AnimateText("A God has been converted to moronic Satanism! It's ultra-effective!!", false);
 		}
 
 		return multiplier;		

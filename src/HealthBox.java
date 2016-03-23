@@ -8,9 +8,11 @@ public class HealthBox {
 	Rectangle2D healthBar;
 	Rectangle2D currentHealth;
 	Compkemon compkemon;
+	boolean animationDone;
 	
 	public HealthBox(Compkemon c, int startX, int startY) {
 		compkemon = c;
+		animationDone = false;
 		
 		healthBox = new Rectangle2D.Double(startX, startY, 300, 85);
 		healthBar = new Rectangle2D.Double(startX + 40, startY + 40, 250, 15);
@@ -32,9 +34,13 @@ public class HealthBox {
 		double percentDeltaHealth = health/100;
 		double newHealth = percentDeltaHealth * healthBar.getWidth();
 		
+		animationDone = false;
+		
 		if (currentHealth.getWidth() > newHealth) {
 			System.out.println("getWidth: " + currentHealth.getWidth() + "/t" + "newHealth = " + newHealth);
 			currentHealth.setFrame(currentHealth.getX(), currentHealth.getY(), currentHealth.getWidth() - 1, currentHealth.getHeight());
+		} else {
+			animationDone = true; 
 		}
 	}
 	

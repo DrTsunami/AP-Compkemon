@@ -15,10 +15,15 @@ public class Ground {
 		g.draw(ground);
 	}
 	
-	public void move(double x, double y) {
-		double deltaX = x;
-		double deltaY = y;
-		
+	public void move(double deltaX, double deltaY) {
 		ground.setFrame(ground.getX() + deltaX, ground.getY() + deltaY, ground.getWidth(), ground.getHeight());
+	}
+	
+	public double getX() {
+		return ground.getX();
+	}
+	
+	public double getY() {
+		return ground.getY();
 	}
 }

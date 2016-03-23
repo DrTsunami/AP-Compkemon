@@ -43,6 +43,7 @@ public class Game {
 	static boolean gameOver = false;
 	
 	// Visual objects
+	static boolean animating;
 	static Ground userGround;
 	static Ground enemyGround;
 	
@@ -165,7 +166,6 @@ public class Game {
 	// User chooses move to use
 	public void ChooseMove() {
 		
-		state = GameState.CHOOSING_MOVE;
 		
 		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
 		commandProcessor = new CommandProcessor(){
@@ -228,22 +228,19 @@ public class Game {
 	
 	public void Intro() {
 		// FIXME you did something here to screw up animations
-		userGround = new Ground(0, 0);
-		
-		state = GameState.INTRO;
-		
+		userGround = new Ground(0, 400);
+		enemyGround = new Ground(GameWindow.ScreenWidth - 250, 200);
+		/*
 		commandProcessor = new CommandProcessor(){
 			public void processCommand(String txt) {
 				// This is called next time we press enter
-				if (Animations.done) {
-					battleScene(myCompkemon, enemy);
-				}
+				battleScene(myCompkemon, enemy);
 				
 			}
 		};
-		
-		
-
+		*/
+		state = GameState.INTRO;
+		battleScene(myCompkemon, enemy);
 	}
 
 	public void EffectHandler(Compkemon compkemon) {
@@ -405,16 +402,20 @@ public class Game {
 			
 			// TODO make a battle intro state where animation will take place
 			case INTRO: {
-				System.out.println("Intro");
-				userGround.move(0.1, 0);
-				userGround.draw(g2d);
+				animating = true;
+				Animations.intro(g2d, userGround, enemyGround);
 				textBox.Draw(g2d);
-				panel.repaint();
+				if (!animating) {
+					state = GameState.CHOOSING_MOVE;
+					System.out.println("changed states");
+				}
 				break;
 			}
 			
 			case CHOOSING_MOVE: {
-				System.out.println("choosing move");
+				//System.out.println("choosing move");
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -423,6 +424,8 @@ public class Game {
 			
 			case APPLYING_EFFECTS: {
 				System.out.println("applying effects");
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);

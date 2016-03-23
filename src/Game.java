@@ -13,7 +13,7 @@ import java.util.ArrayList;
 enum GameState{
 	WAITING_FOR_INPUT,
 	SELECTING_COMPKEMON,
-	BATTLE,
+	INTRO,
 	CHOOSING_MOVE,
 	APPLYING_MOVE,
 	APPLYING_EFFECTS,
@@ -41,6 +41,10 @@ public class Game {
 	static int priority;
 	static Compkemon loser = new Compkemon();
 	static boolean gameOver = false;
+	
+	// Visual objects
+	static Ground userGround;
+	static Ground enemyGround;
 	
 	
 	// Performed on initialization
@@ -224,7 +228,9 @@ public class Game {
 	
 	public void Intro() {
 		// FIXME you did something here to screw up animations
-		state = GameState.BATTLE;
+		userGround = new Ground(0, 0);
+		
+		state = GameState.INTRO;
 		
 		commandProcessor = new CommandProcessor(){
 			public void processCommand(String txt) {
@@ -232,6 +238,7 @@ public class Game {
 				if (Animations.done) {
 					battleScene(myCompkemon, enemy);
 				}
+				
 			}
 		};
 		
@@ -358,8 +365,8 @@ public class Game {
 		
 	}
 	
-	
 	public void draw(Graphics2D g2d) {
+		// This keeps drawing over and over once in case
 		int windowWidth = GameWindow.ScreenWidth;
 		int windowHeight = GameWindow.ScreenHeight; 
 		// Sets background
@@ -397,14 +404,16 @@ public class Game {
 			}
 			
 			// TODO make a battle intro state where animation will take place
-			case BATTLE: {
-				System.out.println("Battle animations");
-				Animations.intro(g2d);
+			case INTRO: {
+				System.out.println("Intro");
+				userGround.move(0.1, 0);
+				userGround.draw(g2d);
+				textBox.Draw(g2d);
+				panel.repaint();
 				break;
 			}
 			
 			case CHOOSING_MOVE: {
-
 				System.out.println("choosing move");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);

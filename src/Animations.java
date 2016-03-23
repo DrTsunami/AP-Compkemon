@@ -27,5 +27,11 @@ public class Animations {
 		enemyGround.draw(g2d);
 		
 	}
+	
+	public static void damaged(Graphics2D g2d, HealthBox box) {
+		box.changeHealth(box.compkemon.currentHealth);
+		box.draw(g2d);
+	}
+	
 
 }

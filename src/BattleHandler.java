@@ -1,4 +1,3 @@
-
 public class BattleHandler {
 	
 	static TypeTable typeTable = Game.typeTable;
@@ -28,6 +27,11 @@ public class BattleHandler {
 	
 	// Method that displays health bar
 	public static void displayHealth(Compkemon user, Compkemon enemy) {
+		
+		
+		
+		
+		//*			OLD CONSOLE DISPLAY
 		
 		// Print user health bar
 		System.out.print(user + " HP: " + user.currentHealth + "/" + user.health + "\t" + "[");
@@ -61,10 +65,13 @@ public class BattleHandler {
 		}
 		System.out.print("]");		
 		System.out.println(); // insert line
+		
+		//*/
+		
+		
 	
 	}
 
-	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static float damageCalculator(Compkemon user, Compkemon target, Move userMove) {

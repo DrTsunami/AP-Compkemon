@@ -28,6 +28,8 @@ public class Game {
 	CommandProcessor commandProcessor;
 	static String commandLine = "";
 	static TextBox textBox;
+	static boolean ready;
+	
 	// Declare static Game variables
 	static GameState state;
 	static Compkemon myCompkemon;
@@ -46,6 +48,8 @@ public class Game {
 	static boolean animating;
 	static Ground userGround;
 	static Ground enemyGround;
+	static HealthBox userHealthBox;
+	static HealthBox enemyHealthBox;
 	
 	
 	// Performed on initialization
@@ -62,18 +66,16 @@ public class Game {
 	// Performed after initialization
 	public void Start() {
 		// Change state and perform welcome messages
+		ready = false;
 		state = GameState.SELECTING_COMPKEMON;
 		textBox.AnimateText("Welcome to the world of hacking!", false);
 		textBox.AnimateText("Enter number corresponding to the Compkemon you wish to hack with: ", true);
-		
 		// override processCommand for commandProcessor in this state. When input is detected, perform this.
 		commandProcessor = new CommandProcessor(){
 			public void processCommand(String txt){
 				// this will be called next time we press enter;
 				Select();
-				// TODO change gamestate locations to switch at the proper time
-				//battleScene(myCompkemon, enemy);
-				Intro();
+				//Intro();
 			}
 		};
 	}
@@ -150,13 +152,15 @@ public class Game {
 			case 5:
 				myCompkemon = new Compkemon(CompkemonList.Jackson);
 				break;
+			// TODO add cases for everything else
 		}
+		
 		
 		textBox.AnimateText("Congratulations, your chosen Compkemon is: " + myCompkemon, false);	
 		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!", false);
 		textBox.AnimateText("A wild " + enemy + " appeared!", false);
 		textBox.AnimateText("Fight!", false);
-		
+		ready = true;
 	}
 	
 	
@@ -165,7 +169,6 @@ public class Game {
 
 	// User chooses move to use
 	public void ChooseMove() {
-		
 		
 		textBox.AnimateText("Choose move: " + myCompkemon.getMoveset(), true);
 		commandProcessor = new CommandProcessor(){
@@ -226,21 +229,24 @@ public class Game {
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+
+	
 	public void Intro() {
-		// FIXME you did something here to screw up animations
-		userGround = new Ground(0, 400);
+		userGround = new Ground(0, 500);
 		enemyGround = new Ground(GameWindow.ScreenWidth - 250, 200);
-		/*
-		commandProcessor = new CommandProcessor(){
-			public void processCommand(String txt) {
-				// This is called next time we press enter
-				battleScene(myCompkemon, enemy);
-				
-			}
-		};
-		*/
 		state = GameState.INTRO;
-		battleScene(myCompkemon, enemy);
+	}
+	
+	// Recursive method to wait for input
+	public boolean WaitingForInput() {
+		boolean waiting = true;
+		if (textBox.animateQueue.size() == 1 && ready) {
+			System.out.println("Clear!");
+			waiting = false;
+		} else {
+			waiting = true;
+		}
+		return waiting;
 	}
 
 	public void EffectHandler(Compkemon compkemon) {
@@ -332,6 +338,9 @@ public class Game {
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		System.out.println("Battle STARTS");
 		// Battle starts
+		userHealthBox = new HealthBox(myCompkemon, GameWindow.ScreenWidth - 380, 400);
+		enemyHealthBox = new HealthBox(enemy, 100 , 50);
+		
 		turnCounter = 0;
 		textBox.AnimateText("Hello, welcome to a battle!", false);
 		ChooseMove();
@@ -362,6 +371,7 @@ public class Game {
 		
 	}
 	
+	
 	public void draw(Graphics2D g2d) {
 		// This keeps drawing over and over once in case
 		int windowWidth = GameWindow.ScreenWidth;
@@ -377,19 +387,8 @@ public class Game {
 		g2d.setFont(font);
 		g2d.setColor(Color.GREEN);
 		
-		
-		
-		// FIXME display pertinent text per gamestate
 		switch (state){
-		/*
-			case WAITING_FOR_INPUT: {
-				System.out.println("waiting for input");
-				g2d.drawString("> ", 10, windowHeight - 10);
-				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
-				textBox.Draw(g2d);
-				break;
-			}
-		*/
+		
 			case SELECTING_COMPKEMON: {
 				System.out.println("selecting compkemon");
 				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, 5);
@@ -397,31 +396,52 @@ public class Game {
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
+				if (!WaitingForInput()) {
+					Intro();
+				} else {
+					System.out.println(textBox.animateQueue.size());
+				}
 				break;
 			}
 			
-			// TODO make a battle intro state where animation will take place
 			case INTRO: {
 				animating = true;
 				Animations.intro(g2d, userGround, enemyGround);
 				textBox.Draw(g2d);
 				if (!animating) {
+					battleScene(myCompkemon, enemy);
+					userHealthBox.draw(g2d);
+					enemyHealthBox.draw(g2d);
 					state = GameState.CHOOSING_MOVE;
-					System.out.println("changed states");
 				}
 				break;
 			}
-			
+			// FIXME continue applying new form of waiting using the queue size and ready boolean
 			case CHOOSING_MOVE: {
-				//System.out.println("choosing move");
+				System.out.println("choosing move");
 				userGround.draw(g2d);
 				enemyGround.draw(g2d);
+				userHealthBox.draw(g2d);
+				enemyHealthBox.draw(g2d);
+				Animations.damaged(g2d, userHealthBox);
+				Animations.damaged(g2d, enemyHealthBox);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				break;
 			}
-			
+			case APPLYING_MOVE: {
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
+				userHealthBox.draw(g2d);
+				enemyHealthBox.draw(g2d);
+				Animations.damaged(g2d, userHealthBox);
+				Animations.damaged(g2d, enemyHealthBox);
+				g2d.drawString("> ", 10, windowHeight - 10);
+				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
+				textBox.Draw(g2d);
+				break;
+			}
 			case APPLYING_EFFECTS: {
 				System.out.println("applying effects");
 				userGround.draw(g2d);
@@ -433,8 +453,13 @@ public class Game {
 			}
 			
 			case END_GAME: {
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
+				userHealthBox.draw(g2d);
+				enemyHealthBox.draw(g2d);
+				Animations.damaged(g2d, userHealthBox);
+				Animations.damaged(g2d, enemyHealthBox);
 				System.out.println("endgame");
-				g2d.fillRect(0, 0, windowWidth, windowHeight);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				textBox.Draw(g2d);
 				break;

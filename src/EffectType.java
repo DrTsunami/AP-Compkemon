@@ -4,6 +4,7 @@ public enum EffectType {
 	Dab,
 	Eat,
 	Enslave,
+	EstablishWrightocracy,
 	LSD,
 	MeatDance,
 	Meatpin,

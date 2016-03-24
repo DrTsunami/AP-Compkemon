@@ -56,6 +56,7 @@ public class Effect {
 				}				
 				didApplyThisTurn = true;
 				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case Dab :
 				if (effectTurns == 0) {	
 					textBox.AnimateText(user + " dabbed out of harm's way!", false);
@@ -93,22 +94,53 @@ public class Effect {
 				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
+			case EstablishWrightocracy:
+				if (effectTurns == 0) {
+					textBox.AnimateText("A Wrightocracy has been established", false);	
+					for(int i = 0; i < typeTable[2].length; i++) {
+						typeTable[5][i] = 3.0f;
+						typeTable[i][5] = 0.1f;
+					}
+				} else if (effectTurns < 5) {
+					textBox.AnimateText("A Wrightocracy looms over the area. Turn: " + effectTurns, false);;					
+				} else if (effectTurns == 5) {
+					textBox.AnimateText("The Wrightocracy has been lifted. End Effect Turn: " + effectTurns, false);
+					typeTable[5][0] = 2.0f;
+					typeTable[5][1] = 2.0f;
+					typeTable[5][2] = 2.0f;
+					typeTable[5][3] = 2.0f;
+					typeTable[5][4] = 2.0f;
+					typeTable[5][5] = 1.0f;
+					typeTable[0][5] = 10.0f;
+					typeTable[1][5] = 0.5f;
+					typeTable[2][5] = 1.0f;
+					typeTable[3][5] = 0.5f;
+					typeTable[4][5] = 0.5f;
+					finished = true;					
+				}				
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
 				user.speed += 20;
 				textBox.AnimateText(user + " understands things in a new light! Speed sharply increased!", false);
+				finished = true;
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case MeatDance:
 				user.attack += 20;
 				textBox.AnimateText(user + "'s attack sharply rose!", false);
+				finished = true;
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Meatpin:
 				target.speed -= 10;
-				textBox.AnimateText(target + " was pinned down by" + user + "!", false);
+				textBox.AnimateText(target + " was pinned down by " + user + "!", false);
 				textBox.AnimateText(target + "'s speed decreased!", false);
+				finished = true;
+				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////			
 			case SatanicMissionary:
@@ -116,6 +148,9 @@ public class Effect {
 				if (effectTurns == 0) {
 					textBox.AnimateText(user + " has summoned the forces of darkness to convert the sane.", false);
 					target.type = "Moron";
+					didApplyThisTurn = true;
+				} else if (effectTurns < 5) { 
+					textBox.AnimateText(target + " is on its knees worshiping Satan.", false);
 					didApplyThisTurn = true;
 				} else if (effectTurns == 5) {
 					textBox.AnimateText("Darkness has lifted", false);
@@ -152,6 +187,7 @@ public class Effect {
 				} 							
 				finished = true;
 				didApplyThisTurn = true;
+				Game.ready = true;
 				break;
 		}
 	}

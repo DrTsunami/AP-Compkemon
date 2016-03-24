@@ -31,18 +31,31 @@ public class HealthBox {
 	
 	// TODO allow change health to handle health gaining moves
 	public void changeHealth(double health) {
+		
 		double percentDeltaHealth = health/100;
 		double newHealth = percentDeltaHealth * healthBar.getWidth();
 		
 		animationDone = false;
-		
+				
 		if (currentHealth.getWidth() > newHealth) {
-			System.out.println("getWidth: " + currentHealth.getWidth() + "/t" + "newHealth = " + newHealth);
+			System.out.println("getWidth: " + currentHealth.getWidth() + "\t" + "newHealth = " + newHealth);
 			currentHealth.setFrame(currentHealth.getX(), currentHealth.getY(), currentHealth.getWidth() - 1, currentHealth.getHeight());
+			if (currentHealth.getWidth() < newHealth) {
+				animationDone = true;
+			}
+		} else if (currentHealth.getWidth() < newHealth) {
+			System.out.println("Absorption detected");
+			System.out.println("getWidth: " + currentHealth.getWidth() + "\t" + "newHealth = " + newHealth);
+			currentHealth.setFrame(currentHealth.getX(), currentHealth.getY(), currentHealth.getWidth() + 1, currentHealth.getHeight());
+			if (currentHealth.getWidth() > newHealth) {
+				animationDone = true;
+			}
 		} else {
 			animationDone = true; 
 		}
 	}
+	
+	
 	
 	public double getX() {
 		return healthBox.getX();

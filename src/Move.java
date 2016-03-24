@@ -109,7 +109,7 @@ public class Move {
 	        case Enslave:
 	        	attackName = "Enslave";
 	        	type = "God";
-	        	power = 70;
+	        	power = 20;
 	        	accuracy = 100.0f;
 	        	hasEffect = true;
 	        	toSelf = true;
@@ -312,6 +312,9 @@ public class Move {
     			break;
     		case "Enslave" :
     			effect = new Effect(EffectType.Enslave, user, target,effectInitCounter);
+    			break;
+    		case "Establish Wrightocracy" :
+    			effect = new Effect(EffectType.EstablishWrightocracy, user, target,effectInitCounter);
     			break;
     		case "LSD" : 
     			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);

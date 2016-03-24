@@ -39,7 +39,7 @@ public class Compkemon {
     	switch(compkemon) {
 			case Prototype: 
 				this.name = "Prototype";
-		        this.type = "Meat";
+		        this.type = "God";
 		        this.health = 100;
 		        this.currentHealth = 100;
 		        this.attack = 80.0f;

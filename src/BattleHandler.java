@@ -163,7 +163,7 @@ public class BattleHandler {
 		} else if (typeMultiplier == 3.0f) {
 			Game.textBox.AnimateText(target + " has been subjected to the Wrightocracy!", false);
 		} else if (typeMultiplier == 10.0f) {
-			Game.textBox.AnimateText("A God has been converted to moronic Satanism! It's ultra-effective!!", false);
+			Game.textBox.AnimateText("A God has been converted to worship Satanism! It's ultra-effective!!", false);
 		}
 
 		return multiplier;		

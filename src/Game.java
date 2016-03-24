@@ -23,7 +23,10 @@ enum GameState{
 	APPLYING_EFFECTS_FIRST, 
 	APPLYING_SECOND_MOVE, 
 	APPLYING_EFFECTS_SECOND,
+	CHECK_EFFECTS_1,
+	CHECK_EFFECTS_2,
 }
+
 
 public class Game {
 	
@@ -111,6 +114,7 @@ public class Game {
 		if (i == 10 && commandLine.length() > 0){ 
 			// if Enter is pressed and the commandLine receives text, then process it and clear the text
 			ProcessCommand(commandLine);
+    		textBox.EnterToContinue(keyCode);
 			commandLine = "";
 		} else {
 			// otherwise, if any other key is pressed, add it to commandLine and continue
@@ -162,13 +166,16 @@ public class Game {
 			case 5:
 				myCompkemon = new Compkemon(CompkemonList.Jackson);
 				break;
+			default: 
+				textBox.AnimateText("Invalid command!", true);
+				Start();
+				break;
 			// TODO add cases for everything else
 		}
 		
 		
 		textBox.AnimateText("Congratulations, your chosen Compkemon is: " + myCompkemon, false);	
 		textBox.AnimateText("An enemy Compkemon hacked! You are under attack!", false);
-		textBox.AnimateText("A wild " + enemy + " appeared!", false);
 		textBox.AnimateText("Fight!", false);
 		ready = true;
 	}
@@ -212,35 +219,7 @@ public class Game {
 					firstHealthBox = enemyHealthBox;
 					secondHealthBox = userHealthBox;
 				}
-				
 				ready = true;
-				/*
-				// Check for lingering effects on first
-				// TODO fix effect orders. Not always proper
-				
-				EffectHandler(first);
-				MoveHandler(first, second);
-					
-				// Check for enemy health. If fainted, end the game
-				
-
-				if (gameOver) {
-					endGame(loser);
-				} else {
-					// Enemy move begin
-					EffectHandler(second);
-					MoveHandler(second, first);
-					
-					if (gameOver) {
-						endGame(loser);		
-					} else {
-						ChooseMove();
-					}
-				}
-				// Turn tracker increases
-				 * 
-				 * 
-				 */
 				turnCounter++;
 			}
 		};
@@ -273,6 +252,8 @@ public class Game {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void EffectHandler(Compkemon compkemon) {
+		ready = false;
+		
 		if (compkemon.effect.size() > 0) {
 			for (int i = 0; i < compkemon.effect.size(); i++) {
 				compkemon.effect.get(i).didApplyThisTurn = false;
@@ -282,6 +263,8 @@ public class Game {
 				}
 			}
 		} 
+		
+		ready = true;
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,7 +281,6 @@ public class Game {
 			// Move hit/miss
 			if (BattleHandler.hitMiss(current.currentMove)) {
 				if (current.currentMove.power > 0) {
-					textBox.AnimateText(other + " took damage!", false);
 					other.currentHealth = (other.currentHealth - ((int)BattleHandler.damageCalculator(current, other, current.currentMove)));	
 					if (other.currentHealth <= 0) {
 						other.currentHealth = 0;
@@ -355,24 +337,21 @@ public class Game {
 					}	
 				}
 			}
-			
-			textBox.AnimateText("Added an effect!", false);
-			
-			ready = true;
 		}
+
+		ready = true;
 	}
 	
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
-		System.out.println("Battle STARTS");
 		// Battle starts
 		userHealthBox = new HealthBox(myCompkemon, GameWindow.ScreenWidth - 380, 400);
 		enemyHealthBox = new HealthBox(enemy, 100 , 50);
 		
 		turnCounter = 0;
-		textBox.AnimateText("Hello, welcome to a battle!", false);
+		textBox.AnimateText("A wild virus appeared!", false);
 		ChooseMove();
 	} // end battleScene
 
@@ -448,7 +427,6 @@ public class Game {
 				}
 				break;
 			}
-			// FIXME continue applying new form of waiting using the queue size and ready boolean
 			case CHOOSING_MOVE: {
 				System.out.println("choosing move");
 				userGround.draw(g2d);
@@ -460,10 +438,31 @@ public class Game {
 				textBox.Draw(g2d);
 				
 				if (!WaitingForInput()) {
-					MoveHandler(first, second);
-					state = GameState.APPLYING_FIRST_MOVE;
+					EffectHandler(first);
+					state = GameState.CHECK_EFFECTS_1;
 				}
 				
+				break;
+			}
+			case CHECK_EFFECTS_1: {
+				System.out.println("Checking first effects");
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
+				userHealthBox.draw(g2d);
+				enemyHealthBox.draw(g2d);
+				textBox.Draw(g2d);
+				if (!WaitingForInput()) {
+					Animations.damaged(g2d, firstHealthBox);
+					Animations.damaged(g2d, secondHealthBox);
+					if (!animating) {
+						if (gameOver) {
+							endGame(loser);
+						} else {
+							MoveHandler(first, second);
+							state = GameState.APPLYING_FIRST_MOVE;
+						}
+					}
+				}
 				break;
 			}
 			case APPLYING_FIRST_MOVE: {
@@ -502,16 +501,42 @@ public class Game {
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				if (!WaitingForInput()) {
+					Animations.damaged(g2d, firstHealthBox);
+					Animations.damaged(g2d, secondHealthBox);
 					if (!animating) {
 						if (gameOver) {
 							endGame(loser);
+						} else {
+							EffectHandler(second);
+							state = GameState.CHECK_EFFECTS_2;
+						}
+					}
+				}
+				
+				break;
+			}
+			case CHECK_EFFECTS_2: {
+				System.out.println("Checking second effects");
+				userGround.draw(g2d);
+				enemyGround.draw(g2d);
+				userHealthBox.draw(g2d);
+				enemyHealthBox.draw(g2d);
+				textBox.Draw(g2d);
+				if (!WaitingForInput()) {
+					Animations.damaged(g2d, firstHealthBox);
+					Animations.damaged(g2d, secondHealthBox);
+					if (!animating) {
+						if (gameOver) {
+							endGame(loser);
+						} else if (second.currentMove == null) {
+							ChooseMove();
+							state = GameState.CHOOSING_MOVE;
 						} else {
 							MoveHandler(second, first);
 							state = GameState.APPLYING_SECOND_MOVE;
 						}
 					}
 				}
-				
 				break;
 			}
 			case APPLYING_SECOND_MOVE: {
@@ -552,6 +577,8 @@ public class Game {
 				textBox.Draw(g2d);
 				
 				if (!WaitingForInput()) {
+					Animations.damaged(g2d, firstHealthBox);
+					Animations.damaged(g2d, secondHealthBox);
 					if (!animating) {
 						if (gameOver) {
 							endGame(loser);
@@ -577,7 +604,6 @@ public class Game {
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				break;
-				// FIXME something is wrong with Prototype at the start of the game
 			}
 			
 		}

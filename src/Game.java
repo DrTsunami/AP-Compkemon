@@ -2,9 +2,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -62,7 +68,9 @@ public class Game {
 	static Ground enemyGround;
 	static HealthBox userHealthBox;
 	static HealthBox enemyHealthBox;
-	
+	// TODO properly assign sprites
+	static Sprite sprite1;
+	static Sprite sprite2;
 	
 	// Performed on initialization
 	public void init() {
@@ -232,6 +240,7 @@ public class Game {
 	public void Intro() {
 		userGround = new Ground(0, 500);
 		enemyGround = new Ground(GameWindow.ScreenWidth - 250, 200);
+		//TODO properly assign sprites
 		state = GameState.INTRO;
 	}
 
@@ -347,6 +356,8 @@ public class Game {
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		// Battle starts
+		sprite1 = new Sprite((int)userGround.getX() + 25, (int)userGround.getY() - 175);
+		sprite2 = new Sprite((int)enemyGround.getX() + 25, (int)enemyGround.getY() - 175);
 		userHealthBox = new HealthBox(myCompkemon, GameWindow.ScreenWidth - 380, 400);
 		enemyHealthBox = new HealthBox(enemy, 100 , 50);
 		
@@ -382,6 +393,13 @@ public class Game {
 	}
 	
 	
+	
+	
+	// FIXME Start loading images using BufferedImage Read thingy
+
+	
+	
+	// TODO clean up this method. It's redundant and messy
 	public void draw(Graphics2D g2d) {
 		// This keeps drawing over and over once in case
 		int windowWidth = GameWindow.ScreenWidth;
@@ -429,10 +447,13 @@ public class Game {
 			}
 			case CHOOSING_MOVE: {
 				System.out.println("choosing move");
+				// TODO properly assign sprites;
 				userGround.draw(g2d);
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -450,6 +471,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				textBox.Draw(g2d);
 				if (!WaitingForInput()) {
 					Animations.damaged(g2d, firstHealthBox);
@@ -471,6 +494,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				if (!WaitingForInput()) {
 					Animations.damaged(g2d, secondHealthBox);
 					if (!animating) {
@@ -497,6 +522,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -521,6 +548,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				textBox.Draw(g2d);
 				if (!WaitingForInput()) {
 					Animations.damaged(g2d, firstHealthBox);
@@ -545,6 +574,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				if (!WaitingForInput()) {
 					Animations.damaged(g2d, firstHealthBox);
 					if (!animating) {
@@ -572,6 +603,8 @@ public class Game {
 				enemyGround.draw(g2d);
 				userHealthBox.draw(g2d);
 				enemyHealthBox.draw(g2d);
+				g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
@@ -599,6 +632,11 @@ public class Game {
 				enemyHealthBox.draw(g2d);
 				Animations.damaged(g2d, userHealthBox);
 				Animations.damaged(g2d, enemyHealthBox);
+				if (loser.equals(myCompkemon)) {
+					g2d.drawImage(sprite2.getImage(), sprite2.getX(), sprite2.getY(), 200, 200, null);  
+				} else {
+					g2d.drawImage(sprite1.getImage(), sprite1.getX(), sprite1.getY(), 200, 200, null);  
+				}
 				System.out.println("endgame");
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);

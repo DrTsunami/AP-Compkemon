@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Compkemon {
@@ -13,6 +14,7 @@ public class Compkemon {
     float speed;
     float evasion;
     ArrayList<Effect> effect;
+    
     
     CompkemonList compkemonList;
     

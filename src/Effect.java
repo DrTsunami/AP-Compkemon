@@ -177,14 +177,11 @@ public class Effect {
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case StateOfAscendancy : 
-				float accuracy = (float) Math.random();
-				textBox.AnimateText(target + " is feeling inferior to " + user, false);								
-				if (accuracy > 0.5f) {
-					target.currentMove = null;
-					textBox.AnimateText("Target move set to null", false);
-					textBox.AnimateText(target + " attacked itself in its fury", false);
-					target.currentHealth -= 20;
-				} 							
+				textBox.AnimateText(target + " is feeling inferior to " + user, false);		
+				target.currentMove = null;
+				textBox.AnimateText("Target move set to null", false);
+				textBox.AnimateText(target + " attacked itself in its fury", false);
+				target.currentHealth -= 20;
 				finished = true;
 				didApplyThisTurn = true;
 				Game.ready = true;

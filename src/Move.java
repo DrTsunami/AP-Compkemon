@@ -99,7 +99,7 @@ public class Move {
 	        	attackName = "Eat";
 	        	type = "Meat";
 	        	power = 0;
-	        	accuracy = 1.0f;
+	        	accuracy = 0.7f;
 	        	hasEffect = true;
 	        	toSelf = true;
 	        	lastingEffect = false;
@@ -230,7 +230,7 @@ public class Move {
 	        	attackName = "State of Ascendancy";
 	        	type = "Cynic";
 	        	power = 0;
-	        	accuracy = 0.8f;
+	        	accuracy = 0.6f;
 	        	hasEffect = true;
 	        	toSelf = false;
 	        	lastingEffect = true;

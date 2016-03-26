@@ -29,7 +29,6 @@ public class HealthBox {
 		//g2d.drawString(compkemon.currentHealth + "/" + compkemon.health, (int)this.getX() + 220, (int)this.getY() + 71);
 	}
 	
-	// TODO allow change health to handle health gaining moves
 	public void changeHealth(double health) {
 		
 		double percentDeltaHealth = health/100;

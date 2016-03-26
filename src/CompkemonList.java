@@ -1,11 +1,14 @@
 
 public enum CompkemonList {
-	Prototype, 
+	Prototype,
+	Aidan,
 	Alex,
+	Hieu,
 	Jackson,
 	Jeremiah,
+	Kenny,
+	Noah,
+	Trevor,
+	Ryan,
 	Wrightson,
-
-
-	
 } // Complete list of available Compkemon

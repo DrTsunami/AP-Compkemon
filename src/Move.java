@@ -62,6 +62,39 @@ public class Move {
 	        	priority = 0;
 	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1. Exerts bad influence damage over time";
 	        	break;
+	        case ChopstickBarrage:
+	        	attackName = "Chopstick Barrage";
+	        	type = "Enlightened";
+	        	power = 65;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "A barrage of chopsticks are hurled at the foe";
+	        	break;
+	        case ChopstickSlam:
+	        	attackName = "Chopstick Slam";
+	        	type = "Enlightened";
+	        	power = 50;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Foe is picked up and slammed down by a pair of chopsticks. Lowers defense.";
+	        	break;
+	        case ColorCorrection:
+	        	attackName = "Color Correction";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Fixes color blindness, attack sharply increases";
+	        	break;
 	        case Creator:
 	        	attackName = "Creator";
 	        	type = "God";
@@ -83,6 +116,39 @@ public class Move {
 	        	lastingEffect = true;
 	        	priority = 4;
 	        	description = "User dabs out of the way. Because it's a moronic move, it doesn't work very often";
+	        	break;
+	        case DankMemes:
+	        	attackName = "Dank Memes";
+	        	type = "Cynic";
+	        	power = 85;
+	        	accuracy = 0.9f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Target subjected to the dankest of memes";
+	        	break;
+	        case DankSaxSolo:
+	        	attackName = "Dank Sax Solo";
+	        	type = "Musician";
+	        	power = 80;
+	        	accuracy = 0.9f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "User's soul is reinvigorated. Recovers health";
+	        	break;
+	        case DDoSAttack:
+	        	attackName = "DDoS Attack";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 0.3f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Overwrites Opponent values to randomized stats";
 	        	break;
 	        case DogmaticBurst:
 	        	attackName = "DogmaticBurst";
@@ -304,8 +370,26 @@ public class Move {
     		case "Apathy" :
     			effect = new Effect(EffectType.Apathy, user, target, effectInitCounter);
     			break;
+    		case "Chopstick Barrage" :
+    			effect = new Effect(EffectType.ChopstickBarrage, user, target, effectInitCounter);
+    			break;
+    		case "Chopstick Slam" :
+    			effect = new Effect(EffectType.ChopstickSlam, user, target, effectInitCounter);
+    			break;
+    		case "Color Correction" :
+    			effect = new Effect(EffectType.ColorCorrection, user, target, effectInitCounter);
+    			break;
     		case "Dab" :
     			effect = new Effect(EffectType.Dab, user, target, effectInitCounter);
+    			break;
+    		case "Dank Memes" :
+    			effect = new Effect(EffectType.DankMemes, user, target, effectInitCounter);
+    			break;
+    		case "Dank Sax Solo" :
+    			effect = new Effect(EffectType.DankSaxSolo, user, target, effectInitCounter);
+    			break;
+    		case "DDoS Attack" :
+    			effect = new Effect(EffectType.DDoSAttack, user, target, effectInitCounter);
     			break;
     		case "Eat" :
     			effect = new Effect(EffectType.Eat, user, target, effectInitCounter);

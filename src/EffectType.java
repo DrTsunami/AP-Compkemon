@@ -1,7 +1,13 @@
 
 public enum EffectType {
 	Apathy,
+	ChopstickBarrage,
+	ChopstickSlam,
+	ColorCorrection,
 	Dab,
+	DankMemes,
+	DankSaxSolo,
+	DDoSAttack,
 	Eat,
 	Enslave,
 	EstablishWrightocracy,

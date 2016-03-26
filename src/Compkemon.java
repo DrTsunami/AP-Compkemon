@@ -38,6 +38,7 @@ public class Compkemon {
     	
     	compkemonList = compkemon;
     	
+    	// FIXME work on all the moves
     	switch(compkemon) {
 			case Prototype: 
 				this.name = "Prototype";
@@ -56,6 +57,25 @@ public class Compkemon {
 		        moveset[1] = new Move(MoveName.Splash);
 		        moveset[2] = new Move(MoveName.Splash);
 		        moveset[3] = new Move(MoveName.Splash);
+		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+			case Aidan:
+				this.name = "Aidan";
+				this.type = "Enlightened";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 70.0f;
+				this.defense = 70.0f;
+				this.speed = 85.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+		        this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.Squint);
+		        moveset[1] = new Move(MoveName.ChopstickBarrage);	 
+		        moveset[2] = new Move(MoveName.ChopstickSlam);			
+		        moveset[3] = new Move(MoveName.StateOfAscendancy);
 		        break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 			case Alex:
@@ -77,12 +97,31 @@ public class Compkemon {
 		        moveset[3] = new Move(MoveName.StateOfAscendancy);
 		        break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+			case Hieu:
+				this.name = "Hieu";
+				this.type = "Moron";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 10.0f;
+				this.defense = 10.0f;
+				this.speed = 50.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.Splash);
+				moveset[1] = new Move(MoveName.Splash);
+				moveset[2] = new Move(MoveName.Splash);
+				moveset[3] = new Move(MoveName.Splash);
+				break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
 			case Jackson:
 				this.name = "Jackson";
 				this.type = "Meat";
 				this.health = 100;
 				this.currentHealth = 100;
-				this.attack = 70.0f;
+				this.attack = 60.0f;
 				this.defense = 95.0f;
 				this.speed = 50.0f;
 				this.evasion = 1.0f;
@@ -114,6 +153,64 @@ public class Compkemon {
 		        moveset[2] = new Move(MoveName.Squint);
 		        moveset[3] = new Move(MoveName.Dab);
 		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
+			case Kenny:
+				this.name = "Kenny";
+				this.type = "Musician";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 80.0f;
+				this.defense = 65.0f;
+				this.speed = 90.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.DankSaxSolo);
+				moveset[1] = new Move(MoveName.Dissonance);
+				moveset[2] = new Move(MoveName.DogmaticBurst);
+				moveset[3] = new Move(MoveName.SexySaxMan);
+				break;
+				
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
+			case Noah:
+				this.name = "Noah";
+				this.type = "Meat";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 85.0f;
+				this.defense = 65.0f;
+				this.speed = 95.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.ColorCorrection);
+				moveset[1] = new Move(MoveName.MeatThrow);
+				moveset[2] = new Move(MoveName.RKO);
+				moveset[3] = new Move(MoveName.PoleDance);
+				break;
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
+			case Trevor:
+				this.name = "Trevor";
+				this.type = "Enlightened";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 95.0f;
+				this.defense = 55.0f;
+				this.speed = 75.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.Hack);
+				moveset[1] = new Move(MoveName.DDoSAttack);
+				moveset[2] = new Move(MoveName.DankMemes);
+				moveset[3] = new Move(MoveName.GGRIP);
+				break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////	     
 			case Wrightson:
 				this.name = "Wrightson";

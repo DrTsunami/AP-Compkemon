@@ -295,7 +295,6 @@ public class Game {
 						other.currentHealth = 0;
 					}					
 				}
-			// TODO make sure to re-add Effect Handler thing here
 				
 			} else {
 				textBox.AnimateText(current + "'s attack missed!", false);
@@ -391,13 +390,6 @@ public class Game {
 		};
 		
 	}
-	
-	
-	
-	
-	// FIXME Start loading images using BufferedImage Read thingy
-
-	
 	
 	// TODO clean up this method. It's redundant and messy
 	public void draw(Graphics2D g2d) {

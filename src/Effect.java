@@ -16,9 +16,6 @@ public class Effect {
 		// empty 
 	}
 	
-
-	// TODO Need to start fixing current effects and add new effects
-	
 	public Effect (EffectType effect, Compkemon user , Compkemon target, int initTurn) {
 		effectType = effect;		
 		this.user = user;
@@ -57,6 +54,30 @@ public class Effect {
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
+			case ChopstickBarrage :
+				textBox.AnimateText(target + " has been ensnared in chopsticks", false);
+				textBox.AnimateText(target + "'s speed fell!", false);
+				target.speed -= 10.0f;
+				finished = true;
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case ChopstickSlam :
+				textBox.AnimateText(target + " was picked up and slammed down by chopsticks", false);
+				textBox.AnimateText(target + "'s defense fell!", false);
+				target.defense -= 10.0f;
+				finished = true;
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case ColorCorrection :
+				textBox.AnimateText(user + " can now see in clearer color!", false);
+				textBox.AnimateText(user + "'s attack sharply rose!", false);
+				user.attack += 20.0f;
+				finished = true;
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case Dab :
 				if (effectTurns == 0) {	
 					textBox.AnimateText(user + " dabbed out of harm's way!", false);
@@ -69,6 +90,35 @@ public class Effect {
 					didApplyThisTurn= true;
 					finished = true;
 				}
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case DankMemes :
+				textBox.AnimateText(target + " has been subjected to the dankest of memes!!", false);
+				finished = true;
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case DankSaxSolo : 
+				textBox.AnimateText(user + "'s soul has been reinvigorated!", false);
+				textBox.AnimateText(user + "'s health was restored", false);
+				float drain_v1 = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
+				user.currentHealth += (int)drain_v1;
+				if (user.currentHealth > 100) {
+					user.currentHealth = 100;
+				}
+				didApplyThisTurn = true;
+				finished = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case DDoSAttack :
+				// TODO test this move a lot!!!!!!!
+				textBox.AnimateText(target + "'s values have been permanently overwritten!!", false);
+				tempFloat = (float)Math.random();
+				target.attack = tempFloat;
+				target.defense = tempFloat;
+				target.speed = tempFloat;
+				didApplyThisTurn= true;
+				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Eat :
@@ -85,8 +135,8 @@ public class Effect {
 			case Enslave : 
 				textBox.AnimateText(target + " was enslaved to the Wrightocracy!", false);
 				textBox.AnimateText(target + "'s energy was drained!", false);
-				float drain = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
-				user.currentHealth += (int)drain;
+				float drain_v2 = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
+				user.currentHealth += (int)drain_v2;
 				if (user.currentHealth > 100) {
 					user.currentHealth = 100;
 				}

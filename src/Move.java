@@ -150,6 +150,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "Overwrites Opponent values to randomized stats";
 	        	break;
+	        case Dissonance:
+	        	attackName = "Dissonance";
+	        	type = "Musician";
+	        	power = 80;
+	        	accuracy = 1.0f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Bad pitch!!!!!";
+	        	break;
 	        case DogmaticBurst:
 	        	attackName = "DogmaticBurst";
 	        	type = "Enlightened";
@@ -194,6 +205,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "Wrightocracy is established over battle. 0.5 multipliers to 0.1 and 2.0 multipliers to 3.0";
 	        	break;
+	        case GGRIP:
+	        	attackName = "GG RIP";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 0.25f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "GG RIP";
+	        	break;
 	        case Growl:
 	        	attackName = "Growl";
 	        	type = "Meat";
@@ -205,6 +227,17 @@ public class Move {
 	            priority = 0;
 	            description = "Opponent's attack lowered by 10";	            
 	            break;
+	        case Hack:
+	        	attackName = "Hack";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "User hacks for more attack";
+	        	break;
 	        case Mercy:
 	        	attackName = "Mercy";
 	        	type = "God";
@@ -249,6 +282,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "Target is pinned by a big piece of meat. Target's speed lowered";
         		break;
+	        case MeatThrow:
+	        	attackName = "Meat Throw";
+	        	type = "Meat";
+	            power = 70;
+	            accuracy = 1.0f;
+	            hasEffect = false;
+	            toSelf = false;
+	            lastingEffect = false;
+	            priority = 0;
+	            description = "Calculated throw. Rarely misses";	            
+	        	break;
 	        case Meatquake:
 	        	attackName = "Meatquake";
 	        	type = "Meat";
@@ -260,6 +304,28 @@ public class Move {
 	        	priority = 0;
 	        	description = "Massive quake created by a big piece of meat.";
         		break;
+	        case PoleDance:
+	        	attackName = "Pole(vault) Dance";
+	        	type = "Meat";
+	        	power = 0;
+	        	accuracy = 0.8f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Nice pole dance.";
+        		break;
+	        case RKO:
+	        	attackName = "RKO";
+	        	type = "Meat";
+	        	power = 120;
+	        	accuracy = 0.85f;
+	        	hasEffect = false;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "RKO!!!!";
+        		break;
 	        case SatanicMissionary:
 	        	attackName = "Satanic Missionary";
 	        	type = "Moron";
@@ -270,6 +336,17 @@ public class Move {
 	        	lastingEffect = true;
 	        	priority = 0;
 	        	description = "Target is converted to worship Satan. Target becomes Moronic type";
+	        	break;
+	        case SexySaxMan:
+	        	attackName = "Sexy Sax Man";
+	        	type = "Musician";
+	        	power = 0;
+	        	accuracy = 0.75f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = true;
+	        	priority = 0;
+	        	description = "User becomes sexy for a few turns";
 	        	break;
 	        case Splash: 
 	        	attackName = "Splash";
@@ -400,6 +477,12 @@ public class Move {
     		case "Establish Wrightocracy" :
     			effect = new Effect(EffectType.EstablishWrightocracy, user, target,effectInitCounter);
     			break;
+    		case "GG RIP" :
+    			effect = new Effect(EffectType.GGRIP, user, target,effectInitCounter);
+    			break;
+    		case "Hack" :
+    			effect = new Effect(EffectType.Hack, user, target,effectInitCounter);
+    			break;
     		case "LSD" : 
     			effect = new Effect(EffectType.LSD, user, target, effectInitCounter);
     			break;
@@ -409,8 +492,14 @@ public class Move {
     		case "Meatpin" :
     			effect = new Effect(EffectType.Meatpin, user, target, effectInitCounter);
     			break;
+    		case "Pole(vault) Dance" :
+    			effect = new Effect(EffectType.PoleDance, user, target,effectInitCounter);
+    			break;
     		case "Satanic Missionary" :
     			effect = new Effect(EffectType.SatanicMissionary, user, target, effectInitCounter);
+    			break;
+    		case "Sexy Sax Man" :
+    			effect = new Effect(EffectType.SexySaxMan, user, target, effectInitCounter);
     			break;
     		case "Squint":
     			effect = new Effect(EffectType.Squint, user, target, effectInitCounter);

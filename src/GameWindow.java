@@ -67,7 +67,7 @@ public class GameWindow extends JFrame implements KeyListener, MouseListener, Mo
      * Content.LoadContent(), init(), and starts updating
      */
     public GameWindow(){
-    	setSize(new Dimension(900, 690));
+    	setSize(new Dimension(1000, 690));
     	
     	//setUndecorated(true); // borderless (fullscreen) window
     	//setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH); // maximize window

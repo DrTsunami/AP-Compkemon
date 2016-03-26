@@ -8,7 +8,7 @@ public enum CompkemonList {
 	Jeremiah,
 	Kenny,
 	Noah,
-	Trevor,
 	Ryan,
+	Trevor,
 	Wrightson,
 } // Complete list of available Compkemon

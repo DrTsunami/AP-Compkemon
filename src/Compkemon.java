@@ -193,6 +193,25 @@ public class Compkemon {
 				moveset[3] = new Move(MoveName.PoleDance);
 				break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////	     
+			case Ryan:
+				this.name = "Ryan";
+				this.type = "Enlightened";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 80.0f;
+				this.defense = 65.0f;
+				this.speed = 99.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+				this.currentMove = new Move();
+				
+				moveset[0] = new Move(MoveName.ChopstickBarrage);
+				moveset[1] = new Move(MoveName.ChopstickBarrage);
+				moveset[2] = new Move(MoveName.ChopstickBarrage);
+				moveset[3] = new Move(MoveName.ChopstickBarrage);
+				break;
+///////////////////////////////////////////////////////////////////////////////////////////////////	     
 			case Trevor:
 				this.name = "Trevor";
 				this.type = "Enlightened";

@@ -153,7 +153,9 @@ public class Game {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
-		enemy = new Compkemon(CompkemonList.Prototype);
+		// TODO maybe make a game mode where you have to fight through everyone in order to win.
+		// TODO properly assign sprites
+		enemy = new Compkemon(CompkemonList.Wrightson);
 		
 		// wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);
@@ -163,17 +165,37 @@ public class Game {
 				myCompkemon =  new Compkemon(CompkemonList.Prototype);
 				break;
 			case 2:
-				myCompkemon =  new Compkemon(CompkemonList.Wrightson);
+				myCompkemon =  new Compkemon(CompkemonList.Aidan);
 				break;
 			case 3:
 				myCompkemon = new Compkemon(CompkemonList.Alex);
 				break;
 			case 4:
-				myCompkemon = new Compkemon(CompkemonList.Jeremiah);
+				myCompkemon = new Compkemon(CompkemonList.Hieu);
 				break;
 			case 5:
 				myCompkemon = new Compkemon(CompkemonList.Jackson);
 				break;
+			case 6:
+				myCompkemon = new Compkemon(CompkemonList.Jeremiah);
+				break;
+			case 7:
+				myCompkemon = new Compkemon(CompkemonList.Kenny);
+				break;
+			case 8:
+				myCompkemon = new Compkemon(CompkemonList.Noah);
+				break;
+			case 9:
+				myCompkemon = new Compkemon(CompkemonList.Ryan);
+				break;
+			case 10:
+				myCompkemon = new Compkemon(CompkemonList.Trevor);
+				break;
+			case 11:
+				// TODO change wrightson's name to God
+				myCompkemon = new Compkemon(CompkemonList.Wrightson);
+				break;
+			
 			default: 
 				textBox.AnimateText("Invalid command!", true);
 				Start();
@@ -411,7 +433,18 @@ public class Game {
 		
 			case SELECTING_COMPKEMON: {
 				System.out.println("selecting compkemon");
-				GamePanel.drawString(g2d, "1. Prototype" + "\n" + "2. Wrightson" + "\n" + "3. Alex" + "\n" + "4. Jeremiah" + "\n" + "5. Jackson" + "\n", 5, 5);
+				GamePanel.drawString(g2d, "1. Prototype" + "\n" + 
+									"2. Aidan" + "\n" + 
+									"3. Alex" + "\n" + 
+									"4. Hieu" + "\n" + 
+									"5. Jackson" + "\n" + 
+									"6. Jeremiah" + "\n" + 
+									"7. Kenny" + "\n" + 
+									"8. Noah" + "\n" + 
+									"9. Ryan" + "\n" + 
+									"10. Trevor" + "\n" + 
+									"11. Wrightson" + "\n",
+									5, 5);
 				g2d.setColor(Color.GREEN);
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
@@ -519,9 +552,12 @@ public class Game {
 				g2d.drawString("> ", 10, windowHeight - 10);
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
+				
+				// FIXME move this block back inside  waiting for input just in case
+				Animations.damaged(g2d, firstHealthBox);
+				Animations.damaged(g2d, secondHealthBox);
+				
 				if (!WaitingForInput()) {
-					Animations.damaged(g2d, firstHealthBox);
-					Animations.damaged(g2d, secondHealthBox);
 					if (!animating) {
 						if (gameOver) {
 							endGame(loser);
@@ -601,9 +637,12 @@ public class Game {
 				g2d.drawString(commandLine, 20 + 5, windowHeight - 10);
 				textBox.Draw(g2d);
 				
+				// FIXME for some reason health animations dont always occur completely. Jumps throuhg animation checking loop
+				// FIXME move this block back inside  waiting for input just in case
+				Animations.damaged(g2d, firstHealthBox);
+				Animations.damaged(g2d, secondHealthBox);
+				
 				if (!WaitingForInput()) {
-					Animations.damaged(g2d, firstHealthBox);
-					Animations.damaged(g2d, secondHealthBox);
 					if (!animating) {
 						if (gameOver) {
 							endGame(loser);

@@ -60,6 +60,7 @@ public class Effect {
 				target.speed -= 10.0f;
 				finished = true;
 				didApplyThisTurn = true;
+				Game.ready = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case ChopstickSlam :
@@ -68,7 +69,9 @@ public class Effect {
 				target.defense -= 10.0f;
 				finished = true;
 				didApplyThisTurn = true;
+				Game.ready = true;
 				break;
+				
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case ColorCorrection :
 				textBox.AnimateText(user + " can now see in clearer color!", false);
@@ -96,12 +99,13 @@ public class Effect {
 				textBox.AnimateText(target + " has been subjected to the dankest of memes!!", false);
 				finished = true;
 				didApplyThisTurn = true;
+				Game.ready = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case DankSaxSolo : 
 				textBox.AnimateText(user + "'s soul has been reinvigorated!", false);
 				textBox.AnimateText(user + "'s health was restored", false);
-				float drain_v1 = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.Enslave)));
+				float drain_v1 = 0.5f * (BattleHandler.damageCalculator(user, target, new Move(MoveName.DankSaxSolo)));
 				user.currentHealth += (int)drain_v1;
 				if (user.currentHealth > 100) {
 					user.currentHealth = 100;
@@ -113,7 +117,7 @@ public class Effect {
 			case DDoSAttack :
 				// TODO test this move a lot!!!!!!!
 				textBox.AnimateText(target + "'s values have been permanently overwritten!!", false);
-				tempFloat = (float)Math.random();
+				tempFloat = (float) Math.random() * 100.0f;
 				target.attack = tempFloat;
 				target.defense = tempFloat;
 				target.speed = tempFloat;
@@ -150,6 +154,7 @@ public class Effect {
 					for(int i = 0; i < typeTable[2].length; i++) {
 						typeTable[5][i] = 3.0f;
 						typeTable[i][5] = 0.1f;
+						typeTable[0][5] = 10.0f;
 					}
 				} else if (effectTurns < 5) {
 					textBox.AnimateText("A Wrightocracy looms over the area. Turn: " + effectTurns, false);;					
@@ -169,6 +174,24 @@ public class Effect {
 					finished = true;					
 				}				
 				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case GGRIP : 
+				textBox.AnimateText("GG RIP GG RIP GG RIP GG RIP", false);
+				textBox.AnimateText("RIP " + target, false);
+				target.currentHealth = 0;
+				didApplyThisTurn = true;
+				finished = true;
+				Game.ready = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case Hack : 
+				textBox.AnimateText(user + " hacked the system!", false);
+				textBox.AnimateText(user + "'s attack sharply rose!", false);
+				user.attack += 10.0f;
+				didApplyThisTurn = true;
+				finished = true;
+				Game.ready = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
@@ -192,6 +215,16 @@ public class Effect {
 				finished = true;
 				didApplyThisTurn = true;
 				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case PoleDance:
+				textBox.AnimateText(target + " has been aroused!", false);
+				textBox.AnimateText(target + "'s defense fell!", false);
+				textBox.AnimateText(target + "'s attack fell!", false);
+				target.attack -= 10.0f;
+				target.defense -= 10.0f;
+				finished = true;
+				didApplyThisTurn = true;
+				break;
 ////////////////////////////////////////////////////////////////////////////////////////////			
 			case SatanicMissionary:
 				String originalType = target.type;
@@ -206,6 +239,19 @@ public class Effect {
 					textBox.AnimateText("Darkness has lifted", false);
 					target.type = originalType;
 					didApplyThisTurn = true;
+					finished = true;
+				}
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case SexySaxMan :
+				if (effectTurns == 0) {	
+					textBox.AnimateText(user + " became sexy to double attack!", false);
+					user.attack *= 2.0f;
+					user.currentHealth -= 25;
+					didApplyThisTurn = true;
+				} else if (effectTurns == 2) {
+					user.attack /= 2.0f;
+					didApplyThisTurn= true;
 					finished = true;
 				}
 				break;

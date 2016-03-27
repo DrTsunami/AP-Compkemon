@@ -15,7 +15,6 @@ public class Compkemon {
     float evasion;
     ArrayList<Effect> effect;
     
-    
     CompkemonList compkemonList;
     
     // Zero arg Constructor

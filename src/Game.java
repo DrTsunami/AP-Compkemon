@@ -271,7 +271,6 @@ public class Game {
 	public void Intro() {
 		userGround = new Ground(0, 500);
 		enemyGround = new Ground(GameWindow.ScreenWidth - 250, 200);
-		//TODO properly assign sprites
 		state = GameState.INTRO;
 	}
 
@@ -451,6 +450,11 @@ public class Game {
 				g2d.setFont(font);
 				g2d.drawString("Press 'Enter' to Start!", (windowWidth/2) - 200 - 30, windowHeight/2 - 100 + 150);
 				// TODO somehow add flashing and moing elements
+				//if (frame % 60 == 0) {
+					//g2d.drawString("_", (windowWidth/2) + 230, windowHeight/2 - 100 + 150);
+				//} else if (frame % 30 == 0) {
+					
+				//}
 				break;
 			}
 		
@@ -698,6 +702,8 @@ public class Game {
 			}
 			
 		}
+		
+		frame++;
 	}
 }
 

@@ -32,8 +32,8 @@ public class Move {
 	        case AlmightyKush:
 	        	attackName = "Almighty Kush";
 	        	type = "Moron";
-	        	power = 100;
-	        	accuracy = 0.0f;
+	        	power = 75;
+	        	accuracy = 0.75f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -65,7 +65,7 @@ public class Move {
 	        case ChopstickBarrage:
 	        	attackName = "Chopstick Barrage";
 	        	type = "Enlightened";
-	        	power = 65;
+	        	power = 50;
 	        	accuracy = 1.0f;
 	        	hasEffect = true;
 	        	toSelf = false;
@@ -76,7 +76,7 @@ public class Move {
 	        case ChopstickSlam:
 	        	attackName = "Chopstick Slam";
 	        	type = "Enlightened";
-	        	power = 50;
+	        	power = 40;
 	        	accuracy = 1.0f;
 	        	hasEffect = true;
 	        	toSelf = false;
@@ -120,7 +120,7 @@ public class Move {
 	        case DankMemes:
 	        	attackName = "Dank Memes";
 	        	type = "Cynic";
-	        	power = 85;
+	        	power = 75;
 	        	accuracy = 0.9f;
 	        	hasEffect = true;
 	        	toSelf = false;
@@ -131,7 +131,7 @@ public class Move {
 	        case DankSaxSolo:
 	        	attackName = "Dank Sax Solo";
 	        	type = "Musician";
-	        	power = 80;
+	        	power = 50;
 	        	accuracy = 0.9f;
 	        	hasEffect = true;
 	        	toSelf = true;
@@ -153,8 +153,8 @@ public class Move {
 	        case Dissonance:
 	        	attackName = "Dissonance";
 	        	type = "Musician";
-	        	power = 80;
-	        	accuracy = 1.0f;
+	        	power = 70;
+	        	accuracy = 0.8f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -164,8 +164,8 @@ public class Move {
 	        case DogmaticBurst:
 	        	attackName = "DogmaticBurst";
 	        	type = "Enlightened";
-	        	power = 90;
-	        	accuracy = 1.0f;
+	        	power = 80;
+	        	accuracy = 0.9f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -216,17 +216,6 @@ public class Move {
 	        	priority = 0;
 	        	description = "GG RIP";
 	        	break;
-	        case Growl:
-	        	attackName = "Growl";
-	        	type = "Meat";
-	            power = 0;
-	            accuracy = 1.0f;
-	            hasEffect = true;
-	            toSelf = false;
-	            lastingEffect = false;
-	            priority = 0;
-	            description = "Opponent's attack lowered by 10";	            
-	            break;
 	        case Hack:
 	        	attackName = "Hack";
 	        	type = "Enlightened";
@@ -274,7 +263,7 @@ public class Move {
 	        case Meatpin:
 	        	attackName = "Meatpin";
 	        	type = "Meat";
-	        	power = 50;
+	        	power = 40;
 	        	accuracy = 1.0f;
 	        	hasEffect = true;
 	        	toSelf = false;
@@ -285,7 +274,7 @@ public class Move {
 	        case MeatThrow:
 	        	attackName = "Meat Throw";
 	        	type = "Meat";
-	            power = 70;
+	            power = 60;
 	            accuracy = 1.0f;
 	            hasEffect = false;
 	            toSelf = false;
@@ -296,7 +285,7 @@ public class Move {
 	        case Meatquake:
 	        	attackName = "Meatquake";
 	        	type = "Meat";
-	        	power = 100;
+	        	power = 70;
 	        	accuracy = 1.0f;
 	        	hasEffect = false;
 	        	toSelf = false;
@@ -318,8 +307,8 @@ public class Move {
 	        case RKO:
 	        	attackName = "RKO";
 	        	type = "Meat";
-	        	power = 120;
-	        	accuracy = 0.85f;
+	        	power = 90;
+	        	accuracy = 0.3f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
@@ -351,9 +340,9 @@ public class Move {
 	        case Splash: 
 	        	attackName = "Splash";
 	        	type = "Moron";
-	            power = 10;
+	            power = 0;
 	            accuracy = 1.0f;
-	            hasEffect = false;
+	            hasEffect = true;
 	            toSelf = false;
 	            lastingEffect = false;
 	            priority = 0;
@@ -500,6 +489,9 @@ public class Move {
     			break;
     		case "Sexy Sax Man" :
     			effect = new Effect(EffectType.SexySaxMan, user, target, effectInitCounter);
+    			break;
+    		case "Splash" :
+    			effect = new Effect(EffectType.Splash, user, target, effectInitCounter);
     			break;
     		case "Squint":
     			effect = new Effect(EffectType.Squint, user, target, effectInitCounter);

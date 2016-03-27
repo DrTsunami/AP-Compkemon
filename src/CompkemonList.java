@@ -10,5 +10,5 @@ public enum CompkemonList {
 	Noah,
 	Ryan,
 	Trevor,
-	Wrightson,
+	God,
 } // Complete list of available Compkemon

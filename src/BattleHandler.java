@@ -2,6 +2,52 @@ public class BattleHandler {
 	
 	static TypeTable typeTable = Game.typeTable;
 	
+	public static Compkemon randomEnemy() {
+		
+		Compkemon enemy = new Compkemon();
+		int random = (int)(Math.random() * 11);
+		
+		switch(random) {
+			case 1:
+				enemy =  new Compkemon(CompkemonList.Prototype);
+				break;
+			case 2:
+				enemy =  new Compkemon(CompkemonList.Aidan);
+				break;
+			case 3:
+				enemy = new Compkemon(CompkemonList.Alex);
+				break;
+			case 4:
+				enemy = new Compkemon(CompkemonList.Hieu);
+				break;
+			case 5:
+				enemy = new Compkemon(CompkemonList.Jackson);
+				break;
+			case 6:
+				enemy = new Compkemon(CompkemonList.Jeremiah);
+				break;
+			case 7:
+				enemy = new Compkemon(CompkemonList.Kenny);
+				break;
+			case 8:
+				enemy = new Compkemon(CompkemonList.Noah);
+				break;
+			case 9:
+				enemy = new Compkemon(CompkemonList.Ryan);
+				break;
+			case 10:
+				enemy = new Compkemon(CompkemonList.Trevor);
+				break;
+			case 11:
+				// TODO change wrightson's name to God
+				enemy = new Compkemon(CompkemonList.God);
+				break;
+		}
+		return enemy;
+	}
+	
+	
+	
 	// Determines Speed and Priority
 	
 	public static int priorityCalculator(Compkemon user, Move userMove, Compkemon enemy, Move enemyMove) {
@@ -81,7 +127,7 @@ public class BattleHandler {
 		float targetDefense = target.defense;		
 		
 		damage = (int)((.85 * ((userAttack)/(targetDefense)) * (userMove.power)) * damageMultiplier(user, target, userMove));
-		
+		damage = (int)((float)damage * 0.6f);
 		return damage;
 		
 	}

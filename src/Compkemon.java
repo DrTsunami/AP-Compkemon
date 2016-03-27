@@ -38,7 +38,6 @@ public class Compkemon {
     	
     	compkemonList = compkemon;
     	
-    	// FIXME work on all the moves
     	switch(compkemon) {
 			case Prototype: 
 				this.name = "Prototype";
@@ -231,8 +230,8 @@ public class Compkemon {
 				moveset[3] = new Move(MoveName.GGRIP);
 				break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////	     
-			case Wrightson:
-				this.name = "Wrightson";
+			case God:
+				this.name = "God";
 				this.type = "God";
 				this.health = 100;
 				this.currentHealth = 100;

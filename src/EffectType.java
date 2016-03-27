@@ -19,6 +19,7 @@ public enum EffectType {
 	PoleDance,
 	SatanicMissionary,
 	SexySaxMan,
+	Splash,
 	Squint,
 	StateOfAscendancy, 
 }

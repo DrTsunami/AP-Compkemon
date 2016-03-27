@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 // Handles the GameStates
 enum GameState{
+	START,
 	WAITING_FOR_INPUT,
 	SELECTING_COMPKEMON,
 	INTRO,
@@ -86,6 +87,10 @@ public class Game {
 	// Performed after initialization
 	public void Start() {
 		// Change state and perform welcome messages
+		state = GameState.START;
+	}
+	
+	public void BeginGame() {
 		ready = false;
 		gameOver = false;
 		state = GameState.SELECTING_COMPKEMON;
@@ -117,6 +122,12 @@ public class Game {
 		// Takes keyCode (key) and gets the character and turns it into the integer
 		char c = keyCode.getKeyChar();
 		int i = (int)c;
+		
+		if (state == GameState.START && i == 10) {
+			state = GameState.SELECTING_COMPKEMON;
+			BeginGame();
+			System.out.println("Beginning game");
+		}
 		
 		// If enter key detected...
 		if (i == 10 && commandLine.length() > 0){ 
@@ -153,9 +164,8 @@ public class Game {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
 		enemy = new Compkemon();
-		// TODO maybe make a game mode where you have to fight through everyone in order to win.
-		// TODO properly assign sprites
-		enemy = new Compkemon(CompkemonList.Wrightson);
+		// TODO maybe make a game mode where you have to fight throuhg 
+		enemy = BattleHandler.randomEnemy();
 		
 		// wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);
@@ -193,14 +203,13 @@ public class Game {
 				break;
 			case 11:
 				// TODO change wrightson's name to God
-				myCompkemon = new Compkemon(CompkemonList.Wrightson);
+				myCompkemon = new Compkemon(CompkemonList.God);
 				break;
 			
 			default: 
 				textBox.AnimateText("Invalid command!", true);
 				Start();
 				break;
-			// TODO add cases for everything else
 		}
 		
 		
@@ -377,8 +386,8 @@ public class Game {
 	
 	public void battleScene(Compkemon myCompkemon, Compkemon enemy) {
 		// Battle starts
-		sprite1 = new Sprite((int)userGround.getX() + 25, (int)userGround.getY() - 175);
-		sprite2 = new Sprite((int)enemyGround.getX() + 25, (int)enemyGround.getY() - 175);
+		sprite1 = new Sprite(myCompkemon, (int)userGround.getX() + 25, (int)userGround.getY() - 175);
+		sprite2 = new Sprite(enemy, (int)enemyGround.getX() + 25, (int)enemyGround.getY() - 175);
 		userHealthBox = new HealthBox(myCompkemon, GameWindow.ScreenWidth - 380, 400);
 		enemyHealthBox = new HealthBox(enemy, 100 , 50);
 		
@@ -401,10 +410,10 @@ public class Game {
 				switch (commandLine) {
 					case "y" :
 						state = GameState.SELECTING_COMPKEMON;
-						Start();
+						BeginGame();
 						break;
 					case "n" :
-						System.exit(0);
+						Start();
 						break;
 				}
 				
@@ -413,6 +422,8 @@ public class Game {
 		
 	}
 	
+	
+	public static int frame = 0;
 	// TODO clean up this method. It's redundant and messy
 	public void draw(Graphics2D g2d) {
 		// This keeps drawing over and over once in case
@@ -428,8 +439,20 @@ public class Game {
 		Font font = new Font("consolas", Font.PLAIN, 18);
 		g2d.setFont(font);
 		g2d.setColor(Color.GREEN);
+	
 		
 		switch (state){
+			case START: {
+				System.out.println("Start");
+				font = new Font("consolas", Font.PLAIN, 60);
+				g2d.setFont(font);
+				g2d.drawString("AP COMPKEMON", (windowWidth/2) - 200, windowHeight/2 - 100);
+				font = new Font("consolas", Font.PLAIN, 36);
+				g2d.setFont(font);
+				g2d.drawString("Press 'Enter' to Start!", (windowWidth/2) - 200 - 30, windowHeight/2 - 100 + 150);
+				// TODO somehow add flashing and moing elements
+				break;
+			}
 		
 			case SELECTING_COMPKEMON: {
 				System.out.println("selecting compkemon");
@@ -442,8 +465,7 @@ public class Game {
 									"7. Kenny" + "\n" + 
 									"8. Noah" + "\n" + 
 									"9. Ryan" + "\n" + 
-									"10. Trevor" + "\n" + 
-									"11. Wrightson" + "\n",
+									"10. Trevor" + "\n",
 									5, 5);
 				g2d.setColor(Color.GREEN);
 				g2d.drawString("> ", 10, windowHeight - 10);

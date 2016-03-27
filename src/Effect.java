@@ -191,7 +191,6 @@ public class Effect {
 				user.attack += 10.0f;
 				didApplyThisTurn = true;
 				finished = true;
-				Game.ready = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case LSD :
@@ -254,6 +253,12 @@ public class Effect {
 					didApplyThisTurn= true;
 					finished = true;
 				}
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case Splash:
+				textBox.AnimateText("But nothing happened!", false);
+				finished = true;
+				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case Squint:

@@ -6,23 +6,56 @@ public class Sprite {
 	
 	private int x;
 	private int y;
+	public Compkemon compkemon;
 	
 	public static BufferedImage img;
 	
 	public Sprite() {
-		init();
 		// Nothing for now
 	}
 	
-	public Sprite(int x, int y) {
-		init();
+	public Sprite(Compkemon c, int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-	
-	public void init() {
+		compkemon = c;
+		
     	Texture t = new Texture("/img/");
-    	img = t.load("trump.png");
+    	
+    	switch (c.name) {
+			case "Prototype" :
+				img = t.load("trump.png");
+				break;
+			case "Aidan" :
+				img = t.load("trump.png");
+				break;
+			case "Alex" :
+				img = t.load("trump.png");
+				break;
+			case "Hieu" :
+				img = t.load("trump.png");
+				break;
+			case "Jackson" :
+				img = t.load("trump.png");
+				break;
+			case "Jeremiah" :
+				img = t.load("trump.png");
+				break;
+			case "Kenny" :
+				img = t.load("trump.png");
+				break;
+			case "Noah" :
+				img = t.load("trump.png");
+				break;
+			case "Ryan" :
+				img = t.load("trump.png");
+				break;
+			case "Trevor" :
+				img = t.load("trump.png");
+				break;
+			case "Wrightson" :
+				img = t.load("trump.png");
+				break;
+    	}
 	}
 	
 	public void move(int deltaX, int deltaY) {

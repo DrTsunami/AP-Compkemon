@@ -72,13 +72,21 @@ public class Game {
 	// TODO properly assign sprites
 	static Sprite sprite1;
 	static Sprite sprite2;
+	static Requirements req;
 	
 	// Performed on initialization
 	public void init() {
+		
+		req = new Requirements();
+
+		req.whileFunction();
+		req.forEachFunction();
+		req.paneFunction();
+		
+		
 		// Draw command line box
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		panel.repaint();
-		
 		// Go to next stage
 		Start();
 		

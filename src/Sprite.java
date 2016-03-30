@@ -28,25 +28,26 @@ public class Sprite {
 		if (compkemon.name.equals("Prototype")) {
 			img = t.load("trump.png");
 		} else if (compkemon.name.equals("Aidan")) {
-			img = t.load("trump.png");
+			img = t.load("aidan.png");
 		} else if (compkemon.name.equals("Alex")) {
 			img = t.load("alex.png");
 		} else if (compkemon.name.equals("Hieu")) {
-			img = t.load("trump.png");
-		} else if (compkemon.name.equals("Jackon")) {
-			img = t.load("trump.png");
+			img = t.load("hieu.png");
+		} else if (compkemon.name.equals("Jackson")) {
+			img = t.load("jackson.png");
 		} else if (compkemon.name.equals("Jeremiah")) {
-			img = t.load("trump.png");
+			img = t.load("jeremiah.png");
 		} else if (compkemon.name.equals("Kenny")) {
-			img = t.load("trump.png");
+			img = t.load("kenny.png");
 		} else if (compkemon.name.equals("Noah")) {
-			img = t.load("trump.png");
+			img = t.load("noah.png");
 		} else if (compkemon.name.equals("Ryan")) {
+			// assign proper path
 			img = t.load("trump.png");
 		} else if (compkemon.name.equals("Trevor")) {
-			img = t.load("trump.png");
+			img = t.load("trevor.png");
 		} else if (compkemon.name.equals("God")) {
-			img = t.load("trump.png");
+			img = t.load("god.png");
 		}
 	}
 	

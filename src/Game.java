@@ -78,7 +78,6 @@ public class Game {
 	public void init() {
 		
 		req = new Requirements();
-
 		req.whileFunction();
 		req.forEachFunction();
 		req.paneFunction();
@@ -98,6 +97,7 @@ public class Game {
 		state = GameState.START;
 	}
 	
+	// Called at start of game
 	public void BeginGame() {
 		ready = false;
 		gameOver = false;
@@ -109,7 +109,6 @@ public class Game {
 			public void processCommand(String txt){
 				// this will be called next time we press enter;
 				Select();
-				//Intro();
 			}
 		};
 	}
@@ -117,9 +116,11 @@ public class Game {
 	// Processes commands
 	public void ProcessCommand(String command){
 
+		// resets text string. Clears it.
 		String text = "";
 		
 		if (command.length() > 0) {
+			// 
 			if (commandProcessor != null)
 				commandProcessor.processCommand(text);
 		}

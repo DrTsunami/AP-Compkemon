@@ -5,7 +5,7 @@ public class BattleHandler {
 	public static Compkemon randomEnemy() {
 		
 		Compkemon enemy = new Compkemon();
-		int random = (int)(Math.random() * 11);
+		int random = (int)(Math.random() * 12);
 		
 		switch(random) {
 			case 1:

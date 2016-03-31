@@ -204,10 +204,10 @@ public class Compkemon {
 				this.moveset = new Move[4];
 				this.currentMove = new Move();
 				
-				moveset[0] = new Move(MoveName.ChopstickBarrage);
+				moveset[0] = new Move(MoveName.Squint);
 				moveset[1] = new Move(MoveName.ChopstickBarrage);
-				moveset[2] = new Move(MoveName.ChopstickBarrage);
-				moveset[3] = new Move(MoveName.ChopstickBarrage);
+				moveset[2] = new Move(MoveName.DivineChopstick);
+				moveset[3] = new Move(MoveName.PickRice);
 				break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////	     
 			case Trevor:

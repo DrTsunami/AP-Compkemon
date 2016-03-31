@@ -125,6 +125,12 @@ public class Effect {
 				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
+			case DivineChopstick :
+				textBox.AnimateText("A divine chopstick came crashing down from the heavens!", false);
+				didApplyThisTurn= true;
+				finished = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case Eat :
 				textBox.AnimateText(user + " consumed a big piece of meat! ", false);
 				textBox.AnimateText(user + " recovered health!", false);
@@ -211,6 +217,18 @@ public class Effect {
 				target.speed -= 10;
 				textBox.AnimateText(target + " was pinned down by " + user + "!", false);
 				textBox.AnimateText(target + "'s speed decreased!", false);
+				finished = true;
+				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case PickRice:
+				textBox.AnimateText(user + " toils in the rice fields and gathers nutrients!", false);
+				textBox.AnimateText(user + "'s defense sharply rose!", false);
+				textBox.AnimateText(user + "'s attack sharply rose!", false);
+				textBox.AnimateText(user + "'s speed sharply rose!", false);
+				user.attack += 20.0f;
+				user.defense += 20.0f;
+				user.speed += 20.0f;
 				finished = true;
 				didApplyThisTurn = true;
 				break;

@@ -65,7 +65,7 @@ public class Move {
 	        case ChopstickBarrage:
 	        	attackName = "Chopstick Barrage";
 	        	type = "Enlightened";
-	        	power = 50;
+	        	power = 40;
 	        	accuracy = 1.0f;
 	        	hasEffect = true;
 	        	toSelf = false;
@@ -160,6 +160,17 @@ public class Move {
 	        	lastingEffect = false;
 	        	priority = 0;
 	        	description = "Bad pitch!!!!!";
+	        	break;
+	        case DivineChopstick:
+	        	attackName = "Divine Chopstick";
+	        	type = "Enlightened";
+	        	power = 100;
+	        	accuracy = 0.5f;
+	        	hasEffect = true;
+	        	toSelf = false;
+	        	lastingEffect = false;
+	        	priority = 2;
+	        	description = "Foe slammed by divine chopstick.";
 	        	break;
 	        case DogmaticBurst:
 	        	attackName = "DogmaticBurst";
@@ -292,6 +303,17 @@ public class Move {
 	        	lastingEffect = false;
 	        	priority = 0;
 	        	description = "Massive quake created by a big piece of meat.";
+        		break;
+	        case PickRice:
+	        	attackName = "Pick Rice";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 0;
+	        	description = "Picks rice.";
         		break;
 	        case PoleDance:
 	        	attackName = "Pole(vault) Dance";
@@ -457,6 +479,9 @@ public class Move {
     		case "DDoS Attack" :
     			effect = new Effect(EffectType.DDoSAttack, user, target, effectInitCounter);
     			break;
+    		case "Divine Chopstick" :
+    			effect = new Effect(EffectType.DivineChopstick, user, target, effectInitCounter);
+    			break;
     		case "Eat" :
     			effect = new Effect(EffectType.Eat, user, target, effectInitCounter);
     			break;
@@ -480,6 +505,9 @@ public class Move {
     			break;
     		case "Meatpin" :
     			effect = new Effect(EffectType.Meatpin, user, target, effectInitCounter);
+    			break;
+    		case "Pick Rice" :
+    			effect = new Effect(EffectType.PickRice, user, target,effectInitCounter);
     			break;
     		case "Pole(vault) Dance" :
     			effect = new Effect(EffectType.PoleDance, user, target,effectInitCounter);

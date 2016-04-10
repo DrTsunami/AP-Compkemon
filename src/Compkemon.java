@@ -236,7 +236,7 @@ public class Compkemon {
 				this.currentHealth = 100;
 				this.attack = 100.0f;
 				this.defense = 100.0f;
-				this.speed = 100.0f;
+				this.speed = 90.0f;
 				this.evasion = 1.0f;
 				this.effect = new ArrayList<Effect>();
 				this.moveset = new Move[4];
@@ -246,6 +246,25 @@ public class Compkemon {
 		        moveset[1] = new Move(MoveName.Mercy);
 		        moveset[2] = new Move(MoveName.EstablishWrightocracy);
 		        moveset[3] = new Move(MoveName.Enslave);
+		        break;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+			case Kevin:
+				this.name = "Kevin";
+				this.type = "Enlightened";
+				this.health = 100;
+				this.currentHealth = 100;
+				this.attack = 50.0f;
+				this.defense = 50.0f;
+				this.speed = 50.0f;
+				this.evasion = 1.0f;
+				this.effect = new ArrayList<Effect>();
+				this.moveset = new Move[4];
+		        this.currentMove = new Move();
+				
+		        moveset[0] = new Move(MoveName.UseBathroom);
+		        moveset[1] = new Move(MoveName.BlowNose);
+		        moveset[2] = new Move(MoveName.GetWater);
+		        moveset[3] = new Move(MoveName.OutOfExcuses);
 		        break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
    

@@ -54,6 +54,14 @@ public class Effect {
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
+			case BlowNose : 
+				textBox.AnimateText(user + " left class blow his nose!", false);
+				textBox.AnimateText(user + " doesn't return!", false);
+				user.currentHealth = 0;
+				didApplyThisTurn= true;
+				finished = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case ChopstickBarrage :
 				textBox.AnimateText(target + " has been ensnared in chopsticks", false);
 				textBox.AnimateText(target + "'s speed fell!", false);
@@ -182,6 +190,14 @@ public class Effect {
 				didApplyThisTurn = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
+			case GetWater : 
+				textBox.AnimateText(user + " left class to get water!", false);
+				textBox.AnimateText(user + " doesn't return!", false);
+				user.currentHealth = 0;
+				didApplyThisTurn= true;
+				finished = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
 			case GGRIP : 
 				textBox.AnimateText("GG RIP GG RIP GG RIP GG RIP", false);
 				textBox.AnimateText("RIP " + target, false);
@@ -219,6 +235,37 @@ public class Effect {
 				textBox.AnimateText(target + "'s speed decreased!", false);
 				finished = true;
 				didApplyThisTurn = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case OutOfExcuses : 
+				
+				int excuseNumber = (int)(Math.random()*6);
+				
+				switch (excuseNumber) {
+					case 2: 
+						textBox.AnimateText(user + " left class to request for spaceship to the Sun", false);
+						break;
+					case 3: 
+						textBox.AnimateText(user + " left class to discover the meaning of life", false);
+						break;
+					case 4: 
+						textBox.AnimateText(user + " left class to find a girl", false);
+						break;
+					case 5: 
+						textBox.AnimateText(user + " left class to search for his classroom", false);
+						break;
+					case 6:
+						textBox.AnimateText(user + " left class to find an excuse to leave class", false);
+						break;
+					default:
+						textBox.AnimateText(user + " left class", false);
+						break;
+				}
+				
+				textBox.AnimateText(user + " doesn't return!", false);
+				user.currentHealth = 0;
+				didApplyThisTurn= true;
+				finished = true;
 				break;
 ////////////////////////////////////////////////////////////////////////////////////////////
 			case PickRice:
@@ -304,6 +351,14 @@ public class Effect {
 				finished = true;
 				didApplyThisTurn = true;
 				Game.ready = true;
+				break;
+////////////////////////////////////////////////////////////////////////////////////////////
+			case UseBathroom : 
+				textBox.AnimateText(user + " left class to use the bathroom!", false);
+				textBox.AnimateText(user + " doesn't return!", false);
+				user.currentHealth = 0;
+				didApplyThisTurn= true;
+				finished = true;
 				break;
 		}
 	}

@@ -62,6 +62,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "User stops caring. Damage multipliers against Cynic type are changed to 0.1. Exerts bad influence damage over time";
 	        	break;
+	        case BlowNose:
+	        	attackName = "Blow Nose";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 4;
+	        	description = "User leaves class to blow nose.";
+	        	break;
 	        case ChopstickBarrage:
 	        	attackName = "Chopstick Barrage";
 	        	type = "Enlightened";
@@ -216,6 +227,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "Wrightocracy is established over battle. 0.5 multipliers to 0.1 and 2.0 multipliers to 3.0";
 	        	break;
+	        case GetWater:
+	           	attackName = "Get Water";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 100.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 4;
+	        	description = "User leaves class to get water";
+	        	break;
 	        case GGRIP:
 	        	attackName = "GG RIP";
 	        	type = "Enlightened";
@@ -304,6 +326,17 @@ public class Move {
 	        	priority = 0;
 	        	description = "Massive quake created by a big piece of meat.";
         		break;
+	        case OutOfExcuses:
+	        	attackName = "Out Of Excuses";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 4;
+	        	description = "User is out of excuses, user provides lame excuse";
+        		break;
 	        case PickRice:
 	        	attackName = "Pick Rice";
 	        	type = "Enlightened";
@@ -390,28 +423,18 @@ public class Move {
 	        	lastingEffect = true;
 	        	priority = 3;
 	        	description = "Target is angered by inferiority, 50% chance attacking itself";
-	        	break;	
-	        case SwordsDance: 
-            	attackName = "Swords Dance";
-            	type = "Meat";
-                power = 0;
-                accuracy = 1.0f;
-                hasEffect = true;
-                toSelf = true;
-                lastingEffect = false;
-                priority = 0;
-                description = "Attack boosted by 20";
-                break;       
-            case Tackle:
-            	attackName = "Tackle";
-            	type = "Meat";
-                power = 50;
-                accuracy = .95f;
-                hasEffect = false;
-                lastingEffect = false;
-                priority = 0;
-                description = "The most mediocre attack in the world. User rushes recklessly at target";
-                break;    
+	        	break;	 
+	        case UseBathroom:
+	        	attackName = "Use Bathroom";
+	        	type = "Enlightened";
+	        	power = 0;
+	        	accuracy = 1.0f;
+	        	hasEffect = true;
+	        	toSelf = true;
+	        	lastingEffect = false;
+	        	priority = 4;
+	        	description = "User leaves class to use restroom";
+	        	break;	 
         }          
     }
     
@@ -458,6 +481,9 @@ public class Move {
     		case "Apathy" :
     			effect = new Effect(EffectType.Apathy, user, target, effectInitCounter);
     			break;
+    		case "Blow Nose" :
+    			effect = new Effect(EffectType.BlowNose, user, target, effectInitCounter);
+    			break;
     		case "Chopstick Barrage" :
     			effect = new Effect(EffectType.ChopstickBarrage, user, target, effectInitCounter);
     			break;
@@ -491,6 +517,9 @@ public class Move {
     		case "Establish Wrightocracy" :
     			effect = new Effect(EffectType.EstablishWrightocracy, user, target,effectInitCounter);
     			break;
+    		case "Get Water":
+    			effect = new Effect(EffectType.GetWater, user, target,effectInitCounter);
+    			break;
     		case "GG RIP" :
     			effect = new Effect(EffectType.GGRIP, user, target,effectInitCounter);
     			break;
@@ -505,6 +534,9 @@ public class Move {
     			break;
     		case "Meatpin" :
     			effect = new Effect(EffectType.Meatpin, user, target, effectInitCounter);
+    			break;
+    		case "Out Of Excuses" :
+    			effect = new Effect(EffectType.OutOfExcuses, user, target, effectInitCounter);
     			break;
     		case "Pick Rice" :
     			effect = new Effect(EffectType.PickRice, user, target,effectInitCounter);
@@ -526,6 +558,9 @@ public class Move {
     			break;
     		case "State of Ascendancy" : 
     			effect = new Effect(EffectType.StateOfAscendancy, user, target, effectInitCounter);
+    			break;
+    		case "Use Bathroom" : 
+    			effect = new Effect(EffectType.UseBathroom, user, target, effectInitCounter);
     			break;
     	}
     	return effect;	

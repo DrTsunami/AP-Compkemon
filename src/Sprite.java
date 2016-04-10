@@ -47,6 +47,8 @@ public class Sprite {
 			img = t.load("trevor.png");
 		} else if (compkemon.name.equals("God")) {
 			img = t.load("god.png");
+		} else if (compkemon.name.equals("Kevin")) {
+			img = t.load("kevin.png");
 		}
 	}
 	

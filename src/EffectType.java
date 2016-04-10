@@ -1,6 +1,7 @@
 
 public enum EffectType {
 	Apathy,
+	BlowNose,
 	ChopstickBarrage,
 	ChopstickSlam,
 	ColorCorrection,
@@ -12,11 +13,13 @@ public enum EffectType {
 	Eat,
 	Enslave,
 	EstablishWrightocracy,
+	GetWater,
 	GGRIP,
 	Hack,
 	LSD,
 	MeatDance,
 	Meatpin,
+	OutOfExcuses,
 	PickRice,
 	PoleDance,
 	SatanicMissionary,
@@ -24,4 +27,5 @@ public enum EffectType {
 	Splash,
 	Squint,
 	StateOfAscendancy, 
+	UseBathroom,
 }

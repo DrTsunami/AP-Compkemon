@@ -181,7 +181,7 @@ public class Game {
 		
 		switch(myCompkemonScanned) {
 			case 1:
-				myCompkemon =  new Compkemon(CompkemonList.Prototype);
+				myCompkemon =  new Compkemon(CompkemonList.God);
 				break;
 			case 2:
 				myCompkemon =  new Compkemon(CompkemonList.Aidan);
@@ -213,6 +213,9 @@ public class Game {
 			case 11:
 				// TODO change wrightson's name to God
 				myCompkemon = new Compkemon(CompkemonList.God);
+				break;
+			case 12:
+				myCompkemon = new Compkemon(CompkemonList.Kevin);
 				break;
 			
 			default: 
@@ -384,6 +387,18 @@ public class Game {
 					}	
 				}
 			}
+		}
+		
+		if (current.currentHealth <= 0) {
+			System.out.println("I'm here! game over here!");
+			loser = current;
+			gameOver = true;
+			ready = true;
+		} else if (other.currentHealth <= 0) {
+			System.out.println("I'm here! game over here!");
+			loser = other;
+			gameOver = true;
+			ready = true;
 		}
 
 		ready = true;

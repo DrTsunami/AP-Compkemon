@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class BattleHandler {
 	
 	static TypeTable typeTable = Game.typeTable;
@@ -44,6 +46,53 @@ public class BattleHandler {
 				break;
 		}
 		return enemy;
+	}
+	
+	public static Compkemon customEnemy(String name) {
+		Compkemon customEnemy = new Compkemon();
+		
+		switch(name) {
+			case "prototype":
+				customEnemy =  new Compkemon(CompkemonList.Prototype);
+				break;
+			case "aidan":
+				customEnemy =  new Compkemon(CompkemonList.Aidan);
+				break;
+			case "alex":
+				customEnemy = new Compkemon(CompkemonList.Alex);
+				break;
+			case "hieu":
+				customEnemy = new Compkemon(CompkemonList.Hieu);
+				break;
+			case "jackson":
+				customEnemy = new Compkemon(CompkemonList.Jackson);
+				break;
+			case "jeremiah":
+				customEnemy = new Compkemon(CompkemonList.Jeremiah);
+				break;
+			case "kenny":
+				customEnemy = new Compkemon(CompkemonList.Kenny);
+				break;
+			case "noah":
+				customEnemy = new Compkemon(CompkemonList.Noah);
+				break;
+			case "ryan":
+				customEnemy = new Compkemon(CompkemonList.Ryan);
+				break;
+			case "trevor":
+				customEnemy = new Compkemon(CompkemonList.Trevor);
+				break;
+			case "god":
+				// TODO change wrightson's name to God
+				customEnemy = new Compkemon(CompkemonList.God);
+				break;
+			default:
+				customEnemy = null;
+				JOptionPane.showConfirmDialog(null, "You don't know how to type");
+				break;
+		}
+		return customEnemy;
+		// FIXME set customenemy to null at the end of the game
 	}
 	
 	
@@ -210,6 +259,8 @@ public class BattleHandler {
 			Game.textBox.AnimateText(target + " has been subjected to the Wrightocracy!", false);
 		} else if (typeMultiplier == 10.0f) {
 			Game.textBox.AnimateText("A God has been converted to worship Satanism! It's ultra-effective!!", false);
+		} else if (typeMultiplier == 0.0f) {
+			Game.textBox.AnimateText("It doesn't effect " + target + "..." , false);
 		}
 
 		return multiplier;		

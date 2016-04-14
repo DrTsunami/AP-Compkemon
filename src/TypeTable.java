@@ -37,7 +37,7 @@ public class TypeTable {
 		damageTable[4][3] = 2.0f;
 		damageTable[4][4] = 0.5f;
 		damageTable[4][5] = 0.5f;
-		damageTable[5][0] = 2.0f;
+		damageTable[5][0] = 0.0f;
 		damageTable[5][1] = 2.0f;
 		damageTable[5][2] = 2.0f;
 		damageTable[5][3] = 2.0f;

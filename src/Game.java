@@ -74,19 +74,20 @@ public class Game {
 	static Sprite sprite2;
 	static Requirements req;
 	
+	static String customEnemy;
+	
 	// Performed on initialization
 	public void init() {
 		
 		req = new Requirements();
 		req.whileFunction();
 		req.forEachFunction();
-		req.paneFunction();
-		
 		
 		// Draw command line box
 		textBox = new TextBox(new Vector2(0, 0), new Vector2(200, 200));
 		panel.repaint();
 		// Go to next stage
+		customEnemy = null;
 		Start();
 		
 	}
@@ -138,6 +139,11 @@ public class Game {
 			System.out.println("Beginning game");
 		}
 		
+		if (state == GameState.START && i == 27) {
+			enemy = BattleHandler.customEnemy(JOptionPane.showInputDialog("Enter command"));
+			System.out.println(enemy);
+		}
+		
 		// If enter key detected...
 		if (i == 10 && commandLine.length() > 0){ 
 			// if Enter is pressed and the commandLine receives text, then process it and clear the text
@@ -172,9 +178,11 @@ public class Game {
 	public void Select() {
 		int myCompkemonScanned = 0;
 		myCompkemon = new Compkemon();
-		enemy = new Compkemon();
 		// TODO maybe make a game mode where you have to fight throuhg 
-		enemy = BattleHandler.randomEnemy();
+		if (enemy == null) {
+			enemy = new Compkemon();
+			enemy = BattleHandler.randomEnemy();
+		}
 		
 		// wait for user to select compkemon
 		myCompkemonScanned = Integer.parseInt(commandLine);

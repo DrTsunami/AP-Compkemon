@@ -33,7 +33,7 @@ public class Move {
 	        	attackName = "Almighty Kush";
 	        	type = "Moron";
 	        	power = 75;
-	        	accuracy = 0.75f;
+	        	accuracy = 1.0f;
 	        	hasEffect = false;
 	        	toSelf = false;
 	        	lastingEffect = false;
